@@ -1,0 +1,11 @@
+{
+  "timestamp_utc": "2026-03-02T01:46:28Z",
+  "roots": {
+    "citadel": "/mnt/riffcastle/lagun-project/citadel/proofs",
+    "lagoon": "/mnt/riffcastle/lagun-project/lagoon/proofs"
+  },
+  "counts": {
+    "citadel": {"sorry": 10, "axiom": 78},
+    "lagoon": {"sorry": 90, "axiom": 15}
+  }
+}
