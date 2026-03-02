@@ -1,0 +1,26 @@
+[workspace]
+resolver = "2"
+members = [
+  "crates/eth2077-types",
+  "crates/eth2077-execution",
+  "crates/eth2077-oob-consensus",
+  "crates/eth2077-bridge",
+  "crates/eth2077-bench",
+  "crates/eth2077-node",
+]
+
+[workspace.package]
+version = "0.1.0"
+edition = "2021"
+license = "AGPL-3.0-or-later"
+authors = ["ETH2077 Contributors"]
+
+[workspace.dependencies]
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+
+[profile.release]
+opt-level = 3
+lto = "thin"
+codegen-units = 1
+strip = true

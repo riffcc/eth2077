@@ -1,0 +1,9 @@
+[package]
+name = "eth2077-bridge"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+authors.workspace = true
+
+[dependencies]
+eth2077-types = { path = "../eth2077-types" }

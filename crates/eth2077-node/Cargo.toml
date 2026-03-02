@@ -1,0 +1,12 @@
+[package]
+name = "eth2077-node"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+authors.workspace = true
+
+[dependencies]
+eth2077-types = { path = "../eth2077-types" }
+eth2077-execution = { path = "../eth2077-execution" }
+eth2077-oob-consensus = { path = "../eth2077-oob-consensus" }
+eth2077-bridge = { path = "../eth2077-bridge" }
