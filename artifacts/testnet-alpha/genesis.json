@@ -1,0 +1,3106 @@
+{
+  "network_name": "eth2077-alpha",
+  "chain_id": 2077001,
+  "genesis_timestamp": 1772409600,
+  "fork_epoch": 0,
+  "validator_count": 48,
+  "fault_budget": 15,
+  "quorum_threshold": 31,
+  "validators": [
+    {
+      "id": 0,
+      "execution_address": "0x4d5345b9aad7346a7448307cbc73cfc43d0d2d93",
+      "consensus_pubkey": "0x666412f4df88d10010e059d3b089080c36d2c72cc6abda57a1ec71b58001b916c445ed4c787cfabbd0158d8803fb926d",
+      "initial_stake_wei": "1000000000000000000"
+    },
+    {
+      "id": 1,
+      "execution_address": "0x4db3b64189166a44383a503abca9eabf401a88d7",
+      "consensus_pubkey": "0x6854dc451123eb6644c29b6e38c0e7be2167451d81b82f836cf0c3028ad9eea7685ee68da67195aa1983e6edb6e7a0eb",
+      "initial_stake_wei": "1000000000000000000"
+    },
+    {
+      "id": 2,
+      "execution_address": "0x52c483d4bb10b879bde027614b5b3187648c7581",
+      "consensus_pubkey": "0x8a8b3a6458506c98abe6abaa191b0559fbf0539fa6bbc25727e992931ae80b6907db2c20ba2de38a7791ea69d5527a50",
+      "initial_stake_wei": "1000000000000000000"
+    },
+    {
+      "id": 3,
+      "execution_address": "0xce4915f788f1e62333a17cda8f26c65d69d35830",
+      "consensus_pubkey": "0x08d82da910148c5103679f945717611d23671f41c74e7034f4b9f291404cca430787d04b5f1f6fef76966dcb580ad4c9",
+      "initial_stake_wei": "1000000000000000000"
+    },
+    {
+      "id": 4,
+      "execution_address": "0xd0697fab467600fe137f6d4d898209d122ae4d03",
+      "consensus_pubkey": "0xd5046caaf358dcd30c2c5aa8a9f4b1ec8db62bdd867d71bd244a96817250488a2161cd3a9629eb0e68f65fc34cd4f7c8",
+      "initial_stake_wei": "1000000000000000000"
+    },
+    {
+      "id": 5,
+      "execution_address": "0x919a8facc13e743c2cd02d1feb9ecf1c88453921",
+      "consensus_pubkey": "0xd7a26537410159037953276f5119733ddb96bf8ced3496eb6e683ed0df422ec44b41179b3254266892efa235d5126458",
+      "initial_stake_wei": "1000000000000000000"
+    },
+    {
+      "id": 6,
+      "execution_address": "0xeacdf4e72800ce1d55ff940b5b1d73dbee07373d",
+      "consensus_pubkey": "0xdde6dd6e3ce0fb105c283a3eec51b920e8631d17f1a43d0bfd5ab649ef00989f367a5028d4c39e3dfd48de37118b1826",
+      "initial_stake_wei": "1000000000000000000"
+    },
+    {
+      "id": 7,
+      "execution_address": "0xd46333cbb6d17258da7537d7aae76ee801e1acff",
+      "consensus_pubkey": "0xf8ad42b0eb0a986b038d5cd695daa33226c6eb8ab1a09fdc4581944d3b8130b28998d91066a851d1ece366ece5c82927",
+      "initial_stake_wei": "1000000000000000000"
+    },
+    {
+      "id": 8,
+      "execution_address": "0xeb9edf58c0a3d40f81b2b5ecc7be171f2935df6e",
+      "consensus_pubkey": "0x8227e744a0ffea1bc7486af4214931e7facfc04bbdc451172187f0818409c5905f0d17b7401618ccc532f0d9dadd80fb",
+      "initial_stake_wei": "1000000000000000000"
+    },
+    {
+      "id": 9,
+      "execution_address": "0x462a70dcf5c04127ff1814c2f32020caa7bcb35c",
+      "consensus_pubkey": "0x7c8a91de230f7783e21b7b8da03dfbe4fb6ae001d9cea1a6177191d2a9043442d2a7d4e1f07505ff2cbc498b66ae49c7",
+      "initial_stake_wei": "1000000000000000000"
+    },
+    {
+      "id": 10,
+      "execution_address": "0x4882ad4018bad3708a253b3bd978266a28223804",
+      "consensus_pubkey": "0xe6f1a4eb34182efa835e847dcddab914429e737fc330aab5d2975a106edc4d73e590c99a8f64b233412569d5c8c9768a",
+      "initial_stake_wei": "1000000000000000000"
+    },
+    {
+      "id": 11,
+      "execution_address": "0x710f9120967da7028c47bb500ab669df0e5c1e3c",
+      "consensus_pubkey": "0xd84d11171d3b7391d6dfb62ba574d401197333f1ac3551a97a70124840ec07a9161668ac536bd308b44301718906e4e3",
+      "initial_stake_wei": "1000000000000000000"
+    },
+    {
+      "id": 12,
+      "execution_address": "0x283a4c563482ad602444b4b59617f7c09b82696b",
+      "consensus_pubkey": "0x2f83ba397bd98a8da0314b9d26e46f817a384c285e1460282a8871753bf1cc1b978c8f040ee659c1ba117f05a9ca092b",
+      "initial_stake_wei": "1000000000000000000"
+    },
+    {
+      "id": 13,
+      "execution_address": "0x813abc9de09576467e221c44bc57937c8a114319",
+      "consensus_pubkey": "0xcf584c26b629bd4244cc73a5882fc352aadf32463a0ccadf16e259b992a752820d1515154581acf3b0115997769e91a4",
+      "initial_stake_wei": "1000000000000000000"
+    },
+    {
+      "id": 14,
+      "execution_address": "0x254d6de95ed883de9fe6ede6a5da8d6a32462852",
+      "consensus_pubkey": "0xc83953c70274766a3a5a3a0eb8ef788aa95240629c9bde99124c961f1737c9681edeb568a6013781c4233b2539a756da",
+      "initial_stake_wei": "1000000000000000000"
+    },
+    {
+      "id": 15,
+      "execution_address": "0x277f79ff4ada4b81e28116060a14fe53ed3c66ba",
+      "consensus_pubkey": "0x6bf99abffaff6624c64bb3568c4d41176fbb064202ceaf9adf74060ca2dba801e398fdb25b972c50fc45975ac097c661",
+      "initial_stake_wei": "1000000000000000000"
+    },
+    {
+      "id": 16,
+      "execution_address": "0xcb7a5e487a5a7c9afbbe5d9bc8b9f411ebb2e952",
+      "consensus_pubkey": "0x5450900967a1c6d9546c00d8bdfef3ee510b81386ad8931a2cdaa550e487a08d84db525038ec67cb84bd9afbc8518984",
+      "initial_stake_wei": "1000000000000000000"
+    },
+    {
+      "id": 17,
+      "execution_address": "0x9b1a60ee37ef08547ce6b79cb52a4cf0592b57c7",
+      "consensus_pubkey": "0x1cf41d374bafd285bccdba09b9fc577b2b33cffc2b93ce1b71a32012b2c5c02be5d2bd66f0739f66fc2d2721fd6256e4",
+      "initial_stake_wei": "1000000000000000000"
+    },
+    {
+      "id": 18,
+      "execution_address": "0xc5b61f618faa27093ba3b82729012f6773d9e055",
+      "consensus_pubkey": "0xc3524a3a581872e09ff667d9aac176c87f0d4799e82b6705bb4a36f04147ef9e3739a7988734cac7c0678d0c86491b65",
+      "initial_stake_wei": "1000000000000000000"
+    },
+    {
+      "id": 19,
+      "execution_address": "0x7563692b1b19e7b6899633e9d0a5102ab0778782",
+      "consensus_pubkey": "0x35895eecc1f207cd4a4290fbba5305490981ca33dfde55b91a38dc81a23b8d6438d85191f6f15e9467137d7365611db7",
+      "initial_stake_wei": "1000000000000000000"
+    },
+    {
+      "id": 20,
+      "execution_address": "0x04001ae85ffb9827677b49c3c2c338a65953417f",
+      "consensus_pubkey": "0x4517915ede6f71b5485652acd59e0b072dcf7a948d9ea7e2cfa8cd90132f21952894416d470f1b1543cbaaf1d6770f11",
+      "initial_stake_wei": "1000000000000000000"
+    },
+    {
+      "id": 21,
+      "execution_address": "0x8dc6a5be5db16e822933a1a41dbd222464da1d71",
+      "consensus_pubkey": "0x3d93bcffe4fd169025671f33d59a9b9c6f77bb3816ce3d7bc5806f43d5788c7b1193b273abfad7a4c702e8d960d8ef6e",
+      "initial_stake_wei": "1000000000000000000"
+    },
+    {
+      "id": 22,
+      "execution_address": "0x4eec9f308c91ea2701c99c619396152387a65d13",
+      "consensus_pubkey": "0xad541090f5b4e94c3c3266c6c34c747a263c945149d5ec0185148e992826a4d18e795dd38a25a9b4393525f59c872830",
+      "initial_stake_wei": "1000000000000000000"
+    },
+    {
+      "id": 23,
+      "execution_address": "0x22cabd288403431987fc699d94d9bc2ff3c0779f",
+      "consensus_pubkey": "0xb257e14a7e529efd58ecb740e2eb1078b8938621ad668ac524d0ff74b0e74c287c90c33466ec413d857e860b1d7d1f9f",
+      "initial_stake_wei": "1000000000000000000"
+    },
+    {
+      "id": 24,
+      "execution_address": "0x261ab28f5c5e9a977cd2dfce575bc974709a1721",
+      "consensus_pubkey": "0x85ce9b58eacfda373d7115c5dc375157c10e2a0a1264b23987fc79db781038f27985bcdf30e66d1b53ef36062434c415",
+      "initial_stake_wei": "1000000000000000000"
+    },
+    {
+      "id": 25,
+      "execution_address": "0xc7fc5ff978b0f38ccbb0cbe6b9d8effef500a485",
+      "consensus_pubkey": "0xfc9f5e4e06a29398a374d869c17a6ec83b6fdd506ede13a1463a1a204612ba75374d2931fb344024faada65705d5ea59",
+      "initial_stake_wei": "1000000000000000000"
+    },
+    {
+      "id": 26,
+      "execution_address": "0x29bb16a077e58a770d9534be376b3735f392ed7e",
+      "consensus_pubkey": "0xbc4f4bdf741422d8291943a382d1eeeb4a685414607486fd726414e0514905d9e641cdc223c582c560bae718fcb92822",
+      "initial_stake_wei": "1000000000000000000"
+    },
+    {
+      "id": 27,
+      "execution_address": "0x58e887b8bfc8e5ecdd3690dbaa096bc35eb2b376",
+      "consensus_pubkey": "0x0c0894f13c0abcdff033a18cb3f4377be9b66b796bfbd411efaa2db9f0537d2be98abdc66b010b13d154f2f5ca6b6f1d",
+      "initial_stake_wei": "1000000000000000000"
+    },
+    {
+      "id": 28,
+      "execution_address": "0xc9ecd374e84f33f7a2b73ce481022e32aa6311ab",
+      "consensus_pubkey": "0x00540c760e664ef245ef06229e07e160daf7a8ed06242cfc17510b83e83dbf4a5c9ceff0adaa2125c5a6d5dc05b3124a",
+      "initial_stake_wei": "1000000000000000000"
+    },
+    {
+      "id": 29,
+      "execution_address": "0x20ce73eb2a487cb28faa1be154e051e9fe519dea",
+      "consensus_pubkey": "0x6f7bc9324eccd3928f663a7ede4fcb262a6edac524fedf9a992cdab12c2e8e554f1309695125874cb6c15ea0556d4943",
+      "initial_stake_wei": "1000000000000000000"
+    },
+    {
+      "id": 30,
+      "execution_address": "0x017fefba895658d2bf04f4f51492094561e908dc",
+      "consensus_pubkey": "0x2189dc7f33d976a657edbcf11aa26d2db97292c77ad2278924ec555545595f41376bafb25f81028c9fc695c0bb362a54",
+      "initial_stake_wei": "1000000000000000000"
+    },
+    {
+      "id": 31,
+      "execution_address": "0x08b2f906e42d372b358730a0852ebe4fc1569a11",
+      "consensus_pubkey": "0x8bd8497905cd1a642e649c5d8f9831dbcea3bcd1b0971638a4413b814c525e72f821c7bebb1814d421ef1a48b0b52a96",
+      "initial_stake_wei": "1000000000000000000"
+    },
+    {
+      "id": 32,
+      "execution_address": "0x177dbb8a7117a3024e1250ba8592c92c4a584ed4",
+      "consensus_pubkey": "0x4f97047e02b03b05c7eeff94838c974e9c1b4995c43945cf1e52243afa791b7925214fc358e4e992a1a6f98ed7005804",
+      "initial_stake_wei": "1000000000000000000"
+    },
+    {
+      "id": 33,
+      "execution_address": "0x44001a786ce48516dc75779386a9263cd447379b",
+      "consensus_pubkey": "0x48f4d91c4244f0dd5a24e01febf62d7bc9caf7461ae8f99c05b3c6d5ce074fa5146c022ad8351523fb144e6ccacf04bc",
+      "initial_stake_wei": "1000000000000000000"
+    },
+    {
+      "id": 34,
+      "execution_address": "0x9f58d2b3a4db4ef64f23ff6c82438dde31f7ec85",
+      "consensus_pubkey": "0x2cac9798f994aff055190d41ddfe4739a5eaa3523494c994e51ec2e7143cc6dd40e65331f11cc8799734dc93b263adf0",
+      "initial_stake_wei": "1000000000000000000"
+    },
+    {
+      "id": 35,
+      "execution_address": "0xa36a7ad2eb6414bc5d59b38a83cec10cc655d9d8",
+      "consensus_pubkey": "0x175b4373d9405ebc7b9fb0a1fa07fbf8a1d8fd08922b6bc7508aa5b0f92478c6493bb10080499110687e7ea009e7aeed",
+      "initial_stake_wei": "1000000000000000000"
+    },
+    {
+      "id": 36,
+      "execution_address": "0x38debb9637a37ad637bb8a7bb714dc71ff3652b2",
+      "consensus_pubkey": "0x733715854ee649b1a40f85c0f7a611bbde8b3c86ef2cf2772b5d057575cd4a44344cfa77bf32cc4f1f991c1448485ae0",
+      "initial_stake_wei": "1000000000000000000"
+    },
+    {
+      "id": 37,
+      "execution_address": "0x6377630551397fb5907b0b5fab882f5923c5aebb",
+      "consensus_pubkey": "0x6a80e9ca0bb39acf6c042452867bbb122c8c9fb0a3d28f2c885bfb2c0c347c626eca5bada2f5bacdb63fb90202101222",
+      "initial_stake_wei": "1000000000000000000"
+    },
+    {
+      "id": 38,
+      "execution_address": "0x94e91070c0c7d2c1fe85a8bbc80dfbfa0be1da5b",
+      "consensus_pubkey": "0x6bd56032e2193f33b382f33a7a5290a704b0cd4ad02d2b1597dca1ba17b5ae81165a4acadb76847d5dedb27d8d8e0fcb",
+      "initial_stake_wei": "1000000000000000000"
+    },
+    {
+      "id": 39,
+      "execution_address": "0x72ea2573b5fa5f537d07374977051f31310f5763",
+      "consensus_pubkey": "0xc9fab186397f413d5f3b21515bdbfa01811460e439b3b08de48d6a8eed2636f4150dd9b0017f3325bb122ab20759c544",
+      "initial_stake_wei": "1000000000000000000"
+    },
+    {
+      "id": 40,
+      "execution_address": "0xfcb98489927563affec3a28d7e3a943b51c39ac9",
+      "consensus_pubkey": "0x0c64a66f292d0ba3aa6b053bbb70ce5b0faddc4d8bb49966420af87d3537b5308055770f0fff60c0ab1cbca558d44baf",
+      "initial_stake_wei": "1000000000000000000"
+    },
+    {
+      "id": 41,
+      "execution_address": "0xbc6f37cdd073b18ca91a986b216dbf52c6cfeaeb",
+      "consensus_pubkey": "0x101e30686a14b09576d0a5622c0cfaafa8dddebf829f9a5561336d09d5c81119f712faed5e64b2670df7b493b4391bb7",
+      "initial_stake_wei": "1000000000000000000"
+    },
+    {
+      "id": 42,
+      "execution_address": "0xd2a57c18e65b2b8d6e8aa34e6834b2c90a8aa1b8",
+      "consensus_pubkey": "0x6f73ad9e63f9b4ffc89530c8895c8ae5bc8980c510ee67ad9adfe40f5f7b35bdd04be3442a9007c7e6b178c0358b08e4",
+      "initial_stake_wei": "1000000000000000000"
+    },
+    {
+      "id": 43,
+      "execution_address": "0x9ff69d7e1c2efe3135212f6bed26caf334868556",
+      "consensus_pubkey": "0xa6b37e3c425c94b902a4f726088abd14a28b20f8bf90874838da9370ee59f3402a1e1adc8feeb31ea637b1ca6b15ef1c",
+      "initial_stake_wei": "1000000000000000000"
+    },
+    {
+      "id": 44,
+      "execution_address": "0x66e8c7f475b76ab60963a5ca79d7648445eba6b3",
+      "consensus_pubkey": "0x383058bac1f89d26a42129b5beab702a9c2d778f400e96db927d81569063216bd73a662e2e14d8472fb12eda498d702a",
+      "initial_stake_wei": "1000000000000000000"
+    },
+    {
+      "id": 45,
+      "execution_address": "0xf001ff627c8e5fb558704ea8e3b4d5e2598dfca7",
+      "consensus_pubkey": "0x6654d2a9be8d72ce0749b19a45694fa9d6adba973a200ce057a7e2adbcc918ea3717d314420cf637df1ab6c962601404",
+      "initial_stake_wei": "1000000000000000000"
+    },
+    {
+      "id": 46,
+      "execution_address": "0xcce13cd6936caef9e687cc3d250fd9a8cb365a16",
+      "consensus_pubkey": "0xb2a1805ddf1af85be97ada3f6f5dd77c38f849bfeae532d4bdeee7b261b9705e8ed39e892684f7eef7c205f56eb6ef10",
+      "initial_stake_wei": "1000000000000000000"
+    },
+    {
+      "id": 47,
+      "execution_address": "0x18a04d05bb60b8473b2d1b931c6ca6d1f4d7fe9d",
+      "consensus_pubkey": "0x564ade057fd17ca4bb401018047aa225bf161ce46d7383420eca2351c3e4e720e46d3717c93a6a6a0496b3dafd80f54c",
+      "initial_stake_wei": "1000000000000000000"
+    }
+  ],
+  "alloc": [
+    {
+      "address": "0x4d5345b9aad7346a7448307cbc73cfc43d0d2d93",
+      "balance_wei": "100000000000000000000000",
+      "role": "validator"
+    },
+    {
+      "address": "0x4db3b64189166a44383a503abca9eabf401a88d7",
+      "balance_wei": "100000000000000000000000",
+      "role": "validator"
+    },
+    {
+      "address": "0x52c483d4bb10b879bde027614b5b3187648c7581",
+      "balance_wei": "100000000000000000000000",
+      "role": "validator"
+    },
+    {
+      "address": "0xce4915f788f1e62333a17cda8f26c65d69d35830",
+      "balance_wei": "100000000000000000000000",
+      "role": "validator"
+    },
+    {
+      "address": "0xd0697fab467600fe137f6d4d898209d122ae4d03",
+      "balance_wei": "100000000000000000000000",
+      "role": "validator"
+    },
+    {
+      "address": "0x919a8facc13e743c2cd02d1feb9ecf1c88453921",
+      "balance_wei": "100000000000000000000000",
+      "role": "validator"
+    },
+    {
+      "address": "0xeacdf4e72800ce1d55ff940b5b1d73dbee07373d",
+      "balance_wei": "100000000000000000000000",
+      "role": "validator"
+    },
+    {
+      "address": "0xd46333cbb6d17258da7537d7aae76ee801e1acff",
+      "balance_wei": "100000000000000000000000",
+      "role": "validator"
+    },
+    {
+      "address": "0xeb9edf58c0a3d40f81b2b5ecc7be171f2935df6e",
+      "balance_wei": "100000000000000000000000",
+      "role": "validator"
+    },
+    {
+      "address": "0x462a70dcf5c04127ff1814c2f32020caa7bcb35c",
+      "balance_wei": "100000000000000000000000",
+      "role": "validator"
+    },
+    {
+      "address": "0x4882ad4018bad3708a253b3bd978266a28223804",
+      "balance_wei": "100000000000000000000000",
+      "role": "validator"
+    },
+    {
+      "address": "0x710f9120967da7028c47bb500ab669df0e5c1e3c",
+      "balance_wei": "100000000000000000000000",
+      "role": "validator"
+    },
+    {
+      "address": "0x283a4c563482ad602444b4b59617f7c09b82696b",
+      "balance_wei": "100000000000000000000000",
+      "role": "validator"
+    },
+    {
+      "address": "0x813abc9de09576467e221c44bc57937c8a114319",
+      "balance_wei": "100000000000000000000000",
+      "role": "validator"
+    },
+    {
+      "address": "0x254d6de95ed883de9fe6ede6a5da8d6a32462852",
+      "balance_wei": "100000000000000000000000",
+      "role": "validator"
+    },
+    {
+      "address": "0x277f79ff4ada4b81e28116060a14fe53ed3c66ba",
+      "balance_wei": "100000000000000000000000",
+      "role": "validator"
+    },
+    {
+      "address": "0xcb7a5e487a5a7c9afbbe5d9bc8b9f411ebb2e952",
+      "balance_wei": "100000000000000000000000",
+      "role": "validator"
+    },
+    {
+      "address": "0x9b1a60ee37ef08547ce6b79cb52a4cf0592b57c7",
+      "balance_wei": "100000000000000000000000",
+      "role": "validator"
+    },
+    {
+      "address": "0xc5b61f618faa27093ba3b82729012f6773d9e055",
+      "balance_wei": "100000000000000000000000",
+      "role": "validator"
+    },
+    {
+      "address": "0x7563692b1b19e7b6899633e9d0a5102ab0778782",
+      "balance_wei": "100000000000000000000000",
+      "role": "validator"
+    },
+    {
+      "address": "0x04001ae85ffb9827677b49c3c2c338a65953417f",
+      "balance_wei": "100000000000000000000000",
+      "role": "validator"
+    },
+    {
+      "address": "0x8dc6a5be5db16e822933a1a41dbd222464da1d71",
+      "balance_wei": "100000000000000000000000",
+      "role": "validator"
+    },
+    {
+      "address": "0x4eec9f308c91ea2701c99c619396152387a65d13",
+      "balance_wei": "100000000000000000000000",
+      "role": "validator"
+    },
+    {
+      "address": "0x22cabd288403431987fc699d94d9bc2ff3c0779f",
+      "balance_wei": "100000000000000000000000",
+      "role": "validator"
+    },
+    {
+      "address": "0x261ab28f5c5e9a977cd2dfce575bc974709a1721",
+      "balance_wei": "100000000000000000000000",
+      "role": "validator"
+    },
+    {
+      "address": "0xc7fc5ff978b0f38ccbb0cbe6b9d8effef500a485",
+      "balance_wei": "100000000000000000000000",
+      "role": "validator"
+    },
+    {
+      "address": "0x29bb16a077e58a770d9534be376b3735f392ed7e",
+      "balance_wei": "100000000000000000000000",
+      "role": "validator"
+    },
+    {
+      "address": "0x58e887b8bfc8e5ecdd3690dbaa096bc35eb2b376",
+      "balance_wei": "100000000000000000000000",
+      "role": "validator"
+    },
+    {
+      "address": "0xc9ecd374e84f33f7a2b73ce481022e32aa6311ab",
+      "balance_wei": "100000000000000000000000",
+      "role": "validator"
+    },
+    {
+      "address": "0x20ce73eb2a487cb28faa1be154e051e9fe519dea",
+      "balance_wei": "100000000000000000000000",
+      "role": "validator"
+    },
+    {
+      "address": "0x017fefba895658d2bf04f4f51492094561e908dc",
+      "balance_wei": "100000000000000000000000",
+      "role": "validator"
+    },
+    {
+      "address": "0x08b2f906e42d372b358730a0852ebe4fc1569a11",
+      "balance_wei": "100000000000000000000000",
+      "role": "validator"
+    },
+    {
+      "address": "0x177dbb8a7117a3024e1250ba8592c92c4a584ed4",
+      "balance_wei": "100000000000000000000000",
+      "role": "validator"
+    },
+    {
+      "address": "0x44001a786ce48516dc75779386a9263cd447379b",
+      "balance_wei": "100000000000000000000000",
+      "role": "validator"
+    },
+    {
+      "address": "0x9f58d2b3a4db4ef64f23ff6c82438dde31f7ec85",
+      "balance_wei": "100000000000000000000000",
+      "role": "validator"
+    },
+    {
+      "address": "0xa36a7ad2eb6414bc5d59b38a83cec10cc655d9d8",
+      "balance_wei": "100000000000000000000000",
+      "role": "validator"
+    },
+    {
+      "address": "0x38debb9637a37ad637bb8a7bb714dc71ff3652b2",
+      "balance_wei": "100000000000000000000000",
+      "role": "validator"
+    },
+    {
+      "address": "0x6377630551397fb5907b0b5fab882f5923c5aebb",
+      "balance_wei": "100000000000000000000000",
+      "role": "validator"
+    },
+    {
+      "address": "0x94e91070c0c7d2c1fe85a8bbc80dfbfa0be1da5b",
+      "balance_wei": "100000000000000000000000",
+      "role": "validator"
+    },
+    {
+      "address": "0x72ea2573b5fa5f537d07374977051f31310f5763",
+      "balance_wei": "100000000000000000000000",
+      "role": "validator"
+    },
+    {
+      "address": "0xfcb98489927563affec3a28d7e3a943b51c39ac9",
+      "balance_wei": "100000000000000000000000",
+      "role": "validator"
+    },
+    {
+      "address": "0xbc6f37cdd073b18ca91a986b216dbf52c6cfeaeb",
+      "balance_wei": "100000000000000000000000",
+      "role": "validator"
+    },
+    {
+      "address": "0xd2a57c18e65b2b8d6e8aa34e6834b2c90a8aa1b8",
+      "balance_wei": "100000000000000000000000",
+      "role": "validator"
+    },
+    {
+      "address": "0x9ff69d7e1c2efe3135212f6bed26caf334868556",
+      "balance_wei": "100000000000000000000000",
+      "role": "validator"
+    },
+    {
+      "address": "0x66e8c7f475b76ab60963a5ca79d7648445eba6b3",
+      "balance_wei": "100000000000000000000000",
+      "role": "validator"
+    },
+    {
+      "address": "0xf001ff627c8e5fb558704ea8e3b4d5e2598dfca7",
+      "balance_wei": "100000000000000000000000",
+      "role": "validator"
+    },
+    {
+      "address": "0xcce13cd6936caef9e687cc3d250fd9a8cb365a16",
+      "balance_wei": "100000000000000000000000",
+      "role": "validator"
+    },
+    {
+      "address": "0x18a04d05bb60b8473b2d1b931c6ca6d1f4d7fe9d",
+      "balance_wei": "100000000000000000000000",
+      "role": "validator"
+    },
+    {
+      "address": "0xc24d054f59bd1c22d6c334e65bc7000e967f09b3",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x624cea2bcdda8dd67bcf223e90cb3e6690a52006",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0xfcc134d4efe01d6d3575d7e2a764124460febd70",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x124c7e847d954eda1d213f6b5fdd12ea272f614d",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x8fb07f61cb5668dae95c4a643ce67b77f5a2b120",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0xa6779bc4fff087c0eba425b9e631910c602c0856",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x4c7c6c8ef55a18e8ad8265f370f2814eec9f6228",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0xb01557d32ec403814e16169655d3ce4fff24f257",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x77e73a1e761ef245579d34d6d9a411236b195787",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x8061bbd47d1d455b674b3dd1627ca44f41eb08e8",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0xafdebf9e539d0ad4e790851c287e684ee2f37c88",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x774389e03b85d851b17cd86dd9e8adc873d58261",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x6bf302388eedee47f1f07d192197460a4c80e11e",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0xb0fd3842eabd1caa893ca68304d0a3805b9b1c04",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x34441ee00bfbc42d6d35cf7e1eb493522a1a4c8e",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x3fef60f0a56c00f807efe0fd00ca5533d988c9c4",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x11e9f0e5bae7f0b5c2dd8a294ba3d05979fd965b",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x3d8718fa37bd2e621a5e3a2684b3e42b115599d2",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x81c07f7f8300764efa0d2ffb58e0a180ef9201dd",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0xf8db447422e43fad543676ae3b3defb4412369b1",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x3c9a9d5c8a33afdcd7a61f2549cf5ece99120432",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0xe221691dab1a6c84c39e17abcced0e6a623ee49f",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x5a3e94ad1082957e0e3cd26d299d2af8f92c3a20",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x14502cd00b75593b0ffd6aece1a6238f3a220c40",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x4658b01191529a2d912af82d1dd7ec85367c7698",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0xd390f7f2018dc2effaa13a080a36f25bc386adc6",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x474759a51e4c84b32c1ad6ff9029af9c75b7e0f1",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0xac1febd26df578a89390078d9aab6cd8232f279b",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x9a0bc7f8875656debf3cfaa9fa9918bea5e20f6f",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x3f939e3737237341e5a0dd9621193991525cd087",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0xc07df1f62341d5ac03b7d87fa74ef2fd70d69120",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x44cc03c9d0a73ea6c9368c2bb96e749cbfe68172",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x563a30cc192d6f1b3f21a1b273f75e849fc0f792",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x653be3ceb7066462e4e162acd330eebba4a9b2d9",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0xe263056de92ca2d7428a090f4f1765b93aba451b",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x87dc1f4fc70cb847b9ead3d06be5e693f471ddd4",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x2b470f219d748cb75c443874fac9f8a57416600c",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x4ef8a57422e04741e326fa7569bbdaf9d8b32ab8",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0xdf0ade45c5d63d69395d4ddf3682c99e9bd8f50a",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x3280833e3c5272fccb145838ac11c110ae455ba3",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x48f20f7fd52ab4dbe611f3bebd663a6014065cbe",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x0fb150f0b38ee780fb2e64b2cf88ff2e001c024c",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x58004c16945bb9da3dad0ca0c5702afec3c8fd32",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0xde357b0dad42f0cb4c241ede0dab3682770b53cd",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0xa07bad2e54f03badf27dfff2a9002ce0f5fad554",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0xde178b1eea2d6ba94270cc7dc3d24fbf68f0e77a",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0xf009316f190f73ab80b3789a374993f4d99613f7",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x5abcd9d0fbb8d59ee328c29b3e1ecceb78da9f6e",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0xf6ff101644e6e9b4fd289e570bd71244f8d74cc0",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x874c8a1989f835e3f69d3e1cfe553d2795a855b1",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x9c1b3bb182a9446e7a20e8256d7dfd3860be1363",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x33e7ee2df3f2bdf6bf0cf8a38c13b12656369e93",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0xbc79518ff021671931ad245a72c2c1645c8605b3",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0xa0a142d2b94690e92aa4eb8e97d6bbd609653d09",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x5901a7ba47cf4000c447d9d81bf78605513f9fe2",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x6dcfc447d12cbe2b9fb8c50eae357f11234f57df",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x8e8b92bbc8633b11ed1e42a22d7f39c3f4ab5c9a",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0xa12afe41db3634d6870e9a77a3fa97d429bd7090",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0xb30276e8d11e42a49da4010f154d59ab4c667616",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x707428449623c18e4d11a55c12680a6ebeed0ea8",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0xbd4a4c924957b5c8bd128ac1d6e7766cde912a26",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x36bce146a06f45edd6b106f03fc78c25d7ea5d35",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x59bf4e4872c4b5462a289ec574ec934228bc1511",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x0d7d851c2608c443733bc3503e58465216129ae9",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x50e8d92c82f30228dca1b62bb1e26d1565972216",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0xcadd8a57c56ace0d6b794d8f50b0d1b85b29e9bc",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x51a9202e266892d3924d05a9585c7456744c0c40",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x047ecaf1d28db863856e4cd2e376e2f9f4c36c08",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x8867c7d669b17046e039812688c1f6f17a24543e",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x5c90dd6858d0a9b2510bc7548c3d7bd37c96f59c",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x8b64425aea3f938a550901fd6e4aa0353f61c78c",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x0f05d77c76a8015d8396256bf962966dcd6ce45b",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0xe72458de2faf5eca631397264020dc7de15abe41",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x5d9f6cb27d9b047c6e9a9b0a2e302e62f8abb471",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x6bff66d637cb8eff2420749475cd18b68172f627",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x3b7f39cf0e3cb213792555912a9e0537a50cb46b",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0xe9cecd02b811a720e46b090d7dc9b0d15a166276",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x94d3a46f19974888c384c1f48d0e3ade772f4d79",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x2f51b192c5d6e1fc5bc3164eba2d9b3afe13b5f8",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x6b4d634f5323856608661ab80d17d958f83d3b71",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x6163ef86617d45d3c481685ed2e5ee3bf384bf18",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x72ae3fc3e8392b0b952ade9fc2a74e7a4a9e7515",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x5be1a26d6feb6ccec9ce5b9556240ad669053f91",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x6284730f4f172ba5b45b2561777bb1746a2670c2",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x53ef8afb30bef1cc35035d1fd9c4b90440484aca",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0xbd080c00a42f53cf1a96b53cf09b302c58d4970c",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0xb6e34450d4cdcc3dd556bcb1f831d94c6c60de29",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x0f239372fc19c9685aeacd629acb6ccaa38c1367",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x5329dfea53b9bcf10c3aaad7a86b73e5f227fd6e",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x42844fa5ca79c78aadcc6d053997022cbadb8c47",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x1fc3c67d0b1d0393d475a54a46f6af76c84f5fa5",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x281ea4857808b2b3b6ad647e06166834f4dd3c4c",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x380e683ece9d189e410db10038ecb52224e2a522",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x662a34a633470b71a3141e72d03b415197de43e5",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x0452d4d364e411954a6aac0f9f42904f8dc4d1c8",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0xc782f33eb427dd3e009c3d736f43950e4cf4a9ee",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x110da1946d69712da39e4dd34e0c4a9e19b780cb",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0xc4a7883f390d538974048ab3cec32606b0b9f2bd",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x463e0214a875296b4d674d3957cb041870f6ad5c",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x8c5d738b46e0ff6a0e2880053d33634d9330aab7",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x7c72a2f7e2cdeec9faa3a23ba51e1c6418386eb8",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x6b8d14b259fba4d3984fe5c67747b9b0cf92eb58",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0xf8e1a60db1724a6ee8eb70acdd2404ac13c5a45b",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x5d49ebcc1fdfac5bfde05199869fdeffecd74402",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0xc4df6e8c614f53b79aa5267a70b0635165adbe6b",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0xaf9aed70e4dbc23d83c04b713b3d1375e16a8c27",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x09e77e7ee6e7fed54022a0d9361e3c7e945d0991",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0xa261d38ef15c782ad40bf18ef33ec85bc7d49320",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0xb0895c362024fcb140880d09c1be0193069c394d",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0xc30ce03d492999429c078702e637e39891a2f350",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0xa477e1ccc740a287c4b3428e57f330c6afdcf58a",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x47534fbfb2b33634d8c9a883cc85143a7a7e7236",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x56307aac312d417fe304742c48fe9188b93a9a39",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x0f6b7d4d87b49b3ed42171a3bcdb782232a83519",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x3d7ff9a6e352f6c1c0bb548cc9deaf760e1624fe",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0xa5762e800583c4a58a79fd90e71cf0c9ae17bb76",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0xd6ff5ed241d7b6e5b4abe83ba9c4651fd59a7781",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x965ffd767ec8450185f0295d3d899c9fc4bddeeb",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x0e4c9a2d7171812c0a26ee6f6b09dbbee1681ca4",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x4981501408cab5e66191f6252b677305b58a7561",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x6fe9cc1fe318523c585cbe6999581c322ef4fb3e",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0xaea1dc6705d76c823d5397c0b306b03b69911c38",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0xeec36eb86f538dbc8dc4ef4c5a748ecb9ee3063a",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x28bac77cc693f627cfa857b9ac174797e4774d59",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0xc552ca77970eca7ba3301a2612b6575fa34a04d4",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x2dc38053036bfd0664ccc1eae7aa6987a0c72268",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x0e0cf013e7e03d97ee475dd9e689f2293b891e38",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0xfeabb25de7946b61b5d0fdf287001cd4df50d889",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0xfc21516533df8e47531b817880e56e12d043eb64",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0xa2f96e84355f7fef8aefc429db92d7d2b1a4d91c",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0xae6329390993b6dbac71091f5dc324b26947f718",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x8ebd0284f9ec876aaee93c10426032aedd7cd24b",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x4dd544eeb1067256aa25ed0eee23555f0d7935b9",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0xd681909118029c79b376c43145ebcaf79447d3a4",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x4d8b4090f3503adcd1920d63ad8c214d9900561e",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0xd4ad906bbd46f04f0fdf2870a4bbd877dd10e881",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x90771333afb607d91cf85d65930e12106cde1fbb",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0xd0ffb0536da96c240868b8915472ca1fab3e50b2",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x6fbf5ee85351214dc70c8c3389c69d7cfcb30c78",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x62b8a9c845e106301480a5a08d8ecb922911bb0a",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0xc22bf5b645311577d92844e8bb3010787af63f85",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x1cee874c44c68d66268c83a09d0edae946742c16",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x8a679164fce9b40d6327c1848522b6b13aa45b03",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0xa732c6a15278a8499f72c059edf2f3020a8ed106",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x220a00d68f0a6454b2f56264f21535c11e5eca23",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0xbb7a663c020044c6298b789479d14e78142e5e1e",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x9263ffe6177dcd40b621037dcdac0dbdbc9f7c06",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x86d972a441eb60e80557f798e97e60488cf9aa41",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x815422c86db566ea67f7d67397b8f5ae271389f2",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x97b8c91ae0a5b641abc0fdd6f39af1748847c784",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x63d3221ec2e198954e963ba76674560a7c0aca97",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0xe8d36496c70052f8fde071379352b009fdc2b97a",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x0096f5943761339318c6757ff34ef22d1d31ff94",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x4d0db502e6af18e2eff03f81fea536a4ed088005",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0xe9c2730317f7e8032171c3acd9dedf1eec1d3fff",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x56baf3dc379d2e826fb11e662a7a52a60369cf64",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x5478fc15175787ceefac0533510de38ad940e867",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x390d6dcdea311f9158ecdfa81d69e75ca2f72c04",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0xc407d938eee3f463015dbba645672d4d0d153973",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x25cd8451d7f01f052bedc0cbeec98a590f75798b",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0xb873551fe5b25dd53296ffb215796f95e621cfea",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0xe99081129c534ded50b0c1aab950466e16e03575",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0xa16414aa61539162384e0ab4dfe285b8ef7efc99",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x3e44d263fba43f39c9d4b9d6c7201ad8a90ce49f",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0xf2b53eb2fd6cc499ec2b2d6ba5b67be514722ace",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x114b0335a9d867b1768cf5788c43ddd861c7ba4f",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0xcd100c5cc0abf4dbf4a756ae43a5762280639506",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x5452d639557d7b7959ed10902ff3da9df82d9f72",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0xe2ff4e4c9017df72a85fef0af689a6efaeb1ae0f",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x55b3aae3ca8dfa01e5eaa19ee3ca4d312f09bd3a",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x569ec98a8fd83dc78055bfdc297f3583ca157d87",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x1e0eaa7f930ad2c14ce233e9763a58844519bb0a",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0xbcc1ae97428235b7147016641634ac29216315e9",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x24e453b970e80bcf2ac8b9b22bd5e60701fb7c10",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0xf09bf0bb1830b801699b14c0774917d13a12d8af",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x44c6053f015b63d9ec356def3c40e8091fbde49b",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0xc2555765cd1cc6730ba7bad510d2d1320cfef5a0",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0xede867193f3f9d6ac0377d772915c79241c9b8e1",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x5272726e04f0f1f2451fefbefbb2e5e8fbb0278f",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x7cfccfc215191b41354d1f4da5c00f3b69d3909d",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x1e160e322654f071ff4ed8ff44c28f940551093f",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0xb97aa28942707414b0df107a9641cb8e8168386c",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0xba3bf768cc3f79d14ccaa98a45c5eafd58c4d906",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0xa48d223226b08d083e00aa8b525406346ea811e7",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x3650aea15c1cec074fa3f8f710baa7ecf934b411",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0xc784510b0dd1a2cfa0474bad781c385e3452a2e3",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0xac2563a5a4f9e8618f4ca00f83c21be33c9eed88",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x9faa33172bb1263aea7f6545df48747440645630",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0xda35a3164c8e0bdfcc1bd124c87787ceb74ebac7",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0xf6e1bcd5be2bc378a09dd2a3b6bb5246b6670be1",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0xb6116551e1ce9132722824c8f9ec15edb22f0dc1",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x8e5dd5962fd3fcf12c2a5a22b239fd40b4234d89",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x90532ddd3210b6efe8e7b247db2cbeed648c21cd",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x227ebcf14056b2f3aa9132146c60dc3d8996f9d8",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x714107d95ac69d4658fc29b162daaf30f22bb9aa",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x31c74a14b67f09afb4d35a9a9792b7b49d3846a2",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x9b8e1d6341af362ef6c33420a457a17acc618972",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0xbe9bbeab907157d3c8691ded8277d79ce358c68f",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0xba5d7d5babd0b5ac9f9099f43f4d3fb12af0f12a",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x98e3584e3cde274985542ab261cfea4b03397f59",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x3bfdf81549d10af0375b674d4be58e752b2bfd42",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0xa611dfc633b9a04195fedb0208f2d5428827efa2",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0xcd9005d1700aba53ff7a7228a673232191a621fd",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x242aea5b0de9cce7342800e081c071f968a0fd4a",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0xfc531d454bc3d8570f152b5523d7962da7dc8f34",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x5e28aa751561298bd4b936406ecef37c9a654145",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x3f4581de1bf764de29075fef643eb0e1a4031715",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0xb13ab47d11317baf1a7022b22105d3969970c655",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x8b4aceb3f41f05add64be9fec1ce6d974a1e00fc",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0xa30870f01743e360da0337d92e9cb546408e815c",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x80f54000c00d0d2d27eb12302ee847b3d683b00f",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0xe52ecc97420e0ac66761219fd85b7d17d52e041c",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0xaa971cf24bfda8a72e0cac75f3e8cf9869dbe0b5",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x80cd208ec7e697226a3284c77856bcdd5a5666c0",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x310fc3b88d6c460ca8e9ba8922da31d1009e9dcc",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x415717a188fbfedbf43fc17a446a729065757f01",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x37b3567c8e6f3157c1f0d37ab201b1eab16210c8",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x97c2f3a691b23d170f5fb324545c00004efced8a",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x478b6a46e4d5344ede3b4149dfb249b51a9ab9e8",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0xe5caffd491d6cbec8ba81d33af58a265c3e8d3ca",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0xbd24f0e7ba4357fdb4754be5e8814e0872263052",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x7a12cc3bb536aad33c7eace16c5e806df90c0af0",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0xd7e8678bc4ebd2a56c48104cf65d836c1a2a6e82",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0xa3eea1246e76864b2bf15eb2919aef1a02ee97c4",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x53650b6f5fef82b5fae16a8a6d4f716f738d2070",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0xc0dbe47d85a447f3f20bb7b84593185c24f0e198",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0xbd925997beb736d66bf75830028493fe01d9c8bf",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x4a34a629494d4fcf2298a14ada67eb0cb6197da3",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x8e5d8f96012f8d7254ca339b8ac1f24f715f6731",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x632b77ffcc27c5967143ffbc2d8fc82bf790f94e",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0xd441b95e4ce83d474d1bf7d84933e13ccef30058",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0xea9b64a689fabb26903b29676db7fc97b48302ea",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x0f897850b8b976620afa8d2c8815fd840383ca3d",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x7993d8c30acc697b579b72a225af26f6915eaea9",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0xccef5a7eb6cd7a8ac706e8df5012d62947d9140c",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x94cba8bddaf7d219b7d8e97a32dc071309c5a6e7",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0xa281424c6c6e54907b5d033f4b7d95b2099b9ef5",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x5e44308cd90ceedba63b6d156b1fe5be3bb12e8e",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x2def8a25254571e5fce1605c3abcbbe0f10c76ca",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x2bc5ceffd86941a9849d1c3ade03e7446a68f2cb",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x5c2824b4e97c4652a681285cb415e77ec48f70d0",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x9f7e52c66971dfa26f85a8d15c0222ccb5a0d97a",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x688a1bdd9a2d33a19aff060212f0e9cc0bf39cab",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x7a34049601f74810f4552f276b9dac511f79d320",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0xf0f9f8fb2a70c493cceb32eccd545c2e58aea30c",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x102232b287a60b2b6b1fa59cbb123638280cc675",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x3b39770fa90ec8bff27d69cde00d69dfd215a376",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x22569ecf0280c9d8f720f8edcc0d9d641408a01b",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x05539b967db914044048f8c1241c20b88520384c",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x7abec9fcab102c00c80985b2cf68aed78a5735d9",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x50741cd4f1e2e9500274e079d95620a61debcca7",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x1408b85f39cb66c8fb284cdc91c6ab72ca65018d",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x9a3b430da12072fce926f0cbb48b7a1e28e84dff",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x1a9ce3f85b6f07995eae7dd188754dd90e4888fb",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x928f361e2c702642f67177dfdca17e3e186a9e33",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0xc3f68dfc7f0d6707d9c62f0345c9926f592d99a6",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0xdd32f40581d8db689e0bfd1a62c619597555c768",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x7a3adad3b4e38409ad7cb2672d6db11a66de1303",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0xc3c0b15ef69f3ef01fa17a7050e2f98c91f0b32a",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0xae2d8f3224eea90a0e0c48b4678102f8f9f0f3ba",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0xc13cac73a74406caebe0db3e16565ca467df325e",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x10e0c532d86f27876c6ec067dd6636a25763015b",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0xb7d4c908ac6f055b834e1cf4e73e6630ba4d0581",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0xfe31b520722c80756d9bc86b6d4ddfbcc1ac4d41",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x9596673d1715a392c158084edc8dd433e78efba4",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x1f0ffb06b07f5307bb1e0ecc83769271791583e6",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x378d822743595df580db8ed9fad1a2b7b6957046",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0xd4d37c6eae8f78faf93404266e2600fe2569ebd0",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x3d0fcfe6b58ac3383e54a2af4c3688053d435b85",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x74ca8176a255adaa9d187aaa3165a180bb1c1002",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x98ed2c9c4d5b378946a031b9f8e9449819b38e31",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0xebc6ef30d43d9950e0f782f53abc23cd166c74ac",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x77cd0a20085c9cfb34c2033f59a74a62582ef0d9",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x708edd0ca2bbae2107179556825d398dc26b1979",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0xc32ac85527090905a752329cfdda634b250f01b9",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0xeeb9a89d0cc2251d27b9ea6faf7e5ceecfe07395",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0xc45987b453ab9a0d1b61172f41ad9cb38c3fe710",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x66564a74ee012dd1986f87febd425a6e74bab39a",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x9da2b7023e24c6334dd1b07999b6ad74e2b1dcaf",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0xe06b89e46f654545fd0eba33cbce798f7cc283d4",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x815082e3fa23dfc25561672fcf2a74e4bbb21f87",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0xc2fd5a7486f57e1a2e9ca7f63d2f1bdfd86927af",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0xc6c904486a1200e42fdd245c24e4215fa32cba1b",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0xdb4228f60315e94cfe79b71c3630faa54e2e38c4",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x6399e8b91686b37ee2f74ab237db5294b1185ce4",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0xc9189a4fddb22f55d1605aa2bdde213daf68ee59",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x4fe7a4179f8efde43d87603c309c89f2250f4151",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x5fcd38aab3fcbf5e22ba35c32e6ab477877ad605",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x7fe99a0f9376d68b78d29df05d17614db5542a40",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x1c1ee485d257bb1cdcc15ccebdba1999769205ad",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x50f03917d5305a588e73955060401e2e0abe031d",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0xf5623ea41d0b13f3fee7b44123f5eac1263ae20d",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x2f3bd17a0a022620f89f003ada4dd7bc4daf88a3",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x943553e1a205074f5b7b47c5009cfb309c8f823b",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x1355b564b48348f679fbe2ffc2ef40e6e7586c1e",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x82c94ef0f7caa11e98b5e837c75a781a8a1bedce",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x131b1d0de5da1d57db44d0b3caadae9f6c44befd",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x46f2952ce80d152dd7dad722bab51ef083847383",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x18547a6e5a8a115bcf80a3223ed2cd186c52ce55",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0xc3f29f58f8fbe653fd9e056fe3ce4bd72288419b",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x72668e4593f25759fdaa499f2448644eae199306",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x0a24ac2bbbdee7c43363a78c932820b29f869d04",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x5e441ea8a346aa734145793fd7f40b2129737525",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x8fa697d03f5311297507e324e04db928263c94dd",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x1cca6de35ee4e568b2351505332bf1b26dcbaa9f",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x34b8514953edf06367490939f1765c2e5692f966",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x727a5c684606f06fc7c02bcbc86bcfc6cb9ea5ec",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0xf150d09592479736849b4218164252dc87a2df8c",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0xe5287a8c159728e0a3829b0e3cc037fbe0c5f007",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x27ed425c98479b26e05fd3f2c3b27ffff2773fc9",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x6a34a6ebac17f7fcf3da5b97f09d2a16828f2654",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x9a17518122d6edd483526a18643a02e24b733dd3",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0xc44b8fdce7f4355579550535272f6749adae4d97",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x981d390b4f9f28f0672315bb403ef00f7565a3a6",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x997200d6f55886279f9eb3e0439bd20943f91050",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0xc0e3e8eb9a67a39a235f4b29a7c06b71c1b87d4d",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x8548ea6955bfec752d4b210b01e77eb42f8914a8",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x59b578f459bbe4b190516b7375a9c0878629e5ac",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x0df1b4fd0c5c3ec235e718fc85443a56066c80d1",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x6ef8a3e43983985903cf0cac174fc3d6016fd3b2",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x353161ef5cb42135937ae69544301c3690abec6b",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x2f578f00b07d75512bc97e1ab45797b8d1869198",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0xd38c9d7a5278b20323839e074b875eb2d7520878",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0xac3f4bdd02b697ee4bffc41597fa87402ebcbda8",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x23bd9c837822105ec681c463f91860b88b4c7066",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0xf8a31e4cc4b5f87137ff2090af42f279b99a5d09",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x495f7b676fa164b861cd5ce2db60be9b9a4b5bd1",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0xdec33636fe39d1c6cd384c4ea0b924f0778d8eb3",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x2cf4b136523a289c3da3d873edc6e7eedf6218b2",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x59ab9cf3868702b85f97da61bd1ca4e1dc1dcb2a",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0xae9962bce1842d45136d812468921b992ac09d66",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x50445c9089dcbde6e3146438d865d5747a1c50d0",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x77e96ad42bd306bcef7cf6019718be23dfa8698d",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0xb4b3dc6be3fe2da3901b0deb6e009ce3727432bc",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0xdd122aa67f611fab12a6e3f83da78cc36860d27f",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x0de12c10b2413fb9e053ad587ca6df50a8c58c33",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0xf72cb665dbbe276fc5bccfbcf7e4dd90bf12fe73",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x859c5f930adea9ba19ab72c81393a2b386d982f5",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x32185240f82f93d8eba49912fc53459fecad18f0",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x83ea7f250135552b61ed5cb6ed8651b556564222",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0xf097fcc138eadb90bdac7577cbc6790395525c38",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x3c064a80c3ac6bb53c08c6ed4eac8ff22bcbe89b",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x98e3bed1e00929cf8eb1ae139d8ae9bc25655d39",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0xdbf8715503ff34b0d326e8e50c1e12e48f8cf976",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0xc2ed80a750aaa9ec711b85ee3795a4bb14c6abb0",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x5f855a96a5acef764492edf609931e3e3694c32c",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x12c02b838a6f211b6fbf020c5c36d8631babe87d",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0xdba48362004cd8313def54fab3142eeee90eb283",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0xc6034b675f31adca57ed78d2fb5e6622e0ad7e32",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x6e0cfaab664af60d6bb5841bd56650825b63df1a",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0xf497a21fa1408e6b7fa7f8e352c6d3540ece8f8e",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0xf380a390438520a0ff12a8d71282992c58a85901",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x2f09f9c6252daf18fc0d8ffc29d36c745ca62b8b",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0xaaa5fa69d76c34f46f15e7eef7e2277989369ad1",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x04dc0d111117773ff94454243ab23d7df3e6295f",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x4b5761d5d2c1e85f9bf8fbd6e91464cabbf06199",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0xca638956029c155371234b2b77cf10e2af66d6e3",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x6ce09fc4974cac6dc9e4f7306c147ac0a924a609",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x8966f4e3069cc1d6bf7af82befee89e6c73632f6",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0xd170d09bdac18ab7b02547bd6eb60dd38ca75448",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x447ee865df827521c7869192fd5cf0f5a6ed9a9b",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0xe2757f07e95830580ab667959609a1b2c58003df",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x040ce817c1ccf324c8053bab8ee590dd98319f50",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0xf60bc3c04dd9a83f3bd1f237e908c41de700ae0d",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x39cf6086cb70d6cfca8b6aa0bd34de77c3d827ef",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0xbc4d59036705a1d85163f14aa0af9235eb6ee4c3",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x1ed08d58346636eed1be79db96bf6a62043cb2b7",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x42388205cddeb1461ae661a98aa30e6eecaf3014",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0xbcaf3030ca5d3dc5f4cfd29520d801a72680f59e",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0xbde697e231a394ad60f0afbc05cdb05f3bcdd651",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0xe5b27f7f672b8d3c5e5cba5f13d76aaa075d1f51",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0xefa4115317b138fa3395184a16241248ba59e7fa",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0xe1bc315bbf3ccaaf1a346a7adceb7e38301a2a26",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x26d29b344e16a205c3c6e1b6a16c54903fb3aa2f",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x23e9c6618d8427bf04b29976d877a5d8c92c6ef0",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x1fe172525e50f8b568ce85be15db1204f61b1d03",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0xbf3a8a3fad9ce534d6273da38aa19afb3474d4f1",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x40f8f17e645874e8d76608e6c7501260daa5763a",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0xaa3743d3d40bfdf68132fef520dccb4a386aa0b1",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0xe49362b0e7e451a9b4933c8657f5be51e190ddb4",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0xdf44d267ab9e93ce47310f8feaf72a7c50a2af0c",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0xa673233f774dd35a6cec6739ff88f91cd0f548c0",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0xf54042fa71d7a0d7740aca79595919ef1a38d0a5",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0xb29d3248ce592b65dd6a605cea47b7a65539c7b6",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0xc3a073cf0a32006074b249b3dc475b899cb7848d",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x9427fbd8b3da2359b55496b3d0abd86deb704a4a",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x92a7987703ffe0c1083280a55e020e50b0bf0e6e",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x8e67f76040a68d22f8950016f42d8fda81b4032d",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0xade859cbb2ed52dcadbca7cc1189a81957378154",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0xc643c7c445ff58de9388edb4f95e623ebcb5744e",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x564c4c46c6cf929bc6f5ceb9aad7b8ff58ac05e3",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0xbafb4c1a0424be2dd73e6edae92244c2f11aaa23",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0xefce01098f127812da534b6753d540a643d9e07f",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x17237bf31e4e94031d2b8d2408d8411593c6b772",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x3244bec1c879f36c4a5c5068ce73b9560ee63577",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x43d36c6254bebbeec1aec5d853a1bcbb58c22bff",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0xb46d55e7a2dd7468ac19598916c81b53d73ea0c3",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0xfc8b94d3f25faf30108c53a10a0ad069f10e40a2",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x7949cf64dc35df105cdaffc881fe372317addedd",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x2c841f150db180bddcdf32040a208e19618dbedf",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x0ca23d6fad365674dad7facf681caed1e2a7ccf3",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x3afe0d491fff90b30004bafd0832146032f23779",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x271b0d7bd582015b9944fe7da3c243a146ac81a8",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x73cbe2e5e455651d813604febd52a66df3d0e99a",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x992642969dc2a110208abd769ab1929734b65d69",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x2b3f777ddf8acf6c5604f82167d7bee9ce1d2d9b",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x3614f66387dee9461a62a24bef3e8ae7a8d12cdc",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x35ff3804826d1f0d6f072d23d37aa0af92b1329e",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x930cb483bc0327593b4d1721b96a3ca40351efbe",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0xf3cc6b9508f4a59cffbc8954043434e0d9ae9b4c",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0xba173ff382615d9fa88f9e77f7167a20defd7276",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0xd2fb321a76c485bab57edebf92eb404034124632",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x3208b43b0579a70a7aa0a3806f19b9b0ebe8c9f6",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0xd3ce69d54808d079ef8a53913ce8610f810c0e9e",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0xf1e63dbfc6418384cf48ec81d0539b62080e5034",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x46aa994ad8290fb32e72441c70747650705cc44b",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x951c18bcff6886fb2082fbf48798b324d2550f7d",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x8bea25992e543a3882fd7824ba3dcdaa1fbbccb5",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x46e6a70a4e708a07794b2739adf00707afaebd32",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0xb28f3446409221fdc8e56012e487628a5d9b6a08",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x187a2cd23b8bbe57c9ec45cd1c629cbd8025edd2",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0xbd541a30ca77a134eee9bedd32189857f5bc0d49",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0xa1147ea8e166482cea4fefc09b5a0c743c4698c9",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0xe8a5d2f95a205a100046d8d3a017073b75b32ed0",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x23e1f897a8a1028e1935bd54e24d8960aafd6452",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x4a78d6211b0f6f81ecdfd279b17c3620dea902a4",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0xd94a2258b6bf048253c706f6d97c56fc8bca1509",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x0ddb30560c227600c4b786237357955e02921941",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x89584e02c8d39aefda737ff5be39418b104e4eba",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x95164092439fe46177671f4d7da7b2b914c699c4",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0xdf3820a653853adad52ce29d8edf94c90020f063",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x85a8a51e2afce3b261e3e051676397403826705c",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x949572320ade55a97c96897046c643add8993c9c",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0xd9289215c76aa471c92c6258924fed22ce793749",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x3b931e7ea04b07fb329c3f5bd3080e26c8f1b297",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x563ae0e10840f22f81ca693bf5d685a6eb26fc33",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0xdd66be5b8d68e47bff2ae6b3ee97be0f8d4226e0",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x8f600cbcd50cbe1773a5f25d0339c972d0996c28",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0xf8b146d6fb3acc2399e6bb30a87b7db70e8499e6",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x99307ae6cf4614ea5d197b5f731103eda04b7565",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0xed10beadeae12a02a851df5c7e9497622c42fe67",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x95642a0c54bc17c154e4bfa875c30c0e3e2e5c10",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x3a38cc376b8354603ce6e9660a52923fc9ba4957",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x45cd88f52a184474f09b560a7694cd3c640ae6b5",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x80d9d01b27095bbf6040446ee4e336be33594101",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x2fc99e353f9d04e2731d77156753ed085c8413a3",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0xb0d37cd857c56ee029f9c2b72aeaef6a6ce2fb72",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x16d23dfd9eed0caed52616eedbe465fb9e7bb9e6",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0xa3fa0b4f173d670b7d4d11d91e22b6b5e06fcbd6",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0xdff2cb18e81561c5b6f71428a2558396af429ac3",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0xdcb96c9e8bce3f9bae9df633716ddd50e8135f81",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x34469a190b81908df00b49c164c473335f797947",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0xb518e2758f5ca6e95822ae931618160ca8ff82ef",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0xe0131f3ba9a2f94244049ea792999655c3c2e798",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x51537d4df92a381258222e66dc6be1e497769227",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0xefb8a5cec7e6a9c63f79251bf190812aa06d5bfd",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0xd2271f0339632323cbaa1125ad7a1eb6718d30ee",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x9974803141c30250740472f215cbf081c6bbe855",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0xc370d8b9c4b590218fe4cb1e9ef3c219bbdcf1fc",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x63b32e2c5a7cb0e972a8f5d031e364ccef2e480e",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x76e02bbf4a92718570667090e7360a7ae2af528a",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0xcfee19f10240da95beeb969122f6cdea33e32062",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x1ec4c9cc11058d6c92effc77a786f3dc7b612b3b",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x81d61be9f221adaa69cbfa7b39c18ebd021ec0f3",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x16888b5c3642b899fc077db756c2f7b0b10e24d2",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x0babb8699b94f5c0ef0c08fcd17c6a90cf4a785c",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x06ccb572263e165616405638e4c59c35c5bc4b05",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0xf33412e8d3ea5117efb67f87a2a5721adcddc059",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x75010b458d30d4bb0e266c08ee412f23e5022cd2",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x6d73d35c5c023a6ac62d5b4d1fe5c6cb5aac9dbc",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x6f0b09df4cb6a516aeef7286bd2e9e41bb245aae",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x3f3941f5f05519b96822d86f3b6d7d0b098188c3",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0xb8f1cef3589ebdb661b32c0e6e3c6232d0dd920b",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x11630f5df154321aa659e3fa454955c1aed7b29f",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x8877cd3442faa5fed32a96a1ae1191e211ffb2e3",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x2c161cb8b9ea1be7a2e7984b23f19a11f19e73b7",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x9c1d2fa7002af6f1c86d7349238bfc43e1a4cd5a",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x82fb4a3688c5e6311f43ed1aa269e5622e1aaaa3",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x38a041098bac47ddb851af6c16d60b298fbc8b0e",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0xfa4963b930e233eb3468e8fdb61701fdfe17a9f0",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0xff9209eb04a44bc5e64f6fb1d083c699e2edd617",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x17334521b73c207222bee5f4b736f001b136ba9f",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x7e3e3ad403b1d86367f33efa2991f089ce35d952",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x5610bc6b696359c7ba495b492947db185e7cb41f",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x27fbaacff6353d17cbe08d2efa2d4b83f68baca9",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0xeef748dcf90ade4b1f4bc7f05337b56210964951",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0xf92c38cc4f75658b6a20a645df1c9445d18c5537",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x55155585ac63b5d4a3e87537f5f4e3f89144901f",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x2353a18c79b52ed0fb06d00953e1727426287822",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0xb6cfb68b2ecc9fde5b2b75ddd245af4ab0554505",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0xede04dbbbcb7b845a118f811bb2ea84963a3d81d",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0xddcef538b0a92014ec33617125f9062ee2cd388e",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x3359453bb71caa17bf726abe993c985365e7da65",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x5b9b8a21c9986b01db50cac1c035ab60ec25351f",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x4b87787e56369a0fb5c8fd641c761cf4ef1cb065",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x4da1e0114b89163e967ff76c60ee37edeaa90676",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x2ca2b512700e743840ce47732fefac57f53818e2",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0xf9d8b11c12941163036d7b112f7985c41bdfa497",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0xb855cb4cd625432d47ad96bb5c5250c61fb7ce9d",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0xf80fabd2d50c28e601a1e0335d93400e2ae42f3b",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x7b03476bd3e609bbbc17ef92b972e6250925b776",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x26aaab0eb647b9241ce46f67855e8c53a336f231",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x217b9dccc92c6022465e4ee0479d74b6a73e88e9",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0xe6d324229665176ddda0f19cb99a1b23b728f0af",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x44b8e5eae166745cd271eb96a13a32f059ab0e60",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x0e260edcc10e4644fc5b01fb9cd5de9d8c3db982",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0xed8e35afe0d524c4ed16f08f323c3e92af0cb2b1",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x6c4eb62b970496b5623ca85b99c2dd8ef3660af0",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0xff6028cadd3c6ed2d5063e628023054597b249c5",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x72ca45d188ff7050c2e1a8419b76bc63cd9e057d",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x6b470967e514fa652349779fbec9d43fdf18a89b",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0x8e3ffb1c202810383e7a6c3eba1b0305e9688a49",
+      "balance_wei": "100000000000000000000000",
+      "role": "user"
+    },
+    {
+      "address": "0xbb2a5cf8e9f06bb10c6afc75c3c84b759fae2355",
+      "balance_wei": "100000000000000000000000000",
+      "role": "faucet"
+    }
+  ]
+}

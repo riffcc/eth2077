@@ -1,0 +1,10 @@
+{
+  "artifact_version": "eth2077-testnet-v0",
+  "seed": 2077,
+  "node_count": 48,
+  "bootnode_count": 8,
+  "chain_id": 2077001,
+  "genesis_timestamp": 1772409600,
+  "fork_epoch": 0,
+  "notes": "Dev/testnet artifacts only. Deterministic by seed, not production key generation."
+}
