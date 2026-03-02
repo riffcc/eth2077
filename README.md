@@ -46,3 +46,10 @@ Build the first Ethereum client where high-scale claims are gated by theorem che
 
 - `scripts/proof_debt_audit.sh` - measures external proof-debt baseline (`citadel`, `lagoon`).
 - `scripts/check_eth2077_formal_gates.sh` - enforces ETH2077 local formal proof policy.
+
+## Benchmark Commands
+
+- Default deterministic suite:
+  - `cargo run -p eth2077-bench --release -- --scenario-set default --seed 2077 --tx-count 600000`
+- 48-node bottleneck sensitivity sweep:
+  - `cargo run -p eth2077-bench --release -- --scenario-set bottleneck-48n --seed 2077 --tx-count 600000`

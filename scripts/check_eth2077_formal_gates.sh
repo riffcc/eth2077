@@ -43,8 +43,8 @@ if [[ "$lean_count" == "0" ]]; then
   exit 0
 fi
 
-sorry_count="$(rg -o --glob '*.lean' '\bsorry\b' "$PROOFS_DIR" | wc -l | tr -d ' ')"
-axiom_count="$(rg -o --glob '*.lean' '\baxiom\b' "$PROOFS_DIR" | wc -l | tr -d ' ')"
+sorry_count="$( (rg -o --glob '*.lean' '\bsorry\b' "$PROOFS_DIR" || true) | wc -l | tr -d ' ')"
+axiom_count="$( (rg -o --glob '*.lean' '\baxiom\b' "$PROOFS_DIR" || true) | wc -l | tr -d ' ')"
 
 echo "ETH2077 local formal gate"
 echo "- proofs_dir: $PROOFS_DIR"

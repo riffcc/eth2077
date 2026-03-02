@@ -1,5 +1,6 @@
 use std::env;
 use std::fs;
+use std::process;
 
 use eth2077_node::bootstrap;
 use eth2077_types::{ScenarioConfig, ScenarioResult};
@@ -222,6 +223,53 @@ fn default_scenarios(seed: u64, tx_count: usize) -> Vec<ScenarioConfig> {
     ]
 }
 
+fn base_48n_scale_scenario(seed: u64, tx_count: usize) -> ScenarioConfig {
+    ScenarioConfig {
+        name: "mesh-48n-scale".to_string(),
+        nodes: 48,
+        tx_count,
+        seed,
+        ingress_tps_per_node: 55_000.0,
+        execution_tps_per_node: 38_000.0,
+        oob_tps_per_node: 62_000.0,
+        mesh_efficiency: 0.69,
+        base_rtt_ms: 33.0,
+        jitter_ms: 11.0,
+        commit_batch_size: 1024,
+        byzantine_fraction: 0.03,
+        packet_loss_fraction: 0.025,
+    }
+}
+
+fn bottleneck_scenarios_48n(seed: u64, tx_count: usize) -> Vec<ScenarioConfig> {
+    let base = base_48n_scale_scenario(seed, tx_count);
+    let mut scenarios = Vec::new();
+
+    let mut push_scaled = |label: &str, ingress_mult: f64, exec_mult: f64, oob_mult: f64| {
+        let mut cfg = base.clone();
+        cfg.name = format!(
+            "mesh-48n-{}-ing{:.2}-exec{:.2}-oob{:.2}",
+            label, ingress_mult, exec_mult, oob_mult
+        );
+        cfg.ingress_tps_per_node *= ingress_mult;
+        cfg.execution_tps_per_node *= exec_mult;
+        cfg.oob_tps_per_node *= oob_mult;
+        scenarios.push(cfg);
+    };
+
+    push_scaled("baseline", 1.0, 1.0, 1.0);
+    push_scaled("exec-lift", 1.0, 1.15, 1.0);
+    push_scaled("exec-lift", 1.0, 1.30, 1.0);
+    push_scaled("exec-lift", 1.0, 1.50, 1.0);
+    push_scaled("exec-lift", 1.0, 1.80, 1.0);
+    push_scaled("exec-lift", 1.0, 2.20, 1.0);
+    push_scaled("exec-oob-lift", 1.0, 1.80, 1.30);
+    push_scaled("exec-oob-lift", 1.0, 2.20, 1.60);
+    push_scaled("ingress-exec-oob-lift", 1.30, 2.20, 2.00);
+
+    scenarios
+}
+
 fn arg_value(args: &[String], flag: &str, default: &str) -> String {
     args.windows(2)
         .find(|w| w[0] == flag)
@@ -236,6 +284,7 @@ fn main() {
     let tx_count: usize = arg_value(&args, "--tx-count", "500000")
         .parse()
         .unwrap_or(500000);
+    let scenario_set = arg_value(&args, "--scenario-set", "default");
     let output_json = arg_value(
         &args,
         "--output-json",
@@ -247,7 +296,17 @@ fn main() {
         "reports/eth2077-mesh-bench-2026-03-02.md",
     );
 
-    let scenarios = default_scenarios(seed, tx_count);
+    let scenarios = match scenario_set.as_str() {
+        "default" => default_scenarios(seed, tx_count),
+        "bottleneck-48n" => bottleneck_scenarios_48n(seed, tx_count),
+        other => {
+            eprintln!(
+                "unknown --scenario-set `{}` (expected `default` or `bottleneck-48n`)",
+                other
+            );
+            process::exit(2);
+        }
+    };
     let results: Vec<ScenarioResult> = scenarios.iter().map(simulate).collect();
 
     let json = serde_json::to_string_pretty(&results).expect("serialize results");
@@ -258,20 +317,24 @@ fn main() {
     md.push_str("This is a deterministic synthetic benchmark for ETH-like workload flow over a Citadel-mesh-style model.\n");
     md.push_str("It is a planning baseline, not yet a live full-client throughput claim.\n\n");
     md.push_str("## Parameters\n\n");
+    md.push_str(&format!("- scenario_set: `{}`\n", scenario_set));
     md.push_str(&format!("- seed: `{}`\n", seed));
     md.push_str(&format!("- tx_count per scenario: `{}`\n", tx_count));
     md.push_str("- commit_batch_size: `1024`\n\n");
 
     md.push_str("## Results\n\n");
-    md.push_str("| Scenario | Nodes | Sustained TPS | p50 Finality (ms) | p95 Finality (ms) | p99 Finality (ms) | Bottleneck |\n");
-    md.push_str("|---|---:|---:|---:|---:|---:|---|\n");
+    md.push_str("| Scenario | Nodes | Sustained TPS | Ingress Cap (TPS) | Exec Cap (TPS) | OOB Cap (TPS) | p50 Finality (ms) | p95 Finality (ms) | p99 Finality (ms) | Bottleneck |\n");
+    md.push_str("|---|---:|---:|---:|---:|---:|---:|---:|---:|---|\n");
 
     for r in &results {
         md.push_str(&format!(
-            "| {} | {} | {:.0} | {:.1} | {:.1} | {:.1} | {} |\n",
+            "| {} | {} | {:.0} | {:.0} | {:.0} | {:.0} | {:.1} | {:.1} | {:.1} | {} |\n",
             r.name,
             r.nodes,
             r.sustained_tps,
+            r.ingress_capacity_tps,
+            r.execution_capacity_tps,
+            r.oob_capacity_tps,
             r.p50_finality_ms,
             r.p95_finality_ms,
             r.p99_finality_ms,
@@ -289,9 +352,12 @@ fn main() {
     println!("Wrote Markdown report: {}", output_md);
     for r in &results {
         println!(
-            "{} => TPS {:.0}, finality p50/p95/p99 {:.1}/{:.1}/{:.1} ms (bottleneck: {})",
+            "{} => TPS {:.0}, cap ingress/exec/oob {:.0}/{:.0}/{:.0}, finality p50/p95/p99 {:.1}/{:.1}/{:.1} ms (bottleneck: {})",
             r.name,
             r.sustained_tps,
+            r.ingress_capacity_tps,
+            r.execution_capacity_tps,
+            r.oob_capacity_tps,
             r.p50_finality_ms,
             r.p95_finality_ms,
             r.p99_finality_ms,

@@ -188,4 +188,34 @@ theorem sustained_strict_gain_with_execution_factor
     _ < factor * execution := hMulStrict
     _ = sustainedThroughput ingress (factor * execution) oob := by exact hNew.symm
 
+/--
+If both ingress and OOB are below execution capacity, sustained throughput is
+set by non-execution lanes (`min ingress oob`).
+-/
+theorem non_execution_bottleneck_characterization
+    (ingress execution oob : Nat)
+    (hOobExec : oob <= execution) :
+    sustainedThroughput ingress execution oob = Nat.min ingress oob := by
+  have hInner : Nat.min execution oob = oob := Nat.min_eq_right hOobExec
+  simp [sustainedThroughput, hInner]
+
+/--
+Once execution has been lifted past both ingress and OOB capacity, further
+execution lifts do not increase sustained throughput.
+-/
+theorem lifting_execution_past_bottleneck_plateaus
+    (ingress execution execution' oob : Nat)
+    (hOobExec : oob <= execution)
+    (hLift : execution <= execution') :
+    sustainedThroughput ingress execution' oob =
+      sustainedThroughput ingress execution oob := by
+  have hOobExec' : oob <= execution' := Nat.le_trans hOobExec hLift
+  have hOld : sustainedThroughput ingress execution oob = Nat.min ingress oob :=
+    non_execution_bottleneck_characterization ingress execution oob hOobExec
+  have hNew : sustainedThroughput ingress execution' oob = Nat.min ingress oob :=
+    non_execution_bottleneck_characterization ingress execution' oob hOobExec'
+  calc
+    sustainedThroughput ingress execution' oob = Nat.min ingress oob := hNew
+    _ = sustainedThroughput ingress execution oob := by exact hOld.symm
+
 end ETH2077Proofs.ExecutionOptimization
