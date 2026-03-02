@@ -44,6 +44,14 @@ dependencies = [
 ]
 
 [[package]]
+name = "eth2077-testnet"
+version = "0.1.0"
+dependencies = [
+ "serde",
+ "serde_json",
+]
+
+[[package]]
 name = "eth2077-types"
 version = "0.1.0"
 dependencies = [

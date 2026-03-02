@@ -40,12 +40,15 @@ Build the first Ethereum client where high-scale claims are gated by theorem che
 - `docs/FORMAL_VERIFICATION_GATES.md`
 - `docs/ROADMAP.md`
 - `docs/STRAWMAP_DEMOLITION_MATRIX.md`
+- `docs/TESTNET_LAUNCH_ALPHA.md`
 - `reports/baseline-2026-03-02.md`
 
 ## Scripts
 
 - `scripts/proof_debt_audit.sh` - measures external proof-debt baseline (`citadel`, `lagoon`).
 - `scripts/check_eth2077_formal_gates.sh` - enforces ETH2077 local formal proof policy.
+- `scripts/build_testnet_artifacts.sh` - generates deterministic testnet chain artifacts + checksums.
+- `scripts/check_testnet_go_nogo.sh` - runs formal gates, benchmark gates, and testnet artifact gates.
 
 ## Benchmark Commands
 
