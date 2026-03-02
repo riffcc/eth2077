@@ -1,0 +1,319 @@
+spiral_to_coord/0       time:   [1.4702 ns 1.4737 ns 1.4813 ns]
+                        thrpt:  [675.07 Melem/s 678.55 Melem/s 680.17 Melem/s]
+                 change:
+                        time:   [-0.3569% +0.2764% +0.8894%] (p = 0.41 > 0.05)
+                        thrpt:  [-0.8816% -0.2756% +0.3581%]
+                        No change in performance detected.
+Found 2 outliers among 10 measurements (20.00%)
+  2 (20.00%) high mild
+spiral_to_coord/10      time:   [22.863 ns 22.990 ns 23.146 ns]
+                        thrpt:  [43.204 Melem/s 43.498 Melem/s 43.739 Melem/s]
+                 change:
+                        time:   [-5.1102% -2.2531% +0.0332%] (p = 0.11 > 0.05)
+                        thrpt:  [-0.0332% +2.3051% +5.3854%]
+                        No change in performance detected.
+Found 2 outliers among 10 measurements (20.00%)
+  1 (10.00%) low severe
+  1 (10.00%) high mild
+spiral_to_coord/100     time:   [28.974 ns 29.039 ns 29.118 ns]
+                        thrpt:  [34.343 Melem/s 34.436 Melem/s 34.514 Melem/s]
+                 change:
+                        time:   [-2.8717% -1.7445% -0.6490%] (p = 0.01 < 0.05)
+                        thrpt:  [+0.6532% +1.7755% +2.9566%]
+                        Change within noise threshold.
+Found 2 outliers among 10 measurements (20.00%)
+  1 (10.00%) high mild
+  1 (10.00%) high severe
+spiral_to_coord/1000    time:   [37.077 ns 37.223 ns 37.429 ns]
+                        thrpt:  [26.717 Melem/s 26.865 Melem/s 26.971 Melem/s]
+                 change:
+                        time:   [-2.9197% -2.6049% -2.2400%] (p = 0.00 < 0.05)
+                        thrpt:  [+2.2913% +2.6746% +3.0075%]
+                        Performance has improved.
+Found 1 outliers among 10 measurements (10.00%)
+  1 (10.00%) high mild
+spiral_to_coord/10000   time:   [32.886 ns 32.969 ns 33.051 ns]
+                        thrpt:  [30.257 Melem/s 30.331 Melem/s 30.408 Melem/s]
+                 change:
+                        time:   [-4.5575% -2.5463% -1.0157%] (p = 0.01 < 0.05)
+                        thrpt:  [+1.0261% +2.6128% +4.7751%]
+                        Performance has improved.
+spiral_to_coord/100000  time:   [36.985 ns 37.055 ns 37.139 ns]
+                        thrpt:  [26.926 Melem/s 26.987 Melem/s 27.038 Melem/s]
+                 change:
+                        time:   [-1.9559% -1.5674% -1.1776%] (p = 0.00 < 0.05)
+                        thrpt:  [+1.1916% +1.5924% +1.9950%]
+                        Performance has improved.
+spiral_to_coord/1000000 time:   [39.051 ns 39.256 ns 39.461 ns]
+                        thrpt:  [25.342 Melem/s 25.474 Melem/s 25.608 Melem/s]
+                 change:
+                        time:   [+1.5281% +2.0484% +2.5039%] (p = 0.00 < 0.05)
+                        thrpt:  [-2.4427% -2.0072% -1.5051%]
+                        Performance has regressed.
+Found 3 outliers among 10 measurements (30.00%)
+  1 (10.00%) low severe
+  1 (10.00%) low mild
+  1 (10.00%) high mild
+
+coord_to_spiral/shell/0 time:   [2.6538 ns 2.6553 ns 2.6570 ns]
+                        thrpt:  [376.36 Melem/s 376.61 Melem/s 376.82 Melem/s]
+                 change:
+                        time:   [-11.613% -4.8831% -0.3602%] (p = 0.18 > 0.05)
+                        thrpt:  [+0.3615% +5.1338% +13.138%]
+                        No change in performance detected.
+coord_to_spiral/shell/1 time:   [5.5271 ns 5.5310 ns 5.5337 ns]
+                        thrpt:  [180.71 Melem/s 180.80 Melem/s 180.93 Melem/s]
+                 change:
+                        time:   [-0.8452% -0.5151% -0.2058%] (p = 0.00 < 0.05)
+                        thrpt:  [+0.2062% +0.5177% +0.8524%]
+                        Change within noise threshold.
+coord_to_spiral/shell/5 time:   [9.1972 ns 9.2312 ns 9.3130 ns]
+                        thrpt:  [107.38 Melem/s 108.33 Melem/s 108.73 Melem/s]
+                 change:
+                        time:   [+0.9796% +2.8952% +5.3164%] (p = 0.02 < 0.05)
+                        thrpt:  [-5.0480% -2.8137% -0.9701%]
+                        Change within noise threshold.
+coord_to_spiral/shell/10
+                        time:   [12.562 ns 12.905 ns 13.620 ns]
+                        thrpt:  [73.423 Melem/s 77.490 Melem/s 79.603 Melem/s]
+                 change:
+                        time:   [+0.9831% +4.6580% +10.270%] (p = 0.03 < 0.05)
+                        thrpt:  [-9.3135% -4.4507% -0.9735%]
+                        Change within noise threshold.
+Found 2 outliers among 10 measurements (20.00%)
+  2 (20.00%) high severe
+coord_to_spiral/shell/50
+                        time:   [40.732 ns 40.770 ns 40.816 ns]
+                        thrpt:  [24.500 Melem/s 24.528 Melem/s 24.551 Melem/s]
+                 change:
+                        time:   [-0.3116% +0.1115% +0.4562%] (p = 0.60 > 0.05)
+                        thrpt:  [-0.4541% -0.1114% +0.3126%]
+                        No change in performance detected.
+coord_to_spiral/shell/100
+                        time:   [80.051 ns 81.132 ns 83.282 ns]
+                        thrpt:  [12.007 Melem/s 12.326 Melem/s 12.492 Melem/s]
+                 change:
+                        time:   [+1.5194% +3.9636% +6.6596%] (p = 0.00 < 0.05)
+                        thrpt:  [-6.2438% -3.8125% -1.4966%]
+                        Performance has regressed.
+Found 1 outliers among 10 measurements (10.00%)
+  1 (10.00%) high mild
+
+shell_detection/0       time:   [1.2262 ns 1.2294 ns 1.2342 ns]
+                        thrpt:  [810.24 Melem/s 813.41 Melem/s 815.53 Melem/s]
+                 change:
+                        time:   [+0.2363% +0.3991% +0.6197%] (p = 0.00 < 0.05)
+                        thrpt:  [-0.6159% -0.3975% -0.2357%]
+                        Change within noise threshold.
+Found 2 outliers among 10 measurements (20.00%)
+  2 (20.00%) high severe
+shell_detection/20      time:   [13.596 ns 13.628 ns 13.648 ns]
+                        thrpt:  [73.270 Melem/s 73.381 Melem/s 73.548 Melem/s]
+                 change:
+                        time:   [+0.6060% +0.8515% +1.0514%] (p = 0.00 < 0.05)
+                        thrpt:  [-1.0404% -0.8444% -0.6024%]
+                        Change within noise threshold.
+shell_detection/94      time:   [14.381 ns 14.400 ns 14.428 ns]
+                        thrpt:  [69.309 Melem/s 69.443 Melem/s 69.539 Melem/s]
+                 change:
+                        time:   [-0.4423% -0.2488% -0.0196%] (p = 0.04 < 0.05)
+                        thrpt:  [+0.0196% +0.2494% +0.4442%]
+                        Change within noise threshold.
+Found 1 outliers among 10 measurements (10.00%)
+  1 (10.00%) high mild
+shell_detection/258     time:   [14.505 ns 14.639 ns 14.834 ns]
+                        thrpt:  [67.413 Melem/s 68.312 Melem/s 68.943 Melem/s]
+                 change:
+                        time:   [+1.6376% +2.3599% +3.0749%] (p = 0.00 < 0.05)
+                        thrpt:  [-2.9831% -2.3055% -1.6112%]
+                        Performance has regressed.
+Found 3 outliers among 10 measurements (30.00%)
+  2 (20.00%) low severe
+  1 (10.00%) high mild
+shell_detection/10000   time:   [15.567 ns 15.579 ns 15.589 ns]
+                        thrpt:  [64.149 Melem/s 64.191 Melem/s 64.240 Melem/s]
+                 change:
+                        time:   [-1.2002% -0.6860% -0.2278%] (p = 0.01 < 0.05)
+                        thrpt:  [+0.2283% +0.6907% +1.2148%]
+                        Change within noise threshold.
+Found 1 outliers among 10 measurements (10.00%)
+  1 (10.00%) low mild
+shell_detection/100000  time:   [28.111 ns 28.350 ns 28.571 ns]
+                        thrpt:  [35.000 Melem/s 35.273 Melem/s 35.573 Melem/s]
+                 change:
+                        time:   [-1.0197% -0.0284% +1.0417%] (p = 0.96 > 0.05)
+                        thrpt:  [-1.0310% +0.0284% +1.0303%]
+                        No change in performance detected.
+shell_detection/1000000 time:   [28.140 ns 28.189 ns 28.277 ns]
+                        thrpt:  [35.365 Melem/s 35.474 Melem/s 35.537 Melem/s]
+                 change:
+                        time:   [-0.7884% -0.5569% -0.2872%] (p = 0.00 < 0.05)
+                        thrpt:  [+0.2880% +0.5600% +0.7946%]
+                        Change within noise threshold.
+
+neighbors/shell/0       time:   [21.659 ns 21.696 ns 21.733 ns]
+                        thrpt:  [920.27 Melem/s 921.85 Melem/s 923.42 Melem/s]
+                 change:
+                        time:   [-3.0233% -2.6714% -2.3029%] (p = 0.00 < 0.05)
+                        thrpt:  [+2.3572% +2.7447% +3.1175%]
+                        Performance has improved.
+neighbors/shell/5       time:   [21.508 ns 21.637 ns 21.776 ns]
+                        thrpt:  [918.46 Melem/s 924.32 Melem/s 929.87 Melem/s]
+                 change:
+                        time:   [-8.2729% -5.2398% -3.0763%] (p = 0.00 < 0.05)
+                        thrpt:  [+3.1739% +5.5295% +9.0190%]
+                        Performance has improved.
+Found 1 outliers among 10 measurements (10.00%)
+  1 (10.00%) high severe
+neighbors/shell/50      time:   [21.583 ns 21.739 ns 21.982 ns]
+                        thrpt:  [909.84 Melem/s 920.02 Melem/s 926.64 Melem/s]
+                 change:
+                        time:   [-2.3317% -1.4075% -0.2915%] (p = 0.02 < 0.05)
+                        thrpt:  [+0.2924% +1.4276% +2.3874%]
+                        Change within noise threshold.
+Found 1 outliers among 10 measurements (10.00%)
+  1 (10.00%) high mild
+
+spiral_iteration/100    time:   [3.0515 µs 3.0716 µs 3.0828 µs]
+                        thrpt:  [32.438 Melem/s 32.556 Melem/s 32.770 Melem/s]
+                 change:
+                        time:   [-2.8673% -1.3707% -0.1923%] (p = 0.06 > 0.05)
+                        thrpt:  [+0.1927% +1.3897% +2.9520%]
+                        No change in performance detected.
+spiral_iteration/1000   time:   [33.329 µs 33.433 µs 33.494 µs]
+                        thrpt:  [29.856 Melem/s 29.910 Melem/s 30.004 Melem/s]
+                 change:
+                        time:   [-0.2860% -0.0196% +0.1951%] (p = 0.89 > 0.05)
+                        thrpt:  [-0.1948% +0.0196% +0.2868%]
+                        No change in performance detected.
+Found 1 outliers among 10 measurements (10.00%)
+  1 (10.00%) low severe
+spiral_iteration/10000  time:   [350.33 µs 350.84 µs 351.10 µs]
+                        thrpt:  [28.482 Melem/s 28.503 Melem/s 28.544 Melem/s]
+                 change:
+                        time:   [-0.9728% -0.3238% +0.2149%] (p = 0.35 > 0.05)
+                        thrpt:  [-0.2144% +0.3248% +0.9824%]
+                        No change in performance detected.
+Found 2 outliers among 10 measurements (20.00%)
+  2 (20.00%) low mild
+spiral_iteration/100000 time:   [3.9479 ms 3.9551 ms 3.9751 ms]
+                        thrpt:  [25.156 Melem/s 25.284 Melem/s 25.330 Melem/s]
+                 change:
+                        time:   [-2.9391% -1.0267% +0.5559%] (p = 0.35 > 0.05)
+                        thrpt:  [-0.5528% +1.0373% +3.0281%]
+                        No change in performance detected.
+Found 2 outliers among 10 measurements (20.00%)
+  1 (10.00%) low mild
+  1 (10.00%) high severe
+
+shell_formulas/slots_in_shell/1
+                        time:   [420.10 ps 421.41 ps 423.18 ps]
+                        change: [-0.6912% -0.0765% +0.4546%] (p = 0.82 > 0.05)
+                        No change in performance detected.
+shell_formulas/total_through_shell/1
+                        time:   [435.56 ps 438.19 ps 444.61 ps]
+                        change: [-0.4037% +1.4966% +3.7357%] (p = 0.23 > 0.05)
+                        No change in performance detected.
+Found 2 outliers among 10 measurements (20.00%)
+  2 (20.00%) high severe
+shell_formulas/slots_in_shell/10
+                        time:   [416.74 ps 417.41 ps 417.86 ps]
+                        change: [-0.4148% -0.2626% -0.1175%] (p = 0.00 < 0.05)
+                        Change within noise threshold.
+shell_formulas/total_through_shell/10
+                        time:   [442.44 ps 443.27 ps 444.83 ps]
+                        change: [+0.7736% +1.2282% +1.7397%] (p = 0.00 < 0.05)
+                        Change within noise threshold.
+shell_formulas/slots_in_shell/100
+                        time:   [417.91 ps 418.80 ps 419.47 ps]
+                        change: [-0.8921% -0.4686% -0.0777%] (p = 0.04 < 0.05)
+                        Change within noise threshold.
+shell_formulas/total_through_shell/100
+                        time:   [435.89 ps 436.71 ps 438.55 ps]
+                        change: [-0.4151% +0.1301% +0.7048%] (p = 0.67 > 0.05)
+                        No change in performance detected.
+shell_formulas/slots_in_shell/1000
+                        time:   [417.95 ps 418.25 ps 418.58 ps]
+                        change: [-2.6284% -2.1998% -1.6138%] (p = 0.00 < 0.05)
+                        Performance has improved.
+Found 2 outliers among 10 measurements (20.00%)
+  1 (10.00%) low mild
+  1 (10.00%) high mild
+shell_formulas/total_through_shell/1000
+                        time:   [437.32 ps 441.97 ps 446.97 ps]
+                        change: [-0.0355% +0.6577% +1.5500%] (p = 0.12 > 0.05)
+                        No change in performance detected.
+Found 1 outliers among 10 measurements (10.00%)
+  1 (10.00%) high mild
+
+roundtrip/0             time:   [3.0954 ns 3.1484 ns 3.2692 ns]
+                        thrpt:  [305.88 Melem/s 317.63 Melem/s 323.06 Melem/s]
+                 change:
+                        time:   [+2.1635% +5.1148% +7.7642%] (p = 0.00 < 0.05)
+                        thrpt:  [-7.2048% -4.8659% -2.1177%]
+                        Performance has regressed.
+roundtrip/100           time:   [37.675 ns 37.755 ns 37.838 ns]
+                        thrpt:  [26.429 Melem/s 26.487 Melem/s 26.543 Melem/s]
+                 change:
+                        time:   [-1.9176% -1.2539% -0.8141%] (p = 0.00 < 0.05)
+                        thrpt:  [+0.8208% +1.2699% +1.9551%]
+                        Change within noise threshold.
+roundtrip/1000          time:   [54.237 ns 54.701 ns 55.407 ns]
+                        thrpt:  [18.048 Melem/s 18.281 Melem/s 18.438 Melem/s]
+                 change:
+                        time:   [-0.2847% +0.5514% +1.6441%] (p = 0.31 > 0.05)
+                        thrpt:  [-1.6176% -0.5483% +0.2855%]
+                        No change in performance detected.
+Found 1 outliers among 10 measurements (10.00%)
+  1 (10.00%) high mild
+roundtrip/10000         time:   [40.823 ns 41.285 ns 41.810 ns]
+                        thrpt:  [23.918 Melem/s 24.222 Melem/s 24.496 Melem/s]
+                 change:
+                        time:   [+1.4367% +2.1316% +3.0250%] (p = 0.00 < 0.05)
+                        thrpt:  [-2.9362% -2.0871% -1.4163%]
+                        Performance has regressed.
+Found 2 outliers among 10 measurements (20.00%)
+  1 (10.00%) high mild
+  1 (10.00%) high severe
+
+routing_simulation/pair/0_dist3
+                        time:   [218.33 ns 218.54 ns 218.77 ns]
+                        change: [-4.2663% -1.3326% +0.9060%] (p = 0.46 > 0.05)
+                        No change in performance detected.
+Found 1 outliers among 10 measurements (10.00%)
+  1 (10.00%) low severe
+routing_simulation/pair/1_dist4
+                        time:   [304.95 ns 305.32 ns 305.90 ns]
+                        change: [-0.3254% +0.8377% +1.8373%] (p = 0.16 > 0.05)
+                        No change in performance detected.
+routing_simulation/pair/2_dist4
+                        time:   [305.46 ns 306.38 ns 307.07 ns]
+                        change: [+1.6112% +1.8393% +2.0814%] (p = 0.00 < 0.05)
+                        Performance has regressed.
+
+routing_scale/shell_distance/5
+                        time:   [362.71 ns 363.40 ns 364.25 ns]
+                        change: [+2.2756% +2.5486% +2.8200%] (p = 0.00 < 0.05)
+                        Performance has regressed.
+Found 1 outliers among 50 measurements (2.00%)
+  1 (2.00%) high mild
+routing_scale/shell_distance/10
+                        time:   [720.75 ns 724.22 ns 728.38 ns]
+                        change: [+6.2942% +7.1450% +8.1345%] (p = 0.00 < 0.05)
+                        Performance has regressed.
+Found 2 outliers among 50 measurements (4.00%)
+  1 (2.00%) high mild
+  1 (2.00%) high severe
+routing_scale/shell_distance/20
+                        time:   [2.3542 µs 2.4073 µs 2.4505 µs]
+                        change: [+77.237% +79.625% +81.853%] (p = 0.00 < 0.05)
+                        Performance has regressed.
+Found 4 outliers among 50 measurements (8.00%)
+  4 (8.00%) low severe
+routing_scale/shell_distance/50
+                        time:   [5.3287 µs 5.5309 µs 5.7218 µs]
+                        change: [+63.044% +68.677% +74.222%] (p = 0.00 < 0.05)
+                        Performance has regressed.
+Found 2 outliers among 50 measurements (4.00%)
+  2 (4.00%) low mild
+
