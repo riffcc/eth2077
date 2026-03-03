@@ -16,6 +16,10 @@ Date: 2026-03-03
   - `engine_newPayloadV3` now rejects `WITHHELD`/`PARTIAL_WITHHOLD`/`LATE_REVEAL` slots as `INVALID`.
   - slot-local penalty lifecycle added with explicit `ACTIVE` -> `RECOVERED` transitions.
   - timeliness and penalty snapshots now returned in forkchoice/newPayload responses.
+- 2026-03-03 (Phase 2 replay hardening landed in devnetd):
+  - header/envelope registration is now replay-aware: idempotent duplicates are accepted, conflicting replays are rejected.
+  - envelope registration now rejects slot mismatch against known header root commitments.
+  - tests added for duplicate, conflict, and mismatch rejection paths.
 
 ## Primary Sources
 

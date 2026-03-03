@@ -115,4 +115,18 @@ theorem recovery_after_reveal :
   apply non_violation_transitions_to_recovered
   exact revealed_is_not_violation
 
+def HeaderReplayValid (storedSlot incomingSlot : Nat) : Prop :=
+  storedSlot = incomingSlot
+
+theorem header_replay_rejects_slot_conflict
+    (storedSlot incomingSlot : Nat)
+    (h : storedSlot ≠ incomingSlot) :
+    ¬ HeaderReplayValid storedSlot incomingSlot := by
+  simpa [HeaderReplayValid] using h
+
+theorem header_replay_accepts_identical_slot
+    (slot : Nat) :
+    HeaderReplayValid slot slot := by
+  simp [HeaderReplayValid]
+
 end ETH2077Proofs.PayloadTimeliness

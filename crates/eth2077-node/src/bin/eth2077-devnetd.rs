@@ -1589,6 +1589,31 @@ fn engine_7732_envelope_to_json(envelope: &Engine7732EnvelopeRecord) -> Value {
     })
 }
 
+fn engine_7732_header_conflicts(
+    existing: &Engine7732HeaderRecord,
+    incoming: &Engine7732HeaderRecord,
+) -> bool {
+    existing.slot != incoming.slot
+        || existing.payload_header_root != incoming.payload_header_root
+        || existing.parent_beacon_block_root != incoming.parent_beacon_block_root
+        || existing.execution_block_hash != incoming.execution_block_hash
+        || existing.proposer != incoming.proposer
+        || existing.bid_value_wei != incoming.bid_value_wei
+        || existing.view_id != incoming.view_id
+}
+
+fn engine_7732_envelope_conflicts(
+    existing: &Engine7732EnvelopeRecord,
+    incoming: &Engine7732EnvelopeRecord,
+) -> bool {
+    existing.slot != incoming.slot
+        || existing.payload_header_root != incoming.payload_header_root
+        || existing.execution_block_hash != incoming.execution_block_hash
+        || existing.payload_body_hash != incoming.payload_body_hash
+        || existing.signer != incoming.signer
+        || existing.data_available != incoming.data_available
+}
+
 fn engine_7732_penalty_to_json(record: &Engine7732PenaltyRecord) -> Value {
     serde_json::json!({
       "slot": hex_u64(record.slot),
@@ -1755,13 +1780,38 @@ fn engine_7732_register_payload_header_response(state: &mut NodeState, req: &Val
         Ok(header) => {
             let slot = header.slot;
             let root = header.payload_header_root.clone();
-            state.engine_7732_headers_by_root.insert(root.clone(), header.clone());
+            if let Some(existing) = state.engine_7732_headers_by_root.get(&root).cloned() {
+                if engine_7732_header_conflicts(&existing, &header) {
+                    return serde_json::json!({
+                      "status": "INVALID",
+                      "validationError": format!("conflicting header replay for root {}", root),
+                      "existingHeader": engine_7732_header_to_json(&existing),
+                      "incomingHeader": engine_7732_header_to_json(&header)
+                    });
+                }
+                let slot_roots = state.engine_7732_headers_by_slot.entry(existing.slot).or_default();
+                if !slot_roots.contains(&root) {
+                    slot_roots.push(root.clone());
+                }
+                return serde_json::json!({
+                  "status": "ACCEPTED",
+                  "replayStatus": "DUPLICATE",
+                  "slot": hex_u64(existing.slot),
+                  "payloadHeaderRoot": root,
+                  "knownHeadersAtSlot": hex_u64(slot_roots.len() as u64),
+                  "header": engine_7732_header_to_json(&existing)
+                });
+            }
+            state
+                .engine_7732_headers_by_root
+                .insert(root.clone(), header.clone());
             let slot_roots = state.engine_7732_headers_by_slot.entry(slot).or_default();
             if !slot_roots.contains(&root) {
                 slot_roots.push(root.clone());
             }
             serde_json::json!({
               "status": "ACCEPTED",
+              "replayStatus": "NEW",
               "slot": hex_u64(slot),
               "payloadHeaderRoot": root,
               "knownHeadersAtSlot": hex_u64(slot_roots.len() as u64),
@@ -1781,16 +1831,48 @@ fn engine_7732_register_payload_envelope_response(state: &mut NodeState, req: &V
         Ok(envelope) => {
             let root = envelope.payload_header_root.clone();
             let slot = envelope.slot;
+            if let Some(header) = state.engine_7732_headers_by_root.get(&root) {
+                if header.slot != slot {
+                    return serde_json::json!({
+                      "status": "INVALID",
+                      "validationError": format!(
+                        "envelope slot mismatch for root {}: header slot {}, envelope slot {}",
+                        root,
+                        header.slot,
+                        slot
+                      )
+                    });
+                }
+            }
             let linkage_status = if state.engine_7732_headers_by_root.contains_key(&root) {
                 "LINKED"
             } else {
                 "ORPHAN"
             };
+            if let Some(existing) = state.engine_7732_envelopes_by_root.get(&root).cloned() {
+                if engine_7732_envelope_conflicts(&existing, &envelope) {
+                    return serde_json::json!({
+                      "status": "INVALID",
+                      "validationError": format!("conflicting envelope replay for root {}", root),
+                      "existingEnvelope": engine_7732_envelope_to_json(&existing),
+                      "incomingEnvelope": engine_7732_envelope_to_json(&envelope)
+                    });
+                }
+                return serde_json::json!({
+                  "status": "ACCEPTED",
+                  "replayStatus": "DUPLICATE",
+                  "slot": hex_u64(existing.slot),
+                  "payloadHeaderRoot": root,
+                  "linkageStatus": linkage_status,
+                  "envelope": engine_7732_envelope_to_json(&existing)
+                });
+            }
             state
                 .engine_7732_envelopes_by_root
                 .insert(root.clone(), envelope.clone());
             serde_json::json!({
               "status": "ACCEPTED",
+              "replayStatus": "NEW",
               "slot": hex_u64(slot),
               "payloadHeaderRoot": root,
               "linkageStatus": linkage_status,
@@ -4727,5 +4809,153 @@ mod tests {
         assert_eq!(recovered_fc["result"]["penalty"]["state"], "RECOVERED");
         assert_eq!(recovered_fc["result"]["penalty"]["lastStatus"], "REVEALED");
         assert!(recovered_fc["result"]["penalty"]["recoveredAtUnixS"].is_u64());
+    }
+
+    #[test]
+    fn engine_7732_header_duplicate_replay_is_idempotent() {
+        let mut state = test_state(2077003);
+        let root = format!("0x{}", "88".repeat(32));
+        let slot = "0x20";
+
+        let first = rpc(
+            &mut state,
+            180,
+            "engine_registerExecutionPayloadHeaderV1",
+            serde_json::json!([{
+              "slot": slot,
+              "payloadHeaderRoot": root
+            }]),
+        );
+        assert_eq!(first["result"]["status"], "ACCEPTED");
+        assert_eq!(first["result"]["replayStatus"], "NEW");
+        assert_eq!(first["result"]["knownHeadersAtSlot"], "0x1");
+
+        let duplicate = rpc(
+            &mut state,
+            181,
+            "engine_registerExecutionPayloadHeaderV1",
+            serde_json::json!([{
+              "slot": slot,
+              "payloadHeaderRoot": format!("0x{}", "88".repeat(32))
+            }]),
+        );
+        assert_eq!(duplicate["result"]["status"], "ACCEPTED");
+        assert_eq!(duplicate["result"]["replayStatus"], "DUPLICATE");
+        assert_eq!(duplicate["result"]["knownHeadersAtSlot"], "0x1");
+    }
+
+    #[test]
+    fn engine_7732_header_conflicting_replay_is_rejected() {
+        let mut state = test_state(2077003);
+        let root = format!("0x{}", "99".repeat(32));
+
+        let _ = rpc(
+            &mut state,
+            190,
+            "engine_registerExecutionPayloadHeaderV1",
+            serde_json::json!([{
+              "slot": "0x21",
+              "payloadHeaderRoot": root
+            }]),
+        );
+
+        let conflict = rpc(
+            &mut state,
+            191,
+            "engine_registerExecutionPayloadHeaderV1",
+            serde_json::json!([{
+              "slot": "0x22",
+              "payloadHeaderRoot": format!("0x{}", "99".repeat(32))
+            }]),
+        );
+        assert_eq!(conflict["result"]["status"], "INVALID");
+        assert!(
+            conflict["result"]["validationError"]
+                .as_str()
+                .unwrap_or_default()
+                .contains("conflicting header replay")
+        );
+    }
+
+    #[test]
+    fn engine_7732_envelope_slot_mismatch_for_known_header_is_rejected() {
+        let mut state = test_state(2077003);
+        let root = format!("0x{}", "aa".repeat(32));
+
+        let _ = rpc(
+            &mut state,
+            200,
+            "engine_registerExecutionPayloadHeaderV1",
+            serde_json::json!([{
+              "slot": "0x23",
+              "payloadHeaderRoot": root
+            }]),
+        );
+
+        let mismatch = rpc(
+            &mut state,
+            201,
+            "engine_registerExecutionPayloadEnvelopeV1",
+            serde_json::json!([{
+              "slot": "0x24",
+              "payloadHeaderRoot": format!("0x{}", "aa".repeat(32))
+            }]),
+        );
+        assert_eq!(mismatch["result"]["status"], "INVALID");
+        assert!(
+            mismatch["result"]["validationError"]
+                .as_str()
+                .unwrap_or_default()
+                .contains("slot mismatch")
+        );
+    }
+
+    #[test]
+    fn engine_7732_envelope_conflicting_replay_is_rejected() {
+        let mut state = test_state(2077003);
+        let root = format!("0x{}", "bb".repeat(32));
+
+        let _ = rpc(
+            &mut state,
+            210,
+            "engine_registerExecutionPayloadHeaderV1",
+            serde_json::json!([{
+              "slot": "0x25",
+              "payloadHeaderRoot": root
+            }]),
+        );
+
+        let first = rpc(
+            &mut state,
+            211,
+            "engine_registerExecutionPayloadEnvelopeV1",
+            serde_json::json!([{
+              "slot": "0x25",
+              "payloadHeaderRoot": format!("0x{}", "bb".repeat(32)),
+              "payloadBodyHash": format!("0x{}", "01".repeat(32)),
+              "dataAvailable": true
+            }]),
+        );
+        assert_eq!(first["result"]["status"], "ACCEPTED");
+        assert_eq!(first["result"]["replayStatus"], "NEW");
+
+        let conflict = rpc(
+            &mut state,
+            212,
+            "engine_registerExecutionPayloadEnvelopeV1",
+            serde_json::json!([{
+              "slot": "0x25",
+              "payloadHeaderRoot": format!("0x{}", "bb".repeat(32)),
+              "payloadBodyHash": format!("0x{}", "02".repeat(32)),
+              "dataAvailable": true
+            }]),
+        );
+        assert_eq!(conflict["result"]["status"], "INVALID");
+        assert!(
+            conflict["result"]["validationError"]
+                .as_str()
+                .unwrap_or_default()
+                .contains("conflicting envelope replay")
+        );
     }
 }
