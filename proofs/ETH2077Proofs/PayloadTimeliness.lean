@@ -129,4 +129,19 @@ theorem header_replay_accepts_identical_slot
     HeaderReplayValid slot slot := by
   simp [HeaderReplayValid]
 
+def MaxSlotWindow : Nat := 256
+
+def ClampedWindow (requestedSlots : Nat) : Nat :=
+  Nat.min requestedSlots MaxSlotWindow
+
+theorem clamped_window_is_bounded
+    (requestedSlots : Nat) :
+    ClampedWindow requestedSlots <= MaxSlotWindow := by
+  simpa [ClampedWindow, MaxSlotWindow] using Nat.min_le_right requestedSlots 256
+
+theorem clamped_window_does_not_expand
+    (requestedSlots : Nat) :
+    ClampedWindow requestedSlots <= requestedSlots := by
+  simpa [ClampedWindow, MaxSlotWindow] using Nat.min_le_left requestedSlots 256
+
 end ETH2077Proofs.PayloadTimeliness

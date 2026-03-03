@@ -1241,6 +1241,20 @@ fn parse_u128_value(input: &Value) -> Option<u128> {
     None
 }
 
+fn parse_bool_value(input: &Value) -> Option<bool> {
+    if let Some(b) = input.as_bool() {
+        return Some(b);
+    }
+    if let Some(s) = input.as_str() {
+        return match s.to_ascii_lowercase().as_str() {
+            "true" | "1" => Some(true),
+            "false" | "0" => Some(false),
+            _ => None,
+        };
+    }
+    None
+}
+
 fn parse_u256_value(input: &Value) -> Option<U256> {
     if let Some(n) = input.as_u64() {
         return Some(U256::from(n));
@@ -1929,6 +1943,145 @@ fn engine_7732_get_payload_envelope_response(state: &NodeState, req: &Value) -> 
     );
     root.and_then(|r| state.engine_7732_envelopes_by_root.get(&r).map(engine_7732_envelope_to_json))
         .unwrap_or(Value::Null)
+}
+
+fn engine_7732_envelopes_by_slot_snapshot(
+    state: &NodeState,
+    slot: u64,
+    include_orphans: bool,
+) -> Value {
+    let header_roots = state
+        .engine_7732_headers_by_slot
+        .get(&slot)
+        .cloned()
+        .unwrap_or_default();
+    let mut linked_envelopes = Vec::new();
+    let mut missing_reveals = Vec::new();
+    for root in &header_roots {
+        if let Some(envelope) = state.engine_7732_envelopes_by_root.get(root) {
+            linked_envelopes.push(engine_7732_envelope_to_json(envelope));
+        } else {
+            missing_reveals.push(root.clone());
+        }
+    }
+
+    let orphan_envelopes = if include_orphans {
+        let mut by_root: Vec<(&String, &Engine7732EnvelopeRecord)> = state
+            .engine_7732_envelopes_by_root
+            .iter()
+            .filter(|(root, env)| env.slot == slot && !state.engine_7732_headers_by_root.contains_key(*root))
+            .collect();
+        by_root.sort_by(|a, b| a.0.cmp(b.0));
+        by_root
+            .into_iter()
+            .map(|(_, env)| engine_7732_envelope_to_json(env))
+            .collect::<Vec<_>>()
+    } else {
+        Vec::new()
+    };
+
+    serde_json::json!({
+      "slot": hex_u64(slot),
+      "headerRoots": header_roots,
+      "linkedEnvelopes": linked_envelopes,
+      "missingReveals": missing_reveals,
+      "orphanEnvelopes": orphan_envelopes,
+      "knownHeadersAtSlot": hex_u64(state.engine_7732_headers_by_slot.get(&slot).map(|v| v.len()).unwrap_or(0) as u64),
+      "linkedEnvelopeCount": hex_u64(state.engine_7732_headers_by_slot.get(&slot).map(|roots| {
+        roots.iter().filter(|r| state.engine_7732_envelopes_by_root.contains_key(*r)).count()
+      }).unwrap_or(0) as u64),
+      "missingRevealCount": hex_u64(state.engine_7732_headers_by_slot.get(&slot).map(|roots| {
+        roots.iter().filter(|r| !state.engine_7732_envelopes_by_root.contains_key(*r)).count()
+      }).unwrap_or(0) as u64),
+      "orphanEnvelopeCount": hex_u64(state.engine_7732_envelopes_by_root.iter().filter(|(root, env)| {
+        env.slot == slot && !state.engine_7732_headers_by_root.contains_key(*root)
+      }).count() as u64),
+      "includeOrphans": include_orphans
+    })
+}
+
+fn engine_7732_get_payload_envelopes_by_slot_response(state: &NodeState, req: &Value) -> Value {
+    let slot = req
+        .get("slot")
+        .and_then(parse_u64_value)
+        .or_else(|| {
+            req.get("params")
+                .and_then(Value::as_array)
+                .and_then(|params| params.first())
+                .and_then(parse_u64_value)
+        })
+        .unwrap_or(state.current_height.saturating_add(1));
+    let include_orphans = req
+        .get("includeOrphans")
+        .and_then(parse_bool_value)
+        .or_else(|| {
+            req.get("params")
+                .and_then(Value::as_array)
+                .and_then(|params| params.get(1))
+                .and_then(parse_bool_value)
+        })
+        .unwrap_or(false);
+    engine_7732_envelopes_by_slot_snapshot(state, slot, include_orphans)
+}
+
+fn engine_7732_get_payload_envelopes_by_range_response(state: &NodeState, req: &Value) -> Value {
+    let start_slot = req
+        .get("startSlot")
+        .and_then(parse_u64_value)
+        .or_else(|| {
+            req.get("params")
+                .and_then(Value::as_array)
+                .and_then(|params| params.first())
+                .and_then(parse_u64_value)
+        })
+        .unwrap_or(state.current_height.saturating_add(1));
+    let end_slot = req
+        .get("endSlot")
+        .and_then(parse_u64_value)
+        .or_else(|| {
+            req.get("params")
+                .and_then(Value::as_array)
+                .and_then(|params| params.get(1))
+                .and_then(parse_u64_value)
+        })
+        .unwrap_or(start_slot);
+    let include_orphans = req
+        .get("includeOrphans")
+        .and_then(parse_bool_value)
+        .or_else(|| {
+            req.get("params")
+                .and_then(Value::as_array)
+                .and_then(|params| params.get(2))
+                .and_then(parse_bool_value)
+        })
+        .unwrap_or(false);
+
+    if end_slot < start_slot {
+        return serde_json::json!({
+          "status": "INVALID",
+          "validationError": format!("invalid range: startSlot {} exceeds endSlot {}", start_slot, end_slot)
+        });
+    }
+
+    const MAX_SLOT_WINDOW: u64 = 256;
+    let requested_slots = end_slot.saturating_sub(start_slot).saturating_add(1);
+    let slot_count = requested_slots.min(MAX_SLOT_WINDOW);
+    let effective_end_slot = start_slot.saturating_add(slot_count.saturating_sub(1));
+    let slots = (start_slot..=effective_end_slot)
+        .map(|slot| engine_7732_envelopes_by_slot_snapshot(state, slot, include_orphans))
+        .collect::<Vec<_>>();
+
+    serde_json::json!({
+      "status": "OK",
+      "startSlot": hex_u64(start_slot),
+      "endSlot": hex_u64(end_slot),
+      "effectiveEndSlot": hex_u64(effective_end_slot),
+      "requestedSlotCount": hex_u64(requested_slots),
+      "slotCount": hex_u64(slot_count),
+      "windowClamped": slot_count < requested_slots,
+      "includeOrphans": include_orphans,
+      "slots": slots
+    })
 }
 
 fn engine_tx_meta_to_json(meta: &EngineTxMeta) -> Value {
@@ -2904,6 +3057,14 @@ fn handle_jsonrpc(state: &mut NodeState, req: &Value) -> Value {
             &id,
             engine_7732_get_payload_envelope_response(state, req),
         ),
+        "engine_getExecutionPayloadEnvelopesBySlotV1" => jsonrpc_response(
+            &id,
+            engine_7732_get_payload_envelopes_by_slot_response(state, req),
+        ),
+        "engine_getExecutionPayloadEnvelopesByRangeV1" => jsonrpc_response(
+            &id,
+            engine_7732_get_payload_envelopes_by_range_response(state, req),
+        ),
         "eth_sendRawTransaction" => {
             let raw_tx = params
                 .as_array()
@@ -3739,7 +3900,9 @@ fn main() {
                         "engine_registerExecutionPayloadHeaderV1",
                         "engine_registerExecutionPayloadEnvelopeV1",
                         "engine_getPayloadTimelinessV1",
-                        "engine_getExecutionPayloadEnvelopeV1"
+                        "engine_getExecutionPayloadEnvelopeV1",
+                        "engine_getExecutionPayloadEnvelopesBySlotV1",
+                        "engine_getExecutionPayloadEnvelopesByRangeV1"
                     ]
                 }),
             )
@@ -3797,6 +3960,25 @@ fn main() {
             let result = {
                 let guard = state.lock().expect("state lock");
                 engine_7732_get_payload_envelope_response(&guard, &req_json)
+            };
+            json_response("200 OK", &result)
+        } else if request_line.starts_with("POST /engine/v1/getExecutionPayloadEnvelopesBySlotV1 ")
+        {
+            let body = request_body_from_http(&req_bytes, header_end, content_length);
+            let req_json = serde_json::from_str::<Value>(&body).unwrap_or(Value::Null);
+            let result = {
+                let guard = state.lock().expect("state lock");
+                engine_7732_get_payload_envelopes_by_slot_response(&guard, &req_json)
+            };
+            json_response("200 OK", &result)
+        } else if request_line
+            .starts_with("POST /engine/v1/getExecutionPayloadEnvelopesByRangeV1 ")
+        {
+            let body = request_body_from_http(&req_bytes, header_end, content_length);
+            let req_json = serde_json::from_str::<Value>(&body).unwrap_or(Value::Null);
+            let result = {
+                let guard = state.lock().expect("state lock");
+                engine_7732_get_payload_envelopes_by_range_response(&guard, &req_json)
             };
             json_response("200 OK", &result)
         } else {
@@ -4956,6 +5138,158 @@ mod tests {
                 .as_str()
                 .unwrap_or_default()
                 .contains("conflicting envelope replay")
+        );
+    }
+
+    #[test]
+    fn engine_7732_get_envelopes_by_slot_reports_linked_missing_and_orphan() {
+        let mut state = test_state(2077003);
+        let slot = "0x30";
+        let root_a = format!("0x{}", "cc".repeat(32));
+        let root_b = format!("0x{}", "dd".repeat(32));
+        let orphan_root = format!("0x{}", "ee".repeat(32));
+
+        let _ = rpc(
+            &mut state,
+            220,
+            "engine_registerExecutionPayloadHeaderV1",
+            serde_json::json!([{
+              "slot": slot,
+              "payloadHeaderRoot": root_a
+            }]),
+        );
+        let _ = rpc(
+            &mut state,
+            221,
+            "engine_registerExecutionPayloadHeaderV1",
+            serde_json::json!([{
+              "slot": slot,
+              "payloadHeaderRoot": root_b
+            }]),
+        );
+        let _ = rpc(
+            &mut state,
+            222,
+            "engine_registerExecutionPayloadEnvelopeV1",
+            serde_json::json!([{
+              "slot": slot,
+              "payloadHeaderRoot": format!("0x{}", "cc".repeat(32))
+            }]),
+        );
+        let _ = rpc(
+            &mut state,
+            223,
+            "engine_registerExecutionPayloadEnvelopeV1",
+            serde_json::json!([{
+              "slot": slot,
+              "payloadHeaderRoot": orphan_root
+            }]),
+        );
+
+        let no_orphans = rpc(
+            &mut state,
+            224,
+            "engine_getExecutionPayloadEnvelopesBySlotV1",
+            serde_json::json!([slot]),
+        );
+        assert_eq!(no_orphans["result"]["linkedEnvelopeCount"], "0x1");
+        assert_eq!(no_orphans["result"]["missingRevealCount"], "0x1");
+        assert_eq!(no_orphans["result"]["orphanEnvelopeCount"], "0x1");
+        let orphan_list = no_orphans["result"]["orphanEnvelopes"]
+            .as_array()
+            .expect("orphan envelope list");
+        assert!(orphan_list.is_empty());
+
+        let with_orphans = rpc(
+            &mut state,
+            225,
+            "engine_getExecutionPayloadEnvelopesBySlotV1",
+            serde_json::json!([slot, true]),
+        );
+        assert_eq!(with_orphans["result"]["linkedEnvelopeCount"], "0x1");
+        assert_eq!(with_orphans["result"]["missingRevealCount"], "0x1");
+        let orphan_list = with_orphans["result"]["orphanEnvelopes"]
+            .as_array()
+            .expect("orphan envelope list");
+        assert_eq!(orphan_list.len(), 1);
+        assert_eq!(orphan_list[0]["payloadHeaderRoot"], Value::String(orphan_root));
+    }
+
+    #[test]
+    fn engine_7732_get_envelopes_by_range_returns_window_and_clamps() {
+        let mut state = test_state(2077003);
+        let slot_a = "0x31";
+        let slot_b = "0x32";
+        let root_a = format!("0x{}", "f1".repeat(32));
+        let root_b = format!("0x{}", "f2".repeat(32));
+
+        let _ = rpc(
+            &mut state,
+            230,
+            "engine_registerExecutionPayloadHeaderV1",
+            serde_json::json!([{
+              "slot": slot_a,
+              "payloadHeaderRoot": root_a
+            }]),
+        );
+        let _ = rpc(
+            &mut state,
+            231,
+            "engine_registerExecutionPayloadEnvelopeV1",
+            serde_json::json!([{
+              "slot": slot_a,
+              "payloadHeaderRoot": format!("0x{}", "f1".repeat(32))
+            }]),
+        );
+        let _ = rpc(
+            &mut state,
+            232,
+            "engine_registerExecutionPayloadHeaderV1",
+            serde_json::json!([{
+              "slot": slot_b,
+              "payloadHeaderRoot": root_b
+            }]),
+        );
+
+        let range = rpc(
+            &mut state,
+            233,
+            "engine_getExecutionPayloadEnvelopesByRangeV1",
+            serde_json::json!([slot_a, slot_b, true]),
+        );
+        assert_eq!(range["result"]["status"], "OK");
+        assert_eq!(range["result"]["slotCount"], "0x2");
+        assert_eq!(range["result"]["windowClamped"], Value::Bool(false));
+        let slots = range["result"]["slots"].as_array().expect("range slot list");
+        assert_eq!(slots.len(), 2);
+
+        let clamped = rpc(
+            &mut state,
+            234,
+            "engine_getExecutionPayloadEnvelopesByRangeV1",
+            serde_json::json!(["0x0", "0x200"]),
+        );
+        assert_eq!(clamped["result"]["status"], "OK");
+        assert_eq!(clamped["result"]["slotCount"], "0x100");
+        assert_eq!(clamped["result"]["windowClamped"], Value::Bool(true));
+        assert_eq!(clamped["result"]["effectiveEndSlot"], "0xff");
+    }
+
+    #[test]
+    fn engine_7732_get_envelopes_by_range_rejects_invalid_bounds() {
+        let mut state = test_state(2077003);
+        let invalid = rpc(
+            &mut state,
+            240,
+            "engine_getExecutionPayloadEnvelopesByRangeV1",
+            serde_json::json!(["0x40", "0x3f"]),
+        );
+        assert_eq!(invalid["result"]["status"], "INVALID");
+        assert!(
+            invalid["result"]["validationError"]
+                .as_str()
+                .unwrap_or_default()
+                .contains("invalid range")
         );
     }
 }

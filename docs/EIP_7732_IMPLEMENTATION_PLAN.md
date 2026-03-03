@@ -20,6 +20,10 @@ Date: 2026-03-03
   - header/envelope registration is now replay-aware: idempotent duplicates are accepted, conflicting replays are rejected.
   - envelope registration now rejects slot mismatch against known header root commitments.
   - tests added for duplicate, conflict, and mismatch rejection paths.
+- 2026-03-03 (Phase 2 transport hooks landed in devnetd):
+  - added `engine_getExecutionPayloadEnvelopesBySlotV1` for linked/missing/orphan envelope snapshots at a slot.
+  - added `engine_getExecutionPayloadEnvelopesByRangeV1` with deterministic max-window clamp (`256` slots).
+  - wired both methods into JSON-RPC dispatch, HTTP engine endpoints, and capability advertisement.
 
 ## Primary Sources
 
