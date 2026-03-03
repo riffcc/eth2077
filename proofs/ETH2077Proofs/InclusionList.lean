@@ -25,6 +25,9 @@ def InclusionCheck.ok (c : InclusionCheck) : Prop :=
 def payloadValid (checks : List InclusionCheck) : Prop :=
   ∀ c, c ∈ checks → c.ok
 
+def viewMutationAllowed (viewFrozen : Bool) (incomingSlot frozenSlot : Nat) : Prop :=
+  viewFrozen = false ∨ incomingSlot ≠ frozenSlot
+
 theorem check_not_ok_of_missing
     (c : InclusionCheck)
     (hMissing : ¬ c.requiredPresent) :
@@ -75,5 +78,20 @@ theorem payload_not_valid_if_missing_required
   apply payload_not_valid_if_exists_invalid
   rcases hMissing with ⟨c, hMem, hMiss⟩
   exact ⟨c, hMem, check_not_ok_of_missing c hMiss⟩
+
+theorem view_mutation_blocked_when_frozen_same_slot
+    (frozenSlot incomingSlot : Nat)
+    (hSame : incomingSlot = frozenSlot) :
+    ¬ viewMutationAllowed true incomingSlot frozenSlot := by
+  intro hAllowed
+  rcases hAllowed with hNotFrozen | hDifferent
+  · cases hNotFrozen
+  · exact hDifferent hSame
+
+theorem view_mutation_allowed_when_slot_rotates
+    (frozenSlot incomingSlot : Nat)
+    (hDifferent : incomingSlot ≠ frozenSlot) :
+    viewMutationAllowed true incomingSlot frozenSlot := by
+  exact Or.inr hDifferent
 
 end ETH2077Proofs.InclusionList

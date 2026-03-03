@@ -19,7 +19,7 @@ This matrix tracks execution-layer EIP parity work against the ETH2030 target su
 | EIP-1559 | Dynamic fee tx (`0x02`) | implemented | Decode + execution path present. |
 | EIP-4844 | Blob transaction (`0x03`) | partial | Decode + execution path + runtime JSON-RPC tests + blob fee RPC fields are wired; no blob sidecar/DA plumbing yet. |
 | EIP-7702 | Set-code transaction (`0x04`) | partial | Decode + execution path + runtime JSON-RPC tests are wired; conformance vectors and stricter auth semantics pending. |
-| EIP-7805 | FOCIL inclusion-list engine lane | partial | Engine API lane now includes `engine_getInclusionListV1` plus `engine_forkchoiceUpdatedV3`/`engine_newPayloadV3` inclusion-list wiring, metadata compatibility checks (sender/nonce/gas/value), and basic nonce/balance/gas-space enforcement with `INCLUSION_LIST_UNSATISFIED`; CL/P2P committee logic still pending. |
+| EIP-7805 | FOCIL inclusion-list engine lane | partial | Engine API lane now includes `engine_getInclusionListV1` plus `engine_forkchoiceUpdatedV3`/`engine_newPayloadV3` inclusion-list wiring, metadata compatibility checks (sender/nonce/gas/value), basic nonce/balance/gas-space enforcement, and server-side committee + view-freeze semantics (immutable IL within frozen slot) with `INCLUSION_LIST_UNSATISFIED`; full CL/P2P committee gossip/attestation path still pending. |
 
 ## Execution Order (One EIP At A Time)
 
@@ -30,7 +30,7 @@ This matrix tracks execution-layer EIP parity work against the ETH2030 target su
    - add conformance tests for invalid signatures/chain-id mismatch/replay semantics.
    - align authorization handling with stricter recovery/validation expectations.
 3. EIP-7805 completion:
-   - wire CL/P2P committee and view-freeze semantics.
+   - wire CL/P2P committee gossip/attestation path to replace server-local committee scaffolding.
    - extend IL validity checks from heuristic precheck to full execution-congruent validation.
 4. EIP-7685 and other roadmap-targeted request/interop features.
 

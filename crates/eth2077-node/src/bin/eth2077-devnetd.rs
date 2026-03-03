@@ -89,6 +89,16 @@ struct NodeState {
     #[serde(skip_serializing)]
     engine_required_il_updated_at_unix_s: Option<u64>,
     #[serde(skip_serializing)]
+    engine_focil_committee: Vec<String>,
+    #[serde(skip_serializing)]
+    engine_focil_view_frozen: bool,
+    #[serde(skip_serializing)]
+    engine_focil_frozen_slot: Option<u64>,
+    #[serde(skip_serializing)]
+    engine_focil_frozen_il_root: Option<String>,
+    #[serde(skip_serializing)]
+    engine_focil_view_id: Option<u64>,
+    #[serde(skip_serializing)]
     evm_db: InMemoryDB,
     #[serde(skip_serializing)]
     tx_receipts: HashMap<String, TxReceiptRecord>,
@@ -1312,6 +1322,73 @@ fn engine_collect_payload_transaction_entries(req: &Value) -> Vec<EngineTxMeta> 
     Vec::new()
 }
 
+fn dedup_string_array(value: &Value) -> Vec<String> {
+    let Some(items) = value.as_array() else {
+        return Vec::new();
+    };
+    let mut out = Vec::new();
+    let mut seen = HashSet::new();
+    for item in items {
+        let Some(raw) = item.as_str() else {
+            continue;
+        };
+        let member = canonical_address(raw).unwrap_or_else(|| raw.trim().to_ascii_lowercase());
+        if seen.insert(member.clone()) {
+            out.push(member);
+        }
+    }
+    out
+}
+
+fn engine_collect_committee_members(req: &Value) -> Vec<String> {
+    let Some(attrs) = payload_attributes_from_engine_request(req) else {
+        return Vec::new();
+    };
+    if let Some(committee) = attrs.get("inclusionListCommittee") {
+        return dedup_string_array(committee);
+    }
+    if let Some(committee) = attrs.get("committee") {
+        return dedup_string_array(committee);
+    }
+    if let Some(committee) = attrs
+        .get("inclusionList")
+        .and_then(|il| il.get("committee"))
+    {
+        return dedup_string_array(committee);
+    }
+    Vec::new()
+}
+
+fn engine_slot_from_payload_attributes(req: &Value) -> Option<u64> {
+    payload_attributes_from_engine_request(req)
+        .and_then(|attrs| attrs.get("slot"))
+        .and_then(parse_u64_value)
+}
+
+fn engine_view_id_from_payload_attributes(req: &Value) -> Option<u64> {
+    payload_attributes_from_engine_request(req)
+        .and_then(|attrs| attrs.get("viewId").or_else(|| attrs.get("view")))
+        .and_then(parse_u64_value)
+}
+
+fn engine_payload_slot(req: &Value) -> Option<u64> {
+    req.get("slot")
+        .and_then(parse_u64_value)
+        .or_else(|| {
+            execution_payload_from_engine_request(req)
+                .and_then(|payload| payload.get("slot").and_then(parse_u64_value))
+        })
+        .or_else(|| {
+            execution_payload_from_engine_request(req)
+                .and_then(|payload| payload.get("blockNumber").and_then(parse_u64_value))
+        })
+}
+
+fn engine_inclusion_list_root(hashes: &[String]) -> String {
+    let joined = hashes.join(",");
+    bytes_to_hex(revm::primitives::keccak256(joined.as_bytes()).as_slice())
+}
+
 fn engine_tx_meta_to_json(meta: &EngineTxMeta) -> Value {
     serde_json::json!({
       "hash": meta.hash,
@@ -1323,7 +1400,7 @@ fn engine_tx_meta_to_json(meta: &EngineTxMeta) -> Value {
     })
 }
 
-fn engine_get_inclusion_list_response(state: &NodeState, req: &Value) -> Value {
+fn engine_get_inclusion_list_response(state: &mut NodeState, req: &Value) -> Value {
     let requested_slot = req
         .get("slot")
         .and_then(parse_u64_value)
@@ -1336,6 +1413,15 @@ fn engine_get_inclusion_list_response(state: &NodeState, req: &Value) -> Value {
         .or(state.engine_required_il_slot)
         .unwrap_or(state.current_height.saturating_add(1));
 
+    if state.engine_required_il_slot == Some(requested_slot) {
+        state.engine_focil_view_frozen = true;
+        state.engine_focil_frozen_slot = Some(requested_slot);
+        state.engine_focil_frozen_il_root = Some(engine_inclusion_list_root(&state.engine_required_il_txs));
+        if state.engine_focil_view_id.is_none() {
+            state.engine_focil_view_id = Some(requested_slot);
+        }
+    }
+
     serde_json::json!({
       "slot": hex_u64(requested_slot),
       "transactions": state.engine_required_il_txs,
@@ -1345,24 +1431,79 @@ fn engine_get_inclusion_list_response(state: &NodeState, req: &Value) -> Value {
         .filter_map(|h| state.engine_required_il_meta.get(h))
         .map(engine_tx_meta_to_json)
         .collect::<Vec<_>>(),
+      "committee": state.engine_focil_committee.clone(),
+      "viewId": state.engine_focil_view_id.map(hex_u64),
+      "viewFreeze": {
+        "frozen": state.engine_focil_view_frozen,
+        "slot": state.engine_focil_frozen_slot.map(hex_u64),
+        "inclusionListRoot": state.engine_focil_frozen_il_root.clone()
+      },
       "maxBytesPerInclusionList": "0x2000",
       "updatedAtUnixS": state.engine_required_il_updated_at_unix_s
     })
 }
 
 fn engine_forkchoice_updated_response(state: &mut NodeState, req: &Value) -> Value {
+    let fc_slot = engine_slot_from_payload_attributes(req)
+        .or(state.engine_required_il_slot)
+        .unwrap_or(state.current_height.saturating_add(1));
+    let fc_view_id = engine_view_id_from_payload_attributes(req).or(Some(fc_slot));
+    let has_il_update = engine_request_has_inclusion_list(req);
+    let il_entries = if has_il_update {
+        engine_collect_inclusion_list_entries(req)
+    } else {
+        Vec::new()
+    };
+    let new_il_hashes: Vec<String> = il_entries.iter().map(|m| m.hash.clone()).collect();
+    let new_il_root = if has_il_update {
+        Some(engine_inclusion_list_root(&new_il_hashes))
+    } else {
+        None
+    };
+
+    if state.engine_focil_view_frozen
+        && state.engine_focil_frozen_slot == Some(fc_slot)
+        && has_il_update
+        && new_il_root.as_ref() != state.engine_focil_frozen_il_root.as_ref()
+    {
+        return serde_json::json!({
+          "payloadStatus": {
+            "status": "INVALID",
+            "latestValidHash": "0x00",
+            "validationError": format!("FOCIL view frozen for slot {}; inclusion list is immutable", fc_slot)
+          },
+          "payloadId": Value::Null,
+          "focil": {
+            "requiredTransactions": hex_u64(state.engine_required_il_txs.len() as u64),
+            "slot": state.engine_required_il_slot.map(hex_u64),
+            "viewId": state.engine_focil_view_id.map(hex_u64),
+            "viewFrozen": state.engine_focil_view_frozen,
+            "committeeSize": hex_u64(state.engine_focil_committee.len() as u64),
+            "frozenInclusionListRoot": state.engine_focil_frozen_il_root.clone()
+          }
+        });
+    }
+
+    if state.engine_focil_view_frozen && state.engine_focil_frozen_slot != Some(fc_slot) {
+        state.engine_focil_view_frozen = false;
+        state.engine_focil_frozen_slot = None;
+        state.engine_focil_frozen_il_root = None;
+    }
+
+    let committee = engine_collect_committee_members(req);
+    if !committee.is_empty() {
+        state.engine_focil_committee = committee;
+    }
+    state.engine_focil_view_id = fc_view_id;
+
     if engine_request_has_inclusion_list(req) {
-        let il_entries = engine_collect_inclusion_list_entries(req);
         let mut il_meta = HashMap::new();
         for entry in &il_entries {
             il_meta.insert(entry.hash.clone(), entry.clone());
         }
-        state.engine_required_il_txs = il_entries.iter().map(|m| m.hash.clone()).collect();
+        state.engine_required_il_txs = new_il_hashes;
         state.engine_required_il_meta = il_meta;
-        state.engine_required_il_slot = payload_attributes_from_engine_request(req)
-            .and_then(|attrs| attrs.get("slot"))
-            .and_then(parse_u64_value)
-            .or(Some(state.current_height.saturating_add(1)));
+        state.engine_required_il_slot = Some(fc_slot);
         state.engine_required_il_updated_at_unix_s = Some(now_unix_s());
     }
 
@@ -1375,7 +1516,11 @@ fn engine_forkchoice_updated_response(state: &mut NodeState, req: &Value) -> Val
       "payloadId": "0x0000000000000000",
       "focil": {
         "requiredTransactions": hex_u64(state.engine_required_il_txs.len() as u64),
-        "slot": state.engine_required_il_slot.map(hex_u64)
+        "slot": state.engine_required_il_slot.map(hex_u64),
+        "viewId": state.engine_focil_view_id.map(hex_u64),
+        "viewFrozen": state.engine_focil_view_frozen,
+        "committeeSize": hex_u64(state.engine_focil_committee.len() as u64),
+        "frozenInclusionListRoot": state.engine_focil_frozen_il_root.clone()
       }
     })
 }
@@ -1410,6 +1555,24 @@ fn engine_new_payload_response(state: &mut NodeState, req: &Value) -> Value {
           "latestValidHash": latest_valid_hash,
           "validationError": format!("missing {} inclusion-list tx(s): {}", missing.len(), preview)
         });
+    }
+
+    if state.engine_focil_view_frozen {
+        let payload_slot = engine_payload_slot(req)
+            .or(state.engine_required_il_slot)
+            .unwrap_or(state.current_height.saturating_add(1));
+        if let Some(frozen_slot) = state.engine_focil_frozen_slot {
+            if payload_slot != frozen_slot {
+                return serde_json::json!({
+                  "status": "INCLUSION_LIST_UNSATISFIED",
+                  "latestValidHash": latest_valid_hash,
+                  "validationError": format!(
+                    "FOCIL view frozen at slot {}; payload targets slot {}",
+                    frozen_slot, payload_slot
+                  )
+                });
+            }
+        }
     }
 
     let mut checks = Vec::new();
@@ -2728,6 +2891,11 @@ fn build_state(cfg: &Config, chain_spec: &Value) -> NodeState {
         engine_required_il_meta: HashMap::new(),
         engine_required_il_slot: None,
         engine_required_il_updated_at_unix_s: None,
+        engine_focil_committee: Vec::new(),
+        engine_focil_view_frozen: false,
+        engine_focil_frozen_slot: None,
+        engine_focil_frozen_il_root: None,
+        engine_focil_view_id: None,
         evm_db: InMemoryDB::default(),
         tx_receipts: HashMap::new(),
         market_nfts,
@@ -2926,8 +3094,8 @@ fn main() {
             let body = request_body_from_http(&req_bytes, header_end, content_length);
             let req_json = serde_json::from_str::<Value>(&body).unwrap_or(Value::Null);
             let result = {
-                let guard = state.lock().expect("state lock");
-                engine_get_inclusion_list_response(&guard, &req_json)
+                let mut guard = state.lock().expect("state lock");
+                engine_get_inclusion_list_response(&mut guard, &req_json)
             };
             json_response("200 OK", &result)
         } else if request_line.starts_with("POST /engine/v1/newPayloadV3 ") {
@@ -3491,6 +3659,157 @@ mod tests {
                 .as_str()
                 .unwrap_or_default()
                 .contains("insufficient balance")
+        );
+    }
+
+    #[test]
+    fn engine_get_inclusion_list_freezes_view_and_blocks_mutation_same_slot() {
+        let mut state = test_state(2077003);
+        let h1 = format!("0x{}", "99".repeat(32));
+        let h2 = format!("0x{}", "aa".repeat(32));
+        let slot = "0x2a";
+
+        let _ = rpc(
+            &mut state,
+            80,
+            "engine_forkchoiceUpdatedV3",
+            serde_json::json!([
+              {},
+              {
+                "payloadAttributes": {
+                  "slot": slot,
+                  "inclusionListTransactions": [h1]
+                }
+              }
+            ]),
+        );
+
+        let il_resp = rpc(
+            &mut state,
+            81,
+            "engine_getInclusionListV1",
+            serde_json::json!([slot]),
+        );
+        assert_eq!(il_resp["result"]["viewFreeze"]["frozen"], Value::Bool(true));
+
+        let fc_mutation_resp = rpc(
+            &mut state,
+            82,
+            "engine_forkchoiceUpdatedV3",
+            serde_json::json!([
+              {},
+              {
+                "payloadAttributes": {
+                  "slot": slot,
+                  "inclusionListTransactions": [h2]
+                }
+              }
+            ]),
+        );
+        assert_eq!(fc_mutation_resp["result"]["payloadStatus"]["status"], "INVALID");
+        assert!(
+            fc_mutation_resp["result"]["payloadStatus"]["validationError"]
+                .as_str()
+                .unwrap_or_default()
+                .contains("view frozen")
+        );
+    }
+
+    #[test]
+    fn engine_forkchoice_rotates_view_on_new_slot_after_freeze() {
+        let mut state = test_state(2077003);
+        let h1 = format!("0x{}", "ab".repeat(32));
+        let h2 = format!("0x{}", "bc".repeat(32));
+
+        let _ = rpc(
+            &mut state,
+            90,
+            "engine_forkchoiceUpdatedV3",
+            serde_json::json!([
+              {},
+              {
+                "payloadAttributes": {
+                  "slot": "0x2a",
+                  "inclusionListTransactions": [h1]
+                }
+              }
+            ]),
+        );
+
+        let _ = rpc(
+            &mut state,
+            91,
+            "engine_getInclusionListV1",
+            serde_json::json!(["0x2a"]),
+        );
+
+        let fc_next_slot_resp = rpc(
+            &mut state,
+            92,
+            "engine_forkchoiceUpdatedV3",
+            serde_json::json!([
+              {},
+              {
+                "payloadAttributes": {
+                  "slot": "0x2b",
+                  "viewId": "0x2b",
+                  "inclusionListTransactions": [h2]
+                }
+              }
+            ]),
+        );
+        assert_eq!(fc_next_slot_resp["result"]["payloadStatus"]["status"], "VALID");
+        assert_eq!(fc_next_slot_resp["result"]["focil"]["viewFrozen"], Value::Bool(false));
+        assert_eq!(fc_next_slot_resp["result"]["focil"]["viewId"], "0x2b");
+    }
+
+    #[test]
+    fn engine_new_payload_rejects_payload_slot_mismatch_when_view_frozen() {
+        let mut state = test_state(2077003);
+        let h1 = format!("0x{}", "cd".repeat(32));
+        let block_hash_hint = block_hash(state.current_height.saturating_add(1));
+
+        let _ = rpc(
+            &mut state,
+            100,
+            "engine_forkchoiceUpdatedV3",
+            serde_json::json!([
+              {},
+              {
+                "payloadAttributes": {
+                  "slot": "0x2a",
+                  "inclusionListTransactions": [h1]
+                }
+              }
+            ]),
+        );
+
+        let _ = rpc(
+            &mut state,
+            101,
+            "engine_getInclusionListV1",
+            serde_json::json!(["0x2a"]),
+        );
+
+        let np_resp = rpc(
+            &mut state,
+            102,
+            "engine_newPayloadV3",
+            serde_json::json!([
+              {
+                "blockHash": block_hash_hint,
+                "slot": "0x2b",
+                "transactions": [format!("0x{}", "cd".repeat(32))]
+              }
+            ]),
+        );
+
+        assert_eq!(np_resp["result"]["status"], "INCLUSION_LIST_UNSATISFIED");
+        assert!(
+            np_resp["result"]["validationError"]
+                .as_str()
+                .unwrap_or_default()
+                .contains("view frozen")
         );
     }
 }
