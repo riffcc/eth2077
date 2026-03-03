@@ -1987,6 +1987,121 @@ fn engine_7732_get_payload_timeliness_by_range_response(state: &NodeState, req: 
     })
 }
 
+fn engine_7732_penalty_slot_snapshot(state: &NodeState, slot: u64, current_unix_s: u64) -> Value {
+    let penalty = state
+        .engine_7732_penalties_by_slot
+        .get(&slot)
+        .map(engine_7732_penalty_to_json)
+        .unwrap_or(Value::Null);
+    let penalized = penalty.is_object();
+    let penalty_state = penalty
+        .get("state")
+        .and_then(Value::as_str)
+        .unwrap_or("NONE")
+        .to_string();
+    let timeliness = engine_7732_slot_status_response(state, slot, current_unix_s);
+    serde_json::json!({
+      "slot": hex_u64(slot),
+      "penalized": penalized,
+      "penaltyState": penalty_state,
+      "penalty": penalty,
+      "timeliness": timeliness
+    })
+}
+
+fn engine_7732_get_payload_penalty_response(state: &NodeState, req: &Value) -> Value {
+    let slot_from_req = req
+        .get("slot")
+        .and_then(parse_u64_value)
+        .or_else(|| {
+            req.get("params")
+                .and_then(Value::as_array)
+                .and_then(|params| params.first())
+                .and_then(parse_u64_value)
+        });
+    let root_from_req = normalize_hash32_value(
+        req.get("payloadHeaderRoot").or_else(|| {
+            req.get("params")
+                .and_then(Value::as_array)
+                .and_then(|params| params.first())
+        }),
+    );
+    let slot = slot_from_req
+        .or_else(|| {
+            root_from_req
+                .as_ref()
+                .and_then(|root| state.engine_7732_headers_by_root.get(root).map(|h| h.slot))
+        })
+        .or_else(|| {
+            root_from_req
+                .as_ref()
+                .and_then(|root| state.engine_7732_envelopes_by_root.get(root).map(|e| e.slot))
+        })
+        .unwrap_or(state.current_height.saturating_add(1));
+    let current_unix_s = engine_7732_current_unix_s_from_req(req).unwrap_or_else(now_unix_s);
+    engine_7732_penalty_slot_snapshot(state, slot, current_unix_s)
+}
+
+fn engine_7732_get_payload_penalties_by_range_response(state: &NodeState, req: &Value) -> Value {
+    let start_slot = req
+        .get("startSlot")
+        .and_then(parse_u64_value)
+        .or_else(|| {
+            req.get("params")
+                .and_then(Value::as_array)
+                .and_then(|params| params.first())
+                .and_then(parse_u64_value)
+        })
+        .unwrap_or(state.current_height.saturating_add(1));
+    let end_slot = req
+        .get("endSlot")
+        .and_then(parse_u64_value)
+        .or_else(|| {
+            req.get("params")
+                .and_then(Value::as_array)
+                .and_then(|params| params.get(1))
+                .and_then(parse_u64_value)
+        })
+        .unwrap_or(start_slot);
+    if end_slot < start_slot {
+        return serde_json::json!({
+          "status": "INVALID",
+          "validationError": format!("invalid range: startSlot {} exceeds endSlot {}", start_slot, end_slot)
+        });
+    }
+    const MAX_SLOT_WINDOW: u64 = 256;
+    let requested_slots = end_slot.saturating_sub(start_slot).saturating_add(1);
+    let slot_count = requested_slots.min(MAX_SLOT_WINDOW);
+    let effective_end_slot = start_slot.saturating_add(slot_count.saturating_sub(1));
+    let current_unix_s =
+        engine_7732_current_unix_s_from_req_with_param(req, 2).unwrap_or_else(now_unix_s);
+    let slots = (start_slot..=effective_end_slot)
+        .map(|slot| engine_7732_penalty_slot_snapshot(state, slot, current_unix_s))
+        .collect::<Vec<_>>();
+    let active_penalty_count = slots
+        .iter()
+        .filter(|slot| slot.get("penaltyState").and_then(Value::as_str) == Some("ACTIVE"))
+        .count() as u64;
+    let recovered_penalty_count = slots
+        .iter()
+        .filter(|slot| slot.get("penaltyState").and_then(Value::as_str) == Some("RECOVERED"))
+        .count() as u64;
+
+    serde_json::json!({
+      "status": "OK",
+      "startSlot": hex_u64(start_slot),
+      "endSlot": hex_u64(end_slot),
+      "effectiveEndSlot": hex_u64(effective_end_slot),
+      "requestedSlotCount": hex_u64(requested_slots),
+      "slotCount": hex_u64(slot_count),
+      "windowClamped": slot_count < requested_slots,
+      "currentUnixS": current_unix_s,
+      "activePenaltyCount": hex_u64(active_penalty_count),
+      "recoveredPenaltyCount": hex_u64(recovered_penalty_count),
+      "slots": slots
+    })
+}
+
 fn engine_7732_get_payload_header_response(state: &NodeState, req: &Value) -> Value {
     let root = normalize_hash32_value(
         req.get("payloadHeaderRoot").or_else(|| {
@@ -3207,6 +3322,14 @@ fn handle_jsonrpc(state: &mut NodeState, req: &Value) -> Value {
             &id,
             engine_7732_get_payload_timeliness_by_range_response(state, req),
         ),
+        "engine_getPayloadPenaltyV1" => jsonrpc_response(
+            &id,
+            engine_7732_get_payload_penalty_response(state, req),
+        ),
+        "engine_getPayloadPenaltiesByRangeV1" => jsonrpc_response(
+            &id,
+            engine_7732_get_payload_penalties_by_range_response(state, req),
+        ),
         "engine_getExecutionPayloadHeaderV1" => jsonrpc_response(
             &id,
             engine_7732_get_payload_header_response(state, req),
@@ -4067,6 +4190,8 @@ fn main() {
                         "engine_registerExecutionPayloadEnvelopeV1",
                         "engine_getPayloadTimelinessV1",
                         "engine_getPayloadTimelinessByRangeV1",
+                        "engine_getPayloadPenaltyV1",
+                        "engine_getPayloadPenaltiesByRangeV1",
                         "engine_getExecutionPayloadHeaderV1",
                         "engine_getExecutionPayloadHeadersBySlotV1",
                         "engine_getExecutionPayloadHeadersByRangeV1",
@@ -4130,6 +4255,22 @@ fn main() {
             let result = {
                 let guard = state.lock().expect("state lock");
                 engine_7732_get_payload_timeliness_by_range_response(&guard, &req_json)
+            };
+            json_response("200 OK", &result)
+        } else if request_line.starts_with("POST /engine/v1/getPayloadPenaltyV1 ") {
+            let body = request_body_from_http(&req_bytes, header_end, content_length);
+            let req_json = serde_json::from_str::<Value>(&body).unwrap_or(Value::Null);
+            let result = {
+                let guard = state.lock().expect("state lock");
+                engine_7732_get_payload_penalty_response(&guard, &req_json)
+            };
+            json_response("200 OK", &result)
+        } else if request_line.starts_with("POST /engine/v1/getPayloadPenaltiesByRangeV1 ") {
+            let body = request_body_from_http(&req_bytes, header_end, content_length);
+            let req_json = serde_json::from_str::<Value>(&body).unwrap_or(Value::Null);
+            let result = {
+                let guard = state.lock().expect("state lock");
+                engine_7732_get_payload_penalties_by_range_response(&guard, &req_json)
             };
             json_response("200 OK", &result)
         } else if request_line.starts_with("POST /engine/v1/getExecutionPayloadHeaderV1 ") {
@@ -5689,6 +5830,142 @@ mod tests {
             301,
             "engine_getExecutionPayloadHeadersByRangeV1",
             serde_json::json!(["0x53", "0x52"]),
+        );
+        assert_eq!(invalid["result"]["status"], "INVALID");
+        assert!(
+            invalid["result"]["validationError"]
+                .as_str()
+                .unwrap_or_default()
+                .contains("invalid range")
+        );
+    }
+
+    #[test]
+    fn engine_7732_get_payload_penalty_tracks_active_then_recovered() {
+        let mut state = test_state(2077003);
+        let slot = 0x61u64;
+        let root = format!("0x{}", "c1".repeat(32));
+        let deadline = state.started_at_unix_s + (slot * 12) + 12;
+
+        let _ = rpc(
+            &mut state,
+            310,
+            "engine_registerExecutionPayloadHeaderV1",
+            serde_json::json!([{
+              "slot": hex_u64(slot),
+              "payloadHeaderRoot": root
+            }]),
+        );
+
+        let _ = rpc_raw(
+            &mut state,
+            serde_json::json!({
+              "jsonrpc": "2.0",
+              "id": 311,
+              "method": "engine_forkchoiceUpdatedV3",
+              "currentUnixS": hex_u64(deadline + 1),
+              "params": [
+                {},
+                { "payloadAttributes": { "slot": hex_u64(slot) } }
+              ]
+            }),
+        );
+        let active = rpc(
+            &mut state,
+            312,
+            "engine_getPayloadPenaltyV1",
+            serde_json::json!([hex_u64(slot)]),
+        );
+        assert_eq!(active["result"]["penalized"], Value::Bool(true));
+        assert_eq!(active["result"]["penaltyState"], "ACTIVE");
+
+        let _ = rpc(
+            &mut state,
+            313,
+            "engine_registerExecutionPayloadEnvelopeV1",
+            serde_json::json!([{
+              "slot": hex_u64(slot),
+              "payloadHeaderRoot": format!("0x{}", "c1".repeat(32)),
+              "revealedAtUnixS": hex_u64(deadline)
+            }]),
+        );
+        let _ = rpc_raw(
+            &mut state,
+            serde_json::json!({
+              "jsonrpc": "2.0",
+              "id": 314,
+              "method": "engine_forkchoiceUpdatedV3",
+              "currentUnixS": hex_u64(deadline + 2),
+              "params": [
+                {},
+                { "payloadAttributes": { "slot": hex_u64(slot) } }
+              ]
+            }),
+        );
+        let recovered = rpc(
+            &mut state,
+            315,
+            "engine_getPayloadPenaltyV1",
+            serde_json::json!([format!("0x{}", "c1".repeat(32))]),
+        );
+        assert_eq!(recovered["result"]["penaltyState"], "RECOVERED");
+        assert_eq!(recovered["result"]["timeliness"]["aggregateStatus"], "REVEALED");
+    }
+
+    #[test]
+    fn engine_7732_get_payload_penalties_by_range_clamps_and_rejects_invalid_bounds() {
+        let mut state = test_state(2077003);
+        let slot = 0x62u64;
+        let root = format!("0x{}", "c2".repeat(32));
+        let deadline = state.started_at_unix_s + (slot * 12) + 12;
+
+        let _ = rpc(
+            &mut state,
+            320,
+            "engine_registerExecutionPayloadHeaderV1",
+            serde_json::json!([{
+              "slot": hex_u64(slot),
+              "payloadHeaderRoot": root
+            }]),
+        );
+        let _ = rpc_raw(
+            &mut state,
+            serde_json::json!({
+              "jsonrpc": "2.0",
+              "id": 321,
+              "method": "engine_forkchoiceUpdatedV3",
+              "currentUnixS": hex_u64(deadline + 1),
+              "params": [
+                {},
+                { "payloadAttributes": { "slot": hex_u64(slot) } }
+              ]
+            }),
+        );
+
+        let one = rpc(
+            &mut state,
+            322,
+            "engine_getPayloadPenaltiesByRangeV1",
+            serde_json::json!([hex_u64(slot), hex_u64(slot), hex_u64(deadline + 1)]),
+        );
+        assert_eq!(one["result"]["status"], "OK");
+        assert_eq!(one["result"]["activePenaltyCount"], "0x1");
+
+        let clamped = rpc(
+            &mut state,
+            323,
+            "engine_getPayloadPenaltiesByRangeV1",
+            serde_json::json!(["0x0", "0x200"]),
+        );
+        assert_eq!(clamped["result"]["status"], "OK");
+        assert_eq!(clamped["result"]["slotCount"], "0x100");
+        assert_eq!(clamped["result"]["windowClamped"], Value::Bool(true));
+
+        let invalid = rpc(
+            &mut state,
+            324,
+            "engine_getPayloadPenaltiesByRangeV1",
+            serde_json::json!(["0x64", "0x63"]),
         );
         assert_eq!(invalid["result"]["status"], "INVALID");
         assert!(

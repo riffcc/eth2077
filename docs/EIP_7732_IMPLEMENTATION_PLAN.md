@@ -32,6 +32,10 @@ Date: 2026-03-03
   - added `engine_getExecutionPayloadHeaderV1` (by root), `engine_getExecutionPayloadHeadersBySlotV1`, and `engine_getExecutionPayloadHeadersByRangeV1`.
   - range hook enforces deterministic max-window clamp (`256` slots) and invalid-bound rejection.
   - wired into JSON-RPC dispatch, HTTP engine endpoints, and capability advertisement.
+- 2026-03-03 (Phase 2 penalty retrieval hooks landed in devnetd):
+  - added `engine_getPayloadPenaltyV1` (slot/root lookup) and `engine_getPayloadPenaltiesByRangeV1`.
+  - range hook returns active/recovered penalty counts with deterministic max-window clamp (`256` slots).
+  - wired into JSON-RPC dispatch, HTTP engine endpoints, and capability advertisement.
 
 ## Primary Sources
 
