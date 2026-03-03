@@ -158,4 +158,18 @@ theorem timeliness_range_accepts_equal_bounds
     TimelinessRangeValid slot slot := by
   simp [TimelinessRangeValid]
 
+def HeaderRangeValid (startSlot endSlot : Nat) : Prop :=
+  TimelinessRangeValid startSlot endSlot
+
+theorem header_range_rejects_invalid_bounds
+    (startSlot endSlot : Nat)
+    (h : endSlot < startSlot) :
+    ¬ HeaderRangeValid startSlot endSlot := by
+  exact timeliness_range_rejects_invalid_bounds startSlot endSlot h
+
+theorem header_range_accepts_equal_bounds
+    (slot : Nat) :
+    HeaderRangeValid slot slot := by
+  simp [HeaderRangeValid, TimelinessRangeValid]
+
 end ETH2077Proofs.PayloadTimeliness

@@ -28,6 +28,10 @@ Date: 2026-03-03
   - added `engine_getPayloadTimelinessByRangeV1` for bounded slot-window timeliness snapshots.
   - method supports deterministic `currentUnixS` override and returns clamped-window metadata.
   - wired into JSON-RPC dispatch, HTTP engine endpoints, and capability advertisement.
+- 2026-03-03 (Phase 2 header retrieval hooks landed in devnetd):
+  - added `engine_getExecutionPayloadHeaderV1` (by root), `engine_getExecutionPayloadHeadersBySlotV1`, and `engine_getExecutionPayloadHeadersByRangeV1`.
+  - range hook enforces deterministic max-window clamp (`256` slots) and invalid-bound rejection.
+  - wired into JSON-RPC dispatch, HTTP engine endpoints, and capability advertisement.
 
 ## Primary Sources
 

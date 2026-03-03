@@ -1987,6 +1987,102 @@ fn engine_7732_get_payload_timeliness_by_range_response(state: &NodeState, req: 
     })
 }
 
+fn engine_7732_get_payload_header_response(state: &NodeState, req: &Value) -> Value {
+    let root = normalize_hash32_value(
+        req.get("payloadHeaderRoot").or_else(|| {
+            req.get("params")
+                .and_then(Value::as_array)
+                .and_then(|params| params.first())
+        }),
+    );
+    root.and_then(|r| state.engine_7732_headers_by_root.get(&r).map(engine_7732_header_to_json))
+        .unwrap_or(Value::Null)
+}
+
+fn engine_7732_headers_by_slot_snapshot(state: &NodeState, slot: u64) -> Value {
+    let header_roots = state
+        .engine_7732_headers_by_slot
+        .get(&slot)
+        .cloned()
+        .unwrap_or_default();
+    let headers = header_roots
+        .iter()
+        .filter_map(|root| state.engine_7732_headers_by_root.get(root))
+        .map(engine_7732_header_to_json)
+        .collect::<Vec<_>>();
+    let revealed_envelope_count = header_roots
+        .iter()
+        .filter(|root| state.engine_7732_envelopes_by_root.contains_key(*root))
+        .count() as u64;
+    serde_json::json!({
+      "slot": hex_u64(slot),
+      "headerRoots": header_roots,
+      "headers": headers,
+      "headerCount": hex_u64(state.engine_7732_headers_by_slot.get(&slot).map(|v| v.len()).unwrap_or(0) as u64),
+      "revealedEnvelopeCount": hex_u64(revealed_envelope_count)
+    })
+}
+
+fn engine_7732_get_payload_headers_by_slot_response(state: &NodeState, req: &Value) -> Value {
+    let slot = req
+        .get("slot")
+        .and_then(parse_u64_value)
+        .or_else(|| {
+            req.get("params")
+                .and_then(Value::as_array)
+                .and_then(|params| params.first())
+                .and_then(parse_u64_value)
+        })
+        .unwrap_or(state.current_height.saturating_add(1));
+    engine_7732_headers_by_slot_snapshot(state, slot)
+}
+
+fn engine_7732_get_payload_headers_by_range_response(state: &NodeState, req: &Value) -> Value {
+    let start_slot = req
+        .get("startSlot")
+        .and_then(parse_u64_value)
+        .or_else(|| {
+            req.get("params")
+                .and_then(Value::as_array)
+                .and_then(|params| params.first())
+                .and_then(parse_u64_value)
+        })
+        .unwrap_or(state.current_height.saturating_add(1));
+    let end_slot = req
+        .get("endSlot")
+        .and_then(parse_u64_value)
+        .or_else(|| {
+            req.get("params")
+                .and_then(Value::as_array)
+                .and_then(|params| params.get(1))
+                .and_then(parse_u64_value)
+        })
+        .unwrap_or(start_slot);
+    if end_slot < start_slot {
+        return serde_json::json!({
+          "status": "INVALID",
+          "validationError": format!("invalid range: startSlot {} exceeds endSlot {}", start_slot, end_slot)
+        });
+    }
+    const MAX_SLOT_WINDOW: u64 = 256;
+    let requested_slots = end_slot.saturating_sub(start_slot).saturating_add(1);
+    let slot_count = requested_slots.min(MAX_SLOT_WINDOW);
+    let effective_end_slot = start_slot.saturating_add(slot_count.saturating_sub(1));
+    let slots = (start_slot..=effective_end_slot)
+        .map(|slot| engine_7732_headers_by_slot_snapshot(state, slot))
+        .collect::<Vec<_>>();
+    serde_json::json!({
+      "status": "OK",
+      "startSlot": hex_u64(start_slot),
+      "endSlot": hex_u64(end_slot),
+      "effectiveEndSlot": hex_u64(effective_end_slot),
+      "requestedSlotCount": hex_u64(requested_slots),
+      "slotCount": hex_u64(slot_count),
+      "windowClamped": slot_count < requested_slots,
+      "slots": slots
+    })
+}
+
 fn engine_7732_get_payload_envelope_response(state: &NodeState, req: &Value) -> Value {
     let root = normalize_hash32_value(
         req.get("payloadHeaderRoot").or_else(|| {
@@ -3111,6 +3207,18 @@ fn handle_jsonrpc(state: &mut NodeState, req: &Value) -> Value {
             &id,
             engine_7732_get_payload_timeliness_by_range_response(state, req),
         ),
+        "engine_getExecutionPayloadHeaderV1" => jsonrpc_response(
+            &id,
+            engine_7732_get_payload_header_response(state, req),
+        ),
+        "engine_getExecutionPayloadHeadersBySlotV1" => jsonrpc_response(
+            &id,
+            engine_7732_get_payload_headers_by_slot_response(state, req),
+        ),
+        "engine_getExecutionPayloadHeadersByRangeV1" => jsonrpc_response(
+            &id,
+            engine_7732_get_payload_headers_by_range_response(state, req),
+        ),
         "engine_getExecutionPayloadEnvelopeV1" => jsonrpc_response(
             &id,
             engine_7732_get_payload_envelope_response(state, req),
@@ -3959,6 +4067,9 @@ fn main() {
                         "engine_registerExecutionPayloadEnvelopeV1",
                         "engine_getPayloadTimelinessV1",
                         "engine_getPayloadTimelinessByRangeV1",
+                        "engine_getExecutionPayloadHeaderV1",
+                        "engine_getExecutionPayloadHeadersBySlotV1",
+                        "engine_getExecutionPayloadHeadersByRangeV1",
                         "engine_getExecutionPayloadEnvelopeV1",
                         "engine_getExecutionPayloadEnvelopesBySlotV1",
                         "engine_getExecutionPayloadEnvelopesByRangeV1"
@@ -4019,6 +4130,33 @@ fn main() {
             let result = {
                 let guard = state.lock().expect("state lock");
                 engine_7732_get_payload_timeliness_by_range_response(&guard, &req_json)
+            };
+            json_response("200 OK", &result)
+        } else if request_line.starts_with("POST /engine/v1/getExecutionPayloadHeaderV1 ") {
+            let body = request_body_from_http(&req_bytes, header_end, content_length);
+            let req_json = serde_json::from_str::<Value>(&body).unwrap_or(Value::Null);
+            let result = {
+                let guard = state.lock().expect("state lock");
+                engine_7732_get_payload_header_response(&guard, &req_json)
+            };
+            json_response("200 OK", &result)
+        } else if request_line.starts_with("POST /engine/v1/getExecutionPayloadHeadersBySlotV1 ")
+        {
+            let body = request_body_from_http(&req_bytes, header_end, content_length);
+            let req_json = serde_json::from_str::<Value>(&body).unwrap_or(Value::Null);
+            let result = {
+                let guard = state.lock().expect("state lock");
+                engine_7732_get_payload_headers_by_slot_response(&guard, &req_json)
+            };
+            json_response("200 OK", &result)
+        } else if request_line
+            .starts_with("POST /engine/v1/getExecutionPayloadHeadersByRangeV1 ")
+        {
+            let body = request_body_from_http(&req_bytes, header_end, content_length);
+            let req_json = serde_json::from_str::<Value>(&body).unwrap_or(Value::Null);
+            let result = {
+                let guard = state.lock().expect("state lock");
+                engine_7732_get_payload_headers_by_range_response(&guard, &req_json)
             };
             json_response("200 OK", &result)
         } else if request_line.starts_with("POST /engine/v1/getExecutionPayloadEnvelopeV1 ") {
@@ -5439,6 +5577,118 @@ mod tests {
             270,
             "engine_getPayloadTimelinessByRangeV1",
             serde_json::json!(["0x44", "0x43"]),
+        );
+        assert_eq!(invalid["result"]["status"], "INVALID");
+        assert!(
+            invalid["result"]["validationError"]
+                .as_str()
+                .unwrap_or_default()
+                .contains("invalid range")
+        );
+    }
+
+    #[test]
+    fn engine_7732_get_header_by_root_returns_registered_header() {
+        let mut state = test_state(2077003);
+        let root = format!("0x{}", "b1".repeat(32));
+        let slot = "0x50";
+
+        let _ = rpc(
+            &mut state,
+            280,
+            "engine_registerExecutionPayloadHeaderV1",
+            serde_json::json!([{
+              "slot": slot,
+              "payloadHeaderRoot": root
+            }]),
+        );
+        let header = rpc(
+            &mut state,
+            281,
+            "engine_getExecutionPayloadHeaderV1",
+            serde_json::json!([format!("0x{}", "b1".repeat(32))]),
+        );
+        assert_eq!(header["result"]["payloadHeaderRoot"], Value::String(root));
+        assert_eq!(header["result"]["slot"], Value::String(slot.to_string()));
+    }
+
+    #[test]
+    fn engine_7732_get_headers_by_slot_and_range_report_counts() {
+        let mut state = test_state(2077003);
+        let slot_a = "0x51";
+        let slot_b = "0x52";
+        let root_a = format!("0x{}", "b2".repeat(32));
+        let root_b = format!("0x{}", "b3".repeat(32));
+
+        let _ = rpc(
+            &mut state,
+            290,
+            "engine_registerExecutionPayloadHeaderV1",
+            serde_json::json!([{
+              "slot": slot_a,
+              "payloadHeaderRoot": root_a
+            }]),
+        );
+        let _ = rpc(
+            &mut state,
+            291,
+            "engine_registerExecutionPayloadEnvelopeV1",
+            serde_json::json!([{
+              "slot": slot_a,
+              "payloadHeaderRoot": format!("0x{}", "b2".repeat(32))
+            }]),
+        );
+        let _ = rpc(
+            &mut state,
+            292,
+            "engine_registerExecutionPayloadHeaderV1",
+            serde_json::json!([{
+              "slot": slot_b,
+              "payloadHeaderRoot": root_b
+            }]),
+        );
+
+        let by_slot = rpc(
+            &mut state,
+            293,
+            "engine_getExecutionPayloadHeadersBySlotV1",
+            serde_json::json!([slot_a]),
+        );
+        assert_eq!(by_slot["result"]["headerCount"], "0x1");
+        assert_eq!(by_slot["result"]["revealedEnvelopeCount"], "0x1");
+
+        let by_range = rpc(
+            &mut state,
+            294,
+            "engine_getExecutionPayloadHeadersByRangeV1",
+            serde_json::json!([slot_a, slot_b]),
+        );
+        assert_eq!(by_range["result"]["status"], "OK");
+        assert_eq!(by_range["result"]["slotCount"], "0x2");
+        let slots = by_range["result"]["slots"].as_array().expect("range slots");
+        assert_eq!(slots.len(), 2);
+        assert_eq!(slots[0]["headerCount"], "0x1");
+    }
+
+    #[test]
+    fn engine_7732_get_headers_by_range_clamps_and_rejects_invalid_bounds() {
+        let mut state = test_state(2077003);
+        let clamped = rpc(
+            &mut state,
+            300,
+            "engine_getExecutionPayloadHeadersByRangeV1",
+            serde_json::json!(["0x0", "0x200"]),
+        );
+        assert_eq!(clamped["result"]["status"], "OK");
+        assert_eq!(clamped["result"]["slotCount"], "0x100");
+        assert_eq!(clamped["result"]["windowClamped"], Value::Bool(true));
+        assert_eq!(clamped["result"]["effectiveEndSlot"], "0xff");
+
+        let invalid = rpc(
+            &mut state,
+            301,
+            "engine_getExecutionPayloadHeadersByRangeV1",
+            serde_json::json!(["0x53", "0x52"]),
         );
         assert_eq!(invalid["result"]["status"], "INVALID");
         assert!(
