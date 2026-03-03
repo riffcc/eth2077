@@ -8,6 +8,10 @@ Date: 2026-03-03
   - slot-indexed header/envelope stores added.
   - engine endpoints added for header/envelope registration, envelope lookup, and timeliness status.
   - baseline status taxonomy exposed: `UNKNOWN`, `HEADER_ONLY`, `PARTIAL_REVEAL`, `REVEALED`, `LATE_REVEAL`, `ORPHAN_ENVELOPE`.
+- 2026-03-03 (Phase 2 initial enforcement landed in devnetd):
+  - deadline-aware withheld states added: `WITHHELD` and `PARTIAL_WITHHOLD`.
+  - forkchoice rejects slots with `WITHHELD`/`PARTIAL_WITHHOLD`/`LATE_REVEAL` timeliness violations.
+  - deterministic test hook (`currentUnixS`) added for reproducible interval/deadline behavior.
 
 ## Primary Sources
 

@@ -8,6 +8,15 @@ EIP-7732 Phase-1 timeliness accounting invariants.
 def SlotInvariant (headerCount revealedOnTime lateReveal : Nat) : Prop :=
   revealedOnTime + lateReveal <= headerCount
 
+def DeadlinePassed (currentUnixS deadlineUnixS : Nat) : Prop :=
+  deadlineUnixS < currentUnixS
+
+def Withheld (headerCount revealedOnTime lateReveal currentUnixS deadlineUnixS : Nat) : Prop :=
+  0 < headerCount ∧
+  revealedOnTime = 0 ∧
+  lateReveal = 0 ∧
+  DeadlinePassed currentUnixS deadlineUnixS
+
 theorem invariant_holds_with_no_reveals (headerCount : Nat) :
     SlotInvariant headerCount 0 0 := by
   simp [SlotInvariant]
@@ -42,5 +51,18 @@ theorem late_reveals_bounded_by_headers
     lateReveal <= headerCount := by
   exact Nat.le_trans (Nat.le_add_left lateReveal revealedOnTime) (by
     simpa [SlotInvariant, Nat.add_comm] using hInv)
+
+theorem withheld_implies_positive_headers
+    (headerCount revealedOnTime lateReveal currentUnixS deadlineUnixS : Nat)
+    (hWithheld : Withheld headerCount revealedOnTime lateReveal currentUnixS deadlineUnixS) :
+    0 < headerCount := by
+  exact hWithheld.1
+
+theorem withheld_implies_no_reveals
+    (headerCount revealedOnTime lateReveal currentUnixS deadlineUnixS : Nat)
+    (hWithheld : Withheld headerCount revealedOnTime lateReveal currentUnixS deadlineUnixS) :
+    revealedOnTime + lateReveal = 0 := by
+  rcases hWithheld with ⟨_, hOnTime, hLate, _⟩
+  simp [hOnTime, hLate]
 
 end ETH2077Proofs.PayloadTimeliness

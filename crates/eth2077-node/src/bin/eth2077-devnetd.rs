@@ -1584,13 +1584,25 @@ fn engine_7732_slot_deadline_unix_s(state: &NodeState, slot: u64) -> u64 {
         .saturating_add(12)
 }
 
-fn engine_7732_slot_status_response(state: &NodeState, slot: u64) -> Value {
+fn engine_7732_current_unix_s_from_req(req: &Value) -> Option<u64> {
+    req.get("currentUnixS")
+        .and_then(parse_u64_value)
+        .or_else(|| {
+            req.get("params")
+                .and_then(Value::as_array)
+                .and_then(|params| params.get(1))
+                .and_then(parse_u64_value)
+        })
+}
+
+fn engine_7732_slot_status_response(state: &NodeState, slot: u64, current_unix_s: u64) -> Value {
     let header_roots = state
         .engine_7732_headers_by_slot
         .get(&slot)
         .cloned()
         .unwrap_or_default();
     let deadline = engine_7732_slot_deadline_unix_s(state, slot);
+    let deadline_passed = current_unix_s > deadline;
     let mut revealed_on_time = Vec::new();
     let mut late_reveals = Vec::new();
     let mut pending_reveals = Vec::new();
@@ -1617,10 +1629,14 @@ fn engine_7732_slot_status_response(state: &NodeState, slot: u64) -> Value {
         "UNKNOWN"
     } else if header_roots.is_empty() && !orphan_roots.is_empty() {
         "ORPHAN_ENVELOPE"
-    } else if !late_reveals.is_empty() {
+    } else if pending_reveals.is_empty() && !late_reveals.is_empty() {
         "LATE_REVEAL"
     } else if pending_reveals.is_empty() {
         "REVEALED"
+    } else if deadline_passed && revealed_on_time.is_empty() && late_reveals.is_empty() {
+        "WITHHELD"
+    } else if deadline_passed {
+        "PARTIAL_WITHHOLD"
     } else if revealed_on_time.is_empty() {
         "HEADER_ONLY"
     } else {
@@ -1652,7 +1668,9 @@ fn engine_7732_slot_status_response(state: &NodeState, slot: u64) -> Value {
             .unwrap_or(false)
         }).count())
         .unwrap_or(0) as u64),
-      "deadlineUnixS": deadline
+      "deadlineUnixS": deadline,
+      "currentUnixS": current_unix_s,
+      "deadlinePassed": deadline_passed
     })
 }
 
@@ -1740,7 +1758,8 @@ fn engine_7732_get_payload_timeliness_response(state: &NodeState, req: &Value) -
                 .and_then(|root| state.engine_7732_envelopes_by_root.get(root).map(|e| e.slot))
         })
         .unwrap_or(state.current_height.saturating_add(1));
-    engine_7732_slot_status_response(state, slot)
+    let now_unix = engine_7732_current_unix_s_from_req(req).unwrap_or_else(now_unix_s);
+    engine_7732_slot_status_response(state, slot, now_unix)
 }
 
 fn engine_7732_get_payload_envelope_response(state: &NodeState, req: &Value) -> Value {
@@ -1813,6 +1832,27 @@ fn engine_forkchoice_updated_response(state: &mut NodeState, req: &Value) -> Val
     let fc_slot = engine_slot_from_payload_attributes(req)
         .or(state.engine_required_il_slot)
         .unwrap_or(state.current_height.saturating_add(1));
+    let timeliness_now = engine_7732_current_unix_s_from_req(req).unwrap_or_else(now_unix_s);
+    let timeliness = engine_7732_slot_status_response(state, fc_slot, timeliness_now);
+    let timeliness_status = timeliness
+        .get("aggregateStatus")
+        .and_then(Value::as_str)
+        .unwrap_or("UNKNOWN");
+    if matches!(
+        timeliness_status,
+        "WITHHELD" | "PARTIAL_WITHHOLD" | "LATE_REVEAL"
+    ) {
+        return serde_json::json!({
+          "payloadStatus": {
+            "status": "INVALID",
+            "latestValidHash": "0x00",
+            "validationError": format!("EIP-7732 timeliness violation for slot {}: {}", fc_slot, timeliness_status)
+          },
+          "payloadId": Value::Null,
+          "timeliness": timeliness
+        });
+    }
+
     let fc_view_id = engine_view_id_from_payload_attributes(req).or(Some(fc_slot));
     let has_il_update = engine_request_has_inclusion_list(req);
     let il_entries = if has_il_update {
@@ -3676,6 +3716,10 @@ mod tests {
         )
     }
 
+    fn rpc_raw(state: &mut NodeState, req: Value) -> Value {
+        handle_jsonrpc(state, &req)
+    }
+
     #[test]
     fn send_eip4844_raw_tx_via_jsonrpc_persists_blob_fields() {
         let mut state = test_state(2077003);
@@ -4349,5 +4393,76 @@ mod tests {
         );
         assert_eq!(timeliness["result"]["aggregateStatus"], "LATE_REVEAL");
         assert_eq!(timeliness["result"]["lateRevealCount"], "0x1");
+    }
+
+    #[test]
+    fn engine_7732_withheld_is_reported_after_deadline() {
+        let mut state = test_state(2077003);
+        let root = format!("0x{}", "34".repeat(32));
+        let slot = 0x13u64;
+        let deadline = state.started_at_unix_s + (slot * 12) + 12;
+
+        let _ = rpc(
+            &mut state,
+            140,
+            "engine_registerExecutionPayloadHeaderV1",
+            serde_json::json!([{
+              "slot": hex_u64(slot),
+              "payloadHeaderRoot": root
+            }]),
+        );
+
+        let timeliness = rpc(
+            &mut state,
+            141,
+            "engine_getPayloadTimelinessV1",
+            serde_json::json!([hex_u64(slot), hex_u64(deadline + 1)]),
+        );
+        assert_eq!(timeliness["result"]["aggregateStatus"], "WITHHELD");
+        assert_eq!(timeliness["result"]["deadlinePassed"], Value::Bool(true));
+    }
+
+    #[test]
+    fn engine_forkchoice_rejects_withheld_7732_slot() {
+        let mut state = test_state(2077003);
+        let slot = 0x14u64;
+        let root = format!("0x{}", "45".repeat(32));
+        let deadline = state.started_at_unix_s + (slot * 12) + 12;
+
+        let _ = rpc(
+            &mut state,
+            150,
+            "engine_registerExecutionPayloadHeaderV1",
+            serde_json::json!([{
+              "slot": hex_u64(slot),
+              "payloadHeaderRoot": root
+            }]),
+        );
+
+        let fc_resp = rpc_raw(
+            &mut state,
+            serde_json::json!({
+              "jsonrpc": "2.0",
+              "id": 151,
+              "method": "engine_forkchoiceUpdatedV3",
+              "currentUnixS": hex_u64(deadline + 1),
+              "params": [
+                {},
+                {
+                  "payloadAttributes": {
+                    "slot": hex_u64(slot)
+                  }
+                }
+              ]
+            }),
+        );
+        assert_eq!(fc_resp["result"]["payloadStatus"]["status"], "INVALID");
+        assert!(
+            fc_resp["result"]["payloadStatus"]["validationError"]
+                .as_str()
+                .unwrap_or_default()
+                .contains("timeliness violation")
+        );
+        assert_eq!(fc_resp["result"]["timeliness"]["aggregateStatus"], "WITHHELD");
     }
 }
