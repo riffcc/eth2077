@@ -12,6 +12,10 @@ Date: 2026-03-03
   - deadline-aware withheld states added: `WITHHELD` and `PARTIAL_WITHHOLD`.
   - forkchoice rejects slots with `WITHHELD`/`PARTIAL_WITHHOLD`/`LATE_REVEAL` timeliness violations.
   - deterministic test hook (`currentUnixS`) added for reproducible interval/deadline behavior.
+- 2026-03-03 (Phase 2 extension landed in devnetd):
+  - `engine_newPayloadV3` now rejects `WITHHELD`/`PARTIAL_WITHHOLD`/`LATE_REVEAL` slots as `INVALID`.
+  - slot-local penalty lifecycle added with explicit `ACTIVE` -> `RECOVERED` transitions.
+  - timeliness and penalty snapshots now returned in forkchoice/newPayload responses.
 
 ## Primary Sources
 

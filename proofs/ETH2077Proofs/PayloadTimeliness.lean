@@ -65,4 +65,54 @@ theorem withheld_implies_no_reveals
   rcases hWithheld with ⟨_, hOnTime, hLate, _⟩
   simp [hOnTime, hLate]
 
+inductive TimelinessStatus where
+  | unknown
+  | headerOnly
+  | partialReveal
+  | revealed
+  | lateReveal
+  | withheld
+  | partialWithhold
+  | orphanEnvelope
+deriving DecidableEq
+
+inductive PenaltyState where
+  | active
+  | recovered
+deriving DecidableEq
+
+def IsViolation (status : TimelinessStatus) : Bool :=
+  status == TimelinessStatus.withheld ||
+  status == TimelinessStatus.partialWithhold ||
+  status == TimelinessStatus.lateReveal
+
+def PenaltyTransition (status : TimelinessStatus) : PenaltyState :=
+  if IsViolation status then PenaltyState.active else PenaltyState.recovered
+
+theorem violation_transitions_to_active
+    (status : TimelinessStatus)
+    (h : IsViolation status = true) :
+    PenaltyTransition status = PenaltyState.active := by
+  simp [PenaltyTransition, h]
+
+theorem non_violation_transitions_to_recovered
+    (status : TimelinessStatus)
+    (h : IsViolation status = false) :
+    PenaltyTransition status = PenaltyState.recovered := by
+  simp [PenaltyTransition, h]
+
+theorem withheld_is_violation : IsViolation TimelinessStatus.withheld = true := by
+  simp [IsViolation]
+
+theorem late_reveal_is_violation : IsViolation TimelinessStatus.lateReveal = true := by
+  simp [IsViolation]
+
+theorem revealed_is_not_violation : IsViolation TimelinessStatus.revealed = false := by
+  simp [IsViolation]
+
+theorem recovery_after_reveal :
+    PenaltyTransition TimelinessStatus.revealed = PenaltyState.recovered := by
+  apply non_violation_transitions_to_recovered
+  exact revealed_is_not_violation
+
 end ETH2077Proofs.PayloadTimeliness

@@ -72,6 +72,16 @@ struct Engine7732EnvelopeRecord {
     revealed_at_unix_s: u64,
 }
 
+#[derive(Debug, Clone)]
+struct Engine7732PenaltyRecord {
+    slot: u64,
+    state: String,
+    reason: String,
+    last_status: String,
+    activated_at_unix_s: u64,
+    recovered_at_unix_s: Option<u64>,
+}
+
 #[derive(Debug, Clone, Serialize)]
 struct NodeState {
     node_id: usize,
@@ -127,6 +137,8 @@ struct NodeState {
     engine_7732_headers_by_root: HashMap<String, Engine7732HeaderRecord>,
     #[serde(skip_serializing)]
     engine_7732_envelopes_by_root: HashMap<String, Engine7732EnvelopeRecord>,
+    #[serde(skip_serializing)]
+    engine_7732_penalties_by_slot: HashMap<u64, Engine7732PenaltyRecord>,
     #[serde(skip_serializing)]
     evm_db: InMemoryDB,
     #[serde(skip_serializing)]
@@ -1577,6 +1589,63 @@ fn engine_7732_envelope_to_json(envelope: &Engine7732EnvelopeRecord) -> Value {
     })
 }
 
+fn engine_7732_penalty_to_json(record: &Engine7732PenaltyRecord) -> Value {
+    serde_json::json!({
+      "slot": hex_u64(record.slot),
+      "state": record.state,
+      "reason": record.reason,
+      "lastStatus": record.last_status,
+      "activatedAtUnixS": record.activated_at_unix_s,
+      "recoveredAtUnixS": record.recovered_at_unix_s
+    })
+}
+
+fn engine_7732_is_timeliness_violation(status: &str) -> bool {
+    matches!(status, "WITHHELD" | "PARTIAL_WITHHOLD" | "LATE_REVEAL")
+}
+
+fn engine_7732_update_penalty_state(
+    state: &mut NodeState,
+    slot: u64,
+    status: &str,
+    reason: &str,
+    current_unix_s: u64,
+) -> Option<Engine7732PenaltyRecord> {
+    if engine_7732_is_timeliness_violation(status) {
+        let mut record = state.engine_7732_penalties_by_slot.get(&slot).cloned().unwrap_or(
+            Engine7732PenaltyRecord {
+                slot,
+                state: "ACTIVE".to_string(),
+                reason: reason.to_string(),
+                last_status: status.to_string(),
+                activated_at_unix_s: current_unix_s,
+                recovered_at_unix_s: None,
+            },
+        );
+        if record.state != "ACTIVE" {
+            record.activated_at_unix_s = current_unix_s;
+            record.recovered_at_unix_s = None;
+        }
+        record.state = "ACTIVE".to_string();
+        record.reason = reason.to_string();
+        record.last_status = status.to_string();
+        state
+            .engine_7732_penalties_by_slot
+            .insert(slot, record.clone());
+        Some(record)
+    } else if let Some(existing) = state.engine_7732_penalties_by_slot.get_mut(&slot) {
+        existing.last_status = status.to_string();
+        if existing.state != "RECOVERED" {
+            existing.state = "RECOVERED".to_string();
+            existing.reason = reason.to_string();
+            existing.recovered_at_unix_s = Some(current_unix_s);
+        }
+        Some(existing.clone())
+    } else {
+        None
+    }
+}
+
 fn engine_7732_slot_deadline_unix_s(state: &NodeState, slot: u64) -> u64 {
     state
         .started_at_unix_s
@@ -1642,6 +1711,11 @@ fn engine_7732_slot_status_response(state: &NodeState, slot: u64, current_unix_s
     } else {
         "PARTIAL_REVEAL"
     };
+    let penalty = state
+        .engine_7732_penalties_by_slot
+        .get(&slot)
+        .map(engine_7732_penalty_to_json)
+        .unwrap_or(Value::Null);
 
     serde_json::json!({
       "slot": hex_u64(slot),
@@ -1670,7 +1744,8 @@ fn engine_7732_slot_status_response(state: &NodeState, slot: u64, current_unix_s
         .unwrap_or(0) as u64),
       "deadlineUnixS": deadline,
       "currentUnixS": current_unix_s,
-      "deadlinePassed": deadline_passed
+      "deadlinePassed": deadline_passed,
+      "penalty": penalty
     })
 }
 
@@ -1838,10 +1913,19 @@ fn engine_forkchoice_updated_response(state: &mut NodeState, req: &Value) -> Val
         .get("aggregateStatus")
         .and_then(Value::as_str)
         .unwrap_or("UNKNOWN");
-    if matches!(
-        timeliness_status,
-        "WITHHELD" | "PARTIAL_WITHHOLD" | "LATE_REVEAL"
-    ) {
+    if engine_7732_is_timeliness_violation(timeliness_status) {
+        let penalty = engine_7732_update_penalty_state(
+            state,
+            fc_slot,
+            timeliness_status,
+            &format!(
+                "EIP-7732 timeliness violation for slot {}: {}",
+                fc_slot, timeliness_status
+            ),
+            timeliness_now,
+        )
+        .map(|record| engine_7732_penalty_to_json(&record))
+        .unwrap_or(Value::Null);
         return serde_json::json!({
           "payloadStatus": {
             "status": "INVALID",
@@ -1849,9 +1933,19 @@ fn engine_forkchoice_updated_response(state: &mut NodeState, req: &Value) -> Val
             "validationError": format!("EIP-7732 timeliness violation for slot {}: {}", fc_slot, timeliness_status)
           },
           "payloadId": Value::Null,
-          "timeliness": timeliness
+          "timeliness": timeliness,
+          "penalty": penalty
         });
     }
+    let penalty = engine_7732_update_penalty_state(
+        state,
+        fc_slot,
+        timeliness_status,
+        "EIP-7732 timeliness recovered",
+        timeliness_now,
+    )
+    .map(|record| engine_7732_penalty_to_json(&record))
+    .unwrap_or(Value::Null);
 
     let fc_view_id = engine_view_id_from_payload_attributes(req).or(Some(fc_slot));
     let has_il_update = engine_request_has_inclusion_list(req);
@@ -1920,6 +2014,8 @@ fn engine_forkchoice_updated_response(state: &mut NodeState, req: &Value) -> Val
         "validationError": Value::Null
       },
       "payloadId": "0x0000000000000000",
+      "timeliness": timeliness,
+      "penalty": penalty,
       "focil": {
         "requiredTransactions": hex_u64(state.engine_required_il_txs.len() as u64),
         "slot": state.engine_required_il_slot.map(hex_u64),
@@ -1954,19 +2050,58 @@ fn engine_new_payload_response(state: &mut NodeState, req: &Value) -> Value {
         .and_then(normalize_hash32)
         .unwrap_or_else(|| "0x00".to_string());
 
+    let payload_slot = engine_payload_slot(req)
+        .or(state.engine_required_il_slot)
+        .unwrap_or(state.current_height.saturating_add(1));
+    let timeliness_now = engine_7732_current_unix_s_from_req(req).unwrap_or_else(now_unix_s);
+    let timeliness = engine_7732_slot_status_response(state, payload_slot, timeliness_now);
+    let timeliness_status = timeliness
+        .get("aggregateStatus")
+        .and_then(Value::as_str)
+        .unwrap_or("UNKNOWN");
+    if engine_7732_is_timeliness_violation(timeliness_status) {
+        let penalty = engine_7732_update_penalty_state(
+            state,
+            payload_slot,
+            timeliness_status,
+            &format!(
+                "EIP-7732 timeliness violation for slot {}: {}",
+                payload_slot, timeliness_status
+            ),
+            timeliness_now,
+        )
+        .map(|record| engine_7732_penalty_to_json(&record))
+        .unwrap_or(Value::Null);
+        return serde_json::json!({
+          "status": "INVALID",
+          "latestValidHash": latest_valid_hash,
+          "validationError": format!("EIP-7732 timeliness violation for slot {}: {}", payload_slot, timeliness_status),
+          "timeliness": timeliness,
+          "penalty": penalty
+        });
+    }
+    let penalty = engine_7732_update_penalty_state(
+        state,
+        payload_slot,
+        timeliness_status,
+        "EIP-7732 timeliness recovered",
+        timeliness_now,
+    )
+    .map(|record| engine_7732_penalty_to_json(&record))
+    .unwrap_or(Value::Null);
+
     if !missing.is_empty() {
         let preview = missing.iter().take(3).cloned().collect::<Vec<_>>().join(", ");
         return serde_json::json!({
           "status": "INCLUSION_LIST_UNSATISFIED",
           "latestValidHash": latest_valid_hash,
-          "validationError": format!("missing {} inclusion-list tx(s): {}", missing.len(), preview)
+          "validationError": format!("missing {} inclusion-list tx(s): {}", missing.len(), preview),
+          "timeliness": timeliness,
+          "penalty": penalty
         });
     }
 
     if state.engine_focil_view_frozen {
-        let payload_slot = engine_payload_slot(req)
-            .or(state.engine_required_il_slot)
-            .unwrap_or(state.current_height.saturating_add(1));
         if let Some(frozen_slot) = state.engine_focil_frozen_slot {
             if payload_slot != frozen_slot {
                 return serde_json::json!({
@@ -1975,7 +2110,9 @@ fn engine_new_payload_response(state: &mut NodeState, req: &Value) -> Value {
                   "validationError": format!(
                     "FOCIL view frozen at slot {}; payload targets slot {}",
                     frozen_slot, payload_slot
-                  )
+                  ),
+                  "timeliness": timeliness,
+                  "penalty": penalty
                 });
             }
         }
@@ -2131,14 +2268,18 @@ fn engine_new_payload_response(state: &mut NodeState, req: &Value) -> Value {
         serde_json::json!({
           "status": "VALID",
           "latestValidHash": latest_valid_hash,
-          "validationError": Value::Null
+          "validationError": Value::Null,
+          "timeliness": timeliness,
+          "penalty": penalty
         })
     } else {
         let preview = checks.iter().take(3).cloned().collect::<Vec<_>>().join("; ");
         serde_json::json!({
           "status": "INCLUSION_LIST_UNSATISFIED",
           "latestValidHash": latest_valid_hash,
-          "validationError": preview
+          "validationError": preview,
+          "timeliness": timeliness,
+          "penalty": penalty
         })
     }
 }
@@ -3321,6 +3462,7 @@ fn build_state(cfg: &Config, chain_spec: &Value) -> NodeState {
         engine_7732_headers_by_slot: HashMap::new(),
         engine_7732_headers_by_root: HashMap::new(),
         engine_7732_envelopes_by_root: HashMap::new(),
+        engine_7732_penalties_by_slot: HashMap::new(),
         evm_db: InMemoryDB::default(),
         tx_receipts: HashMap::new(),
         market_nfts,
@@ -4464,5 +4606,126 @@ mod tests {
                 .contains("timeliness violation")
         );
         assert_eq!(fc_resp["result"]["timeliness"]["aggregateStatus"], "WITHHELD");
+        assert_eq!(fc_resp["result"]["penalty"]["state"], "ACTIVE");
+        assert_eq!(fc_resp["result"]["penalty"]["lastStatus"], "WITHHELD");
+    }
+
+    #[test]
+    fn engine_new_payload_rejects_withheld_7732_slot() {
+        let mut state = test_state(2077003);
+        let slot = 0x15u64;
+        let root = format!("0x{}", "56".repeat(32));
+        let deadline = state.started_at_unix_s + (slot * 12) + 12;
+        let next_block_hash = block_hash(state.current_height.saturating_add(1));
+
+        let _ = rpc(
+            &mut state,
+            160,
+            "engine_registerExecutionPayloadHeaderV1",
+            serde_json::json!([{
+              "slot": hex_u64(slot),
+              "payloadHeaderRoot": root
+            }]),
+        );
+
+        let np_resp = rpc_raw(
+            &mut state,
+            serde_json::json!({
+              "jsonrpc": "2.0",
+              "id": 161,
+              "method": "engine_newPayloadV3",
+              "currentUnixS": hex_u64(deadline + 1),
+              "params": [
+                {
+                  "slot": hex_u64(slot),
+                  "blockHash": next_block_hash,
+                  "transactions": []
+                }
+              ]
+            }),
+        );
+
+        assert_eq!(np_resp["result"]["status"], "INVALID");
+        assert!(
+            np_resp["result"]["validationError"]
+                .as_str()
+                .unwrap_or_default()
+                .contains("timeliness violation")
+        );
+        assert_eq!(np_resp["result"]["timeliness"]["aggregateStatus"], "WITHHELD");
+        assert_eq!(np_resp["result"]["penalty"]["state"], "ACTIVE");
+        assert_eq!(np_resp["result"]["penalty"]["lastStatus"], "WITHHELD");
+    }
+
+    #[test]
+    fn engine_7732_penalty_recovers_after_reveal() {
+        let mut state = test_state(2077003);
+        let slot = 0x16u64;
+        let root = format!("0x{}", "67".repeat(32));
+        let deadline = state.started_at_unix_s + (slot * 12) + 12;
+
+        let _ = rpc(
+            &mut state,
+            170,
+            "engine_registerExecutionPayloadHeaderV1",
+            serde_json::json!([{
+              "slot": hex_u64(slot),
+              "payloadHeaderRoot": root
+            }]),
+        );
+
+        let first_fc = rpc_raw(
+            &mut state,
+            serde_json::json!({
+              "jsonrpc": "2.0",
+              "id": 171,
+              "method": "engine_forkchoiceUpdatedV3",
+              "currentUnixS": hex_u64(deadline + 1),
+              "params": [
+                {},
+                {
+                  "payloadAttributes": {
+                    "slot": hex_u64(slot)
+                  }
+                }
+              ]
+            }),
+        );
+        assert_eq!(first_fc["result"]["payloadStatus"]["status"], "INVALID");
+        assert_eq!(first_fc["result"]["penalty"]["state"], "ACTIVE");
+
+        let _ = rpc(
+            &mut state,
+            172,
+            "engine_registerExecutionPayloadEnvelopeV1",
+            serde_json::json!([{
+              "slot": hex_u64(slot),
+              "payloadHeaderRoot": format!("0x{}", "67".repeat(32)),
+              "revealedAtUnixS": hex_u64(deadline)
+            }]),
+        );
+
+        let recovered_fc = rpc_raw(
+            &mut state,
+            serde_json::json!({
+              "jsonrpc": "2.0",
+              "id": 173,
+              "method": "engine_forkchoiceUpdatedV3",
+              "currentUnixS": hex_u64(deadline + 2),
+              "params": [
+                {},
+                {
+                  "payloadAttributes": {
+                    "slot": hex_u64(slot)
+                  }
+                }
+              ]
+            }),
+        );
+        assert_eq!(recovered_fc["result"]["payloadStatus"]["status"], "VALID");
+        assert_eq!(recovered_fc["result"]["timeliness"]["aggregateStatus"], "REVEALED");
+        assert_eq!(recovered_fc["result"]["penalty"]["state"], "RECOVERED");
+        assert_eq!(recovered_fc["result"]["penalty"]["lastStatus"], "REVEALED");
+        assert!(recovered_fc["result"]["penalty"]["recoveredAtUnixS"].is_u64());
     }
 }
