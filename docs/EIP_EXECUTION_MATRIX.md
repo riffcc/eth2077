@@ -20,6 +20,7 @@ This matrix tracks execution-layer EIP parity work against the ETH2030 target su
 | EIP-4844 | Blob transaction (`0x03`) | partial | Decode + execution path + runtime JSON-RPC tests + blob fee RPC fields are wired; no blob sidecar/DA plumbing yet. |
 | EIP-7702 | Set-code transaction (`0x04`) | partial | Decode + execution path + runtime JSON-RPC tests are wired; conformance vectors and stricter auth semantics pending. |
 | EIP-7805 | FOCIL inclusion-list engine lane | partial | Engine API lane now includes `engine_getInclusionListV1` plus `engine_forkchoiceUpdatedV3`/`engine_newPayloadV3` inclusion-list wiring, metadata compatibility checks (sender/nonce/gas/value), basic nonce/balance/gas-space enforcement, and server-side committee + view-freeze semantics (immutable IL within frozen slot) with `INCLUSION_LIST_UNSATISFIED`; full CL/P2P committee gossip/attestation path still pending. |
+| EIP-7732 | ePBS consensus/EL integration lane | missing | Source-anchored plan captured in `docs/EIP_7732_IMPLEMENTATION_PLAN.md`; implementation starts with header/envelope data model + runtime hooks in devnetd. |
 
 ## Execution Order (One EIP At A Time)
 
@@ -33,6 +34,7 @@ This matrix tracks execution-layer EIP parity work against the ETH2030 target su
    - wire CL/P2P committee gossip/attestation path to replace server-local committee scaffolding.
    - extend IL validity checks from heuristic precheck to full execution-congruent validation.
 4. EIP-7685 and other roadmap-targeted request/interop features.
+5. EIP-7732 phased integration per `docs/EIP_7732_IMPLEMENTATION_PLAN.md`.
 
 ## Required Evidence Per EIP
 
