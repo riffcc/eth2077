@@ -49,6 +49,29 @@ struct EngineTxMeta {
     value: Option<U256>,
 }
 
+#[derive(Debug, Clone)]
+struct Engine7732HeaderRecord {
+    slot: u64,
+    payload_header_root: String,
+    parent_beacon_block_root: Option<String>,
+    execution_block_hash: Option<String>,
+    proposer: Option<String>,
+    bid_value_wei: Option<U256>,
+    view_id: Option<u64>,
+    received_at_unix_s: u64,
+}
+
+#[derive(Debug, Clone)]
+struct Engine7732EnvelopeRecord {
+    slot: u64,
+    payload_header_root: String,
+    execution_block_hash: Option<String>,
+    payload_body_hash: Option<String>,
+    signer: Option<String>,
+    data_available: bool,
+    revealed_at_unix_s: u64,
+}
+
 #[derive(Debug, Clone, Serialize)]
 struct NodeState {
     node_id: usize,
@@ -98,6 +121,12 @@ struct NodeState {
     engine_focil_frozen_il_root: Option<String>,
     #[serde(skip_serializing)]
     engine_focil_view_id: Option<u64>,
+    #[serde(skip_serializing)]
+    engine_7732_headers_by_slot: HashMap<u64, Vec<String>>,
+    #[serde(skip_serializing)]
+    engine_7732_headers_by_root: HashMap<String, Engine7732HeaderRecord>,
+    #[serde(skip_serializing)]
+    engine_7732_envelopes_by_root: HashMap<String, Engine7732EnvelopeRecord>,
     #[serde(skip_serializing)]
     evm_db: InMemoryDB,
     #[serde(skip_serializing)]
@@ -1389,6 +1418,343 @@ fn engine_inclusion_list_root(hashes: &[String]) -> String {
     bytes_to_hex(revm::primitives::keccak256(joined.as_bytes()).as_slice())
 }
 
+fn normalize_hash32_value(value: Option<&Value>) -> Option<String> {
+    value.and_then(Value::as_str).and_then(normalize_hash32)
+}
+
+fn engine_7732_payload_header_source<'a>(req: &'a Value) -> Option<&'a Value> {
+    req.get("payloadHeader")
+        .or_else(|| req.get("signedExecutionPayloadHeader"))
+        .or_else(|| req.get("executionPayloadHeader"))
+        .or_else(|| req.get("params").and_then(Value::as_array).and_then(|a| a.first()))
+}
+
+fn engine_7732_payload_envelope_source<'a>(req: &'a Value) -> Option<&'a Value> {
+    req.get("payloadEnvelope")
+        .or_else(|| req.get("signedExecutionPayloadEnvelope"))
+        .or_else(|| req.get("executionPayloadEnvelope"))
+        .or_else(|| req.get("params").and_then(Value::as_array).and_then(|a| a.first()))
+}
+
+fn engine_7732_payload_header_root_from_value(value: &Value) -> Option<String> {
+    let message = value.get("message").unwrap_or(value);
+    normalize_hash32_value(
+        message
+            .get("payloadHeaderRoot")
+            .or_else(|| message.get("executionPayloadHeaderRoot"))
+            .or_else(|| message.get("headerRoot"))
+            .or_else(|| message.get("payloadRoot"))
+            .or_else(|| message.get("root")),
+    )
+}
+
+fn engine_7732_parse_header_record(
+    req: &Value,
+    fallback_slot: u64,
+) -> Result<Engine7732HeaderRecord, String> {
+    let source = engine_7732_payload_header_source(req)
+        .ok_or_else(|| "missing payload header object".to_string())?;
+    let message = source.get("message").unwrap_or(source);
+
+    let slot = message
+        .get("slot")
+        .and_then(parse_u64_value)
+        .or_else(|| req.get("slot").and_then(parse_u64_value))
+        .unwrap_or(fallback_slot);
+    let payload_header_root = engine_7732_payload_header_root_from_value(source).unwrap_or_else(|| {
+        let encoded = serde_json::to_string(message).unwrap_or_else(|_| "{}".to_string());
+        bytes_to_hex(revm::primitives::keccak256(encoded.as_bytes()).as_slice())
+    });
+
+    Ok(Engine7732HeaderRecord {
+        slot,
+        payload_header_root,
+        parent_beacon_block_root: normalize_hash32_value(
+            message
+                .get("parentBeaconBlockRoot")
+                .or_else(|| message.get("parentRoot")),
+        ),
+        execution_block_hash: normalize_hash32_value(
+            message
+                .get("executionBlockHash")
+                .or_else(|| message.get("blockHash")),
+        ),
+        proposer: message
+            .get("proposer")
+            .or_else(|| message.get("proposerAddress"))
+            .or_else(|| message.get("builder"))
+            .and_then(Value::as_str)
+            .map(|raw| canonical_address(raw).unwrap_or_else(|| raw.to_string())),
+        bid_value_wei: message
+            .get("bidValue")
+            .or_else(|| message.get("bidValueWei"))
+            .and_then(parse_u256_value),
+        view_id: message
+            .get("viewId")
+            .or_else(|| message.get("view"))
+            .and_then(parse_u64_value),
+        received_at_unix_s: req
+            .get("receivedAtUnixS")
+            .or_else(|| message.get("receivedAtUnixS"))
+            .and_then(parse_u64_value)
+            .unwrap_or_else(now_unix_s),
+    })
+}
+
+fn engine_7732_parse_envelope_record(
+    req: &Value,
+    fallback_slot: u64,
+) -> Result<Engine7732EnvelopeRecord, String> {
+    let source = engine_7732_payload_envelope_source(req)
+        .ok_or_else(|| "missing payload envelope object".to_string())?;
+    let message = source.get("message").unwrap_or(source);
+
+    let slot = message
+        .get("slot")
+        .and_then(parse_u64_value)
+        .or_else(|| req.get("slot").and_then(parse_u64_value))
+        .unwrap_or(fallback_slot);
+
+    let payload_header_root = engine_7732_payload_header_root_from_value(source).unwrap_or_else(|| {
+        let encoded = serde_json::to_string(message).unwrap_or_else(|_| "{}".to_string());
+        bytes_to_hex(revm::primitives::keccak256(encoded.as_bytes()).as_slice())
+    });
+
+    Ok(Engine7732EnvelopeRecord {
+        slot,
+        payload_header_root,
+        execution_block_hash: normalize_hash32_value(
+            message
+                .get("executionBlockHash")
+                .or_else(|| message.get("blockHash")),
+        ),
+        payload_body_hash: normalize_hash32_value(
+            message
+                .get("payloadBodyHash")
+                .or_else(|| message.get("payloadHash"))
+                .or_else(|| message.get("bodyRoot")),
+        ),
+        signer: message
+            .get("signer")
+            .or_else(|| message.get("builder"))
+            .or_else(|| message.get("revealer"))
+            .and_then(Value::as_str)
+            .map(|raw| canonical_address(raw).unwrap_or_else(|| raw.to_string())),
+        data_available: message
+            .get("dataAvailable")
+            .and_then(Value::as_bool)
+            .unwrap_or(true),
+        revealed_at_unix_s: req
+            .get("revealedAtUnixS")
+            .or_else(|| message.get("revealedAtUnixS"))
+            .and_then(parse_u64_value)
+            .unwrap_or_else(now_unix_s),
+    })
+}
+
+fn engine_7732_header_to_json(header: &Engine7732HeaderRecord) -> Value {
+    serde_json::json!({
+      "slot": hex_u64(header.slot),
+      "payloadHeaderRoot": header.payload_header_root,
+      "parentBeaconBlockRoot": header.parent_beacon_block_root,
+      "executionBlockHash": header.execution_block_hash,
+      "proposer": header.proposer,
+      "bidValue": header.bid_value_wei.map(u256_to_hex),
+      "viewId": header.view_id.map(hex_u64),
+      "receivedAtUnixS": header.received_at_unix_s
+    })
+}
+
+fn engine_7732_envelope_to_json(envelope: &Engine7732EnvelopeRecord) -> Value {
+    serde_json::json!({
+      "slot": hex_u64(envelope.slot),
+      "payloadHeaderRoot": envelope.payload_header_root,
+      "executionBlockHash": envelope.execution_block_hash,
+      "payloadBodyHash": envelope.payload_body_hash,
+      "signer": envelope.signer,
+      "dataAvailable": envelope.data_available,
+      "revealedAtUnixS": envelope.revealed_at_unix_s
+    })
+}
+
+fn engine_7732_slot_deadline_unix_s(state: &NodeState, slot: u64) -> u64 {
+    state
+        .started_at_unix_s
+        .saturating_add(slot.saturating_mul(12))
+        .saturating_add(12)
+}
+
+fn engine_7732_slot_status_response(state: &NodeState, slot: u64) -> Value {
+    let header_roots = state
+        .engine_7732_headers_by_slot
+        .get(&slot)
+        .cloned()
+        .unwrap_or_default();
+    let deadline = engine_7732_slot_deadline_unix_s(state, slot);
+    let mut revealed_on_time = Vec::new();
+    let mut late_reveals = Vec::new();
+    let mut pending_reveals = Vec::new();
+
+    for root in &header_roots {
+        match state.engine_7732_envelopes_by_root.get(root) {
+            Some(env) if env.revealed_at_unix_s <= deadline => revealed_on_time.push(root.clone()),
+            Some(env) => {
+                let _ = env;
+                late_reveals.push(root.clone())
+            }
+            None => pending_reveals.push(root.clone()),
+        }
+    }
+
+    let orphan_roots: Vec<String> = state
+        .engine_7732_envelopes_by_root
+        .iter()
+        .filter(|(_, env)| env.slot == slot && !state.engine_7732_headers_by_root.contains_key(&env.payload_header_root))
+        .map(|(root, _)| root.clone())
+        .collect();
+
+    let aggregate_status = if header_roots.is_empty() && orphan_roots.is_empty() {
+        "UNKNOWN"
+    } else if header_roots.is_empty() && !orphan_roots.is_empty() {
+        "ORPHAN_ENVELOPE"
+    } else if !late_reveals.is_empty() {
+        "LATE_REVEAL"
+    } else if pending_reveals.is_empty() {
+        "REVEALED"
+    } else if revealed_on_time.is_empty() {
+        "HEADER_ONLY"
+    } else {
+        "PARTIAL_REVEAL"
+    };
+
+    serde_json::json!({
+      "slot": hex_u64(slot),
+      "aggregateStatus": aggregate_status,
+      "headerRoots": header_roots,
+      "revealedOnTime": revealed_on_time,
+      "lateReveals": late_reveals,
+      "pendingReveals": pending_reveals,
+      "orphanEnvelopes": orphan_roots,
+      "headerCount": hex_u64(state.engine_7732_headers_by_slot.get(&slot).map(|v| v.len()).unwrap_or(0) as u64),
+      "revealedCount": hex_u64(state
+        .engine_7732_headers_by_slot
+        .get(&slot)
+        .map(|roots| roots.iter().filter(|r| state.engine_7732_envelopes_by_root.contains_key(*r)).count())
+        .unwrap_or(0) as u64),
+      "lateRevealCount": hex_u64(state
+        .engine_7732_headers_by_slot
+        .get(&slot)
+        .map(|roots| roots.iter().filter(|r| {
+          state
+            .engine_7732_envelopes_by_root
+            .get(*r)
+            .map(|env| env.revealed_at_unix_s > deadline)
+            .unwrap_or(false)
+        }).count())
+        .unwrap_or(0) as u64),
+      "deadlineUnixS": deadline
+    })
+}
+
+fn engine_7732_register_payload_header_response(state: &mut NodeState, req: &Value) -> Value {
+    let fallback_slot = state.current_height.saturating_add(1);
+    match engine_7732_parse_header_record(req, fallback_slot) {
+        Ok(header) => {
+            let slot = header.slot;
+            let root = header.payload_header_root.clone();
+            state.engine_7732_headers_by_root.insert(root.clone(), header.clone());
+            let slot_roots = state.engine_7732_headers_by_slot.entry(slot).or_default();
+            if !slot_roots.contains(&root) {
+                slot_roots.push(root.clone());
+            }
+            serde_json::json!({
+              "status": "ACCEPTED",
+              "slot": hex_u64(slot),
+              "payloadHeaderRoot": root,
+              "knownHeadersAtSlot": hex_u64(slot_roots.len() as u64),
+              "header": engine_7732_header_to_json(&header)
+            })
+        }
+        Err(err) => serde_json::json!({
+          "status": "INVALID",
+          "validationError": err
+        }),
+    }
+}
+
+fn engine_7732_register_payload_envelope_response(state: &mut NodeState, req: &Value) -> Value {
+    let fallback_slot = state.current_height.saturating_add(1);
+    match engine_7732_parse_envelope_record(req, fallback_slot) {
+        Ok(envelope) => {
+            let root = envelope.payload_header_root.clone();
+            let slot = envelope.slot;
+            let linkage_status = if state.engine_7732_headers_by_root.contains_key(&root) {
+                "LINKED"
+            } else {
+                "ORPHAN"
+            };
+            state
+                .engine_7732_envelopes_by_root
+                .insert(root.clone(), envelope.clone());
+            serde_json::json!({
+              "status": "ACCEPTED",
+              "slot": hex_u64(slot),
+              "payloadHeaderRoot": root,
+              "linkageStatus": linkage_status,
+              "envelope": engine_7732_envelope_to_json(&envelope)
+            })
+        }
+        Err(err) => serde_json::json!({
+          "status": "INVALID",
+          "validationError": err
+        }),
+    }
+}
+
+fn engine_7732_get_payload_timeliness_response(state: &NodeState, req: &Value) -> Value {
+    let slot_from_req = req
+        .get("slot")
+        .and_then(parse_u64_value)
+        .or_else(|| {
+            req.get("params")
+                .and_then(Value::as_array)
+                .and_then(|params| params.first())
+                .and_then(parse_u64_value)
+        });
+    let root_from_req = normalize_hash32_value(
+        req.get("payloadHeaderRoot").or_else(|| {
+            req.get("params")
+                .and_then(Value::as_array)
+                .and_then(|params| params.first())
+        }),
+    );
+    let slot = slot_from_req
+        .or_else(|| {
+            root_from_req
+                .as_ref()
+                .and_then(|root| state.engine_7732_headers_by_root.get(root).map(|h| h.slot))
+        })
+        .or_else(|| {
+            root_from_req
+                .as_ref()
+                .and_then(|root| state.engine_7732_envelopes_by_root.get(root).map(|e| e.slot))
+        })
+        .unwrap_or(state.current_height.saturating_add(1));
+    engine_7732_slot_status_response(state, slot)
+}
+
+fn engine_7732_get_payload_envelope_response(state: &NodeState, req: &Value) -> Value {
+    let root = normalize_hash32_value(
+        req.get("payloadHeaderRoot").or_else(|| {
+            req.get("params")
+                .and_then(Value::as_array)
+                .and_then(|params| params.first())
+        }),
+    );
+    root.and_then(|r| state.engine_7732_envelopes_by_root.get(&r).map(engine_7732_envelope_to_json))
+        .unwrap_or(Value::Null)
+}
+
 fn engine_tx_meta_to_json(meta: &EngineTxMeta) -> Value {
     serde_json::json!({
       "hash": meta.hash,
@@ -2259,6 +2625,22 @@ fn handle_jsonrpc(state: &mut NodeState, req: &Value) -> Value {
             jsonrpc_response(&id, engine_forkchoice_updated_response(state, req))
         }
         "engine_newPayloadV3" => jsonrpc_response(&id, engine_new_payload_response(state, req)),
+        "engine_registerExecutionPayloadHeaderV1" => jsonrpc_response(
+            &id,
+            engine_7732_register_payload_header_response(state, req),
+        ),
+        "engine_registerExecutionPayloadEnvelopeV1" => jsonrpc_response(
+            &id,
+            engine_7732_register_payload_envelope_response(state, req),
+        ),
+        "engine_getPayloadTimelinessV1" => jsonrpc_response(
+            &id,
+            engine_7732_get_payload_timeliness_response(state, req),
+        ),
+        "engine_getExecutionPayloadEnvelopeV1" => jsonrpc_response(
+            &id,
+            engine_7732_get_payload_envelope_response(state, req),
+        ),
         "eth_sendRawTransaction" => {
             let raw_tx = params
                 .as_array()
@@ -2896,6 +3278,9 @@ fn build_state(cfg: &Config, chain_spec: &Value) -> NodeState {
         engine_focil_frozen_slot: None,
         engine_focil_frozen_il_root: None,
         engine_focil_view_id: None,
+        engine_7732_headers_by_slot: HashMap::new(),
+        engine_7732_headers_by_root: HashMap::new(),
+        engine_7732_envelopes_by_root: HashMap::new(),
         evm_db: InMemoryDB::default(),
         tx_receipts: HashMap::new(),
         market_nfts,
@@ -3086,7 +3471,11 @@ fn main() {
                         "engine_newPayloadV3",
                         "engine_forkchoiceUpdatedV3",
                         "engine_getPayloadV3",
-                        "engine_getInclusionListV1"
+                        "engine_getInclusionListV1",
+                        "engine_registerExecutionPayloadHeaderV1",
+                        "engine_registerExecutionPayloadEnvelopeV1",
+                        "engine_getPayloadTimelinessV1",
+                        "engine_getExecutionPayloadEnvelopeV1"
                     ]
                 }),
             )
@@ -3112,6 +3501,38 @@ fn main() {
             let result = {
                 let mut guard = state.lock().expect("state lock");
                 engine_forkchoice_updated_response(&mut guard, &req_json)
+            };
+            json_response("200 OK", &result)
+        } else if request_line.starts_with("POST /engine/v1/registerExecutionPayloadHeaderV1 ") {
+            let body = request_body_from_http(&req_bytes, header_end, content_length);
+            let req_json = serde_json::from_str::<Value>(&body).unwrap_or(Value::Null);
+            let result = {
+                let mut guard = state.lock().expect("state lock");
+                engine_7732_register_payload_header_response(&mut guard, &req_json)
+            };
+            json_response("200 OK", &result)
+        } else if request_line.starts_with("POST /engine/v1/registerExecutionPayloadEnvelopeV1 ") {
+            let body = request_body_from_http(&req_bytes, header_end, content_length);
+            let req_json = serde_json::from_str::<Value>(&body).unwrap_or(Value::Null);
+            let result = {
+                let mut guard = state.lock().expect("state lock");
+                engine_7732_register_payload_envelope_response(&mut guard, &req_json)
+            };
+            json_response("200 OK", &result)
+        } else if request_line.starts_with("POST /engine/v1/getPayloadTimelinessV1 ") {
+            let body = request_body_from_http(&req_bytes, header_end, content_length);
+            let req_json = serde_json::from_str::<Value>(&body).unwrap_or(Value::Null);
+            let result = {
+                let guard = state.lock().expect("state lock");
+                engine_7732_get_payload_timeliness_response(&guard, &req_json)
+            };
+            json_response("200 OK", &result)
+        } else if request_line.starts_with("POST /engine/v1/getExecutionPayloadEnvelopeV1 ") {
+            let body = request_body_from_http(&req_bytes, header_end, content_length);
+            let req_json = serde_json::from_str::<Value>(&body).unwrap_or(Value::Null);
+            let result = {
+                let guard = state.lock().expect("state lock");
+                engine_7732_get_payload_envelope_response(&guard, &req_json)
             };
             json_response("200 OK", &result)
         } else {
@@ -3811,5 +4232,122 @@ mod tests {
                 .unwrap_or_default()
                 .contains("view frozen")
         );
+    }
+
+    #[test]
+    fn engine_7732_header_registration_shows_header_only_timeliness() {
+        let mut state = test_state(2077003);
+        let root = format!("0x{}", "ef".repeat(32));
+        let block_hash_hint = block_hash(state.current_height.saturating_add(1));
+
+        let register_header = rpc(
+            &mut state,
+            110,
+            "engine_registerExecutionPayloadHeaderV1",
+            serde_json::json!([{
+              "slot": "0x10",
+              "payloadHeaderRoot": root,
+              "executionBlockHash": block_hash_hint,
+              "bidValue": "0x2a"
+            }]),
+        );
+        assert_eq!(register_header["result"]["status"], "ACCEPTED");
+
+        let timeliness = rpc(
+            &mut state,
+            111,
+            "engine_getPayloadTimelinessV1",
+            serde_json::json!(["0x10"]),
+        );
+        assert_eq!(timeliness["result"]["aggregateStatus"], "HEADER_ONLY");
+        assert_eq!(timeliness["result"]["headerCount"], "0x1");
+        assert_eq!(timeliness["result"]["revealedCount"], "0x0");
+    }
+
+    #[test]
+    fn engine_7732_on_time_reveal_transitions_to_revealed() {
+        let mut state = test_state(2077003);
+        let root = format!("0x{}", "01".repeat(32));
+        let on_time_reveal_at = state.started_at_unix_s + (0x11 * 12) + 5;
+
+        let _ = rpc(
+            &mut state,
+            120,
+            "engine_registerExecutionPayloadHeaderV1",
+            serde_json::json!([{
+              "slot": "0x11",
+              "payloadHeaderRoot": root
+            }]),
+        );
+
+        let _ = rpc(
+            &mut state,
+            121,
+            "engine_registerExecutionPayloadEnvelopeV1",
+            serde_json::json!([{
+              "slot": "0x11",
+              "payloadHeaderRoot": format!("0x{}", "01".repeat(32)),
+              "revealedAtUnixS": on_time_reveal_at
+            }]),
+        );
+
+        let timeliness = rpc(
+            &mut state,
+            122,
+            "engine_getPayloadTimelinessV1",
+            serde_json::json!(["0x11"]),
+        );
+        assert_eq!(timeliness["result"]["aggregateStatus"], "REVEALED");
+        assert_eq!(timeliness["result"]["revealedCount"], "0x1");
+        assert_eq!(timeliness["result"]["lateRevealCount"], "0x0");
+
+        let envelope = rpc(
+            &mut state,
+            123,
+            "engine_getExecutionPayloadEnvelopeV1",
+            serde_json::json!([format!("0x{}", "01".repeat(32))]),
+        );
+        assert_eq!(
+            envelope["result"]["payloadHeaderRoot"],
+            Value::String(format!("0x{}", "01".repeat(32)))
+        );
+    }
+
+    #[test]
+    fn engine_7732_late_reveal_is_reported() {
+        let mut state = test_state(2077003);
+        let root = format!("0x{}", "23".repeat(32));
+        let slot = 0x12u64;
+
+        let _ = rpc(
+            &mut state,
+            130,
+            "engine_registerExecutionPayloadHeaderV1",
+            serde_json::json!([{
+              "slot": hex_u64(slot),
+              "payloadHeaderRoot": root
+            }]),
+        );
+
+        let late_reveal_at = state.started_at_unix_s + (slot * 12) + 25;
+        let _ = rpc(
+            &mut state,
+            131,
+            "engine_registerExecutionPayloadEnvelopeV1",
+            serde_json::json!([{
+              "slot": hex_u64(slot),
+              "payloadHeaderRoot": format!("0x{}", "23".repeat(32)),
+              "revealedAtUnixS": late_reveal_at
+            }]),
+        );
+
+        let timeliness = rpc(
+            &mut state,
+            132,
+            "engine_getPayloadTimelinessV1",
+            serde_json::json!([hex_u64(slot)]),
+        );
+        assert_eq!(timeliness["result"]["aggregateStatus"], "LATE_REVEAL");
+        assert_eq!(timeliness["result"]["lateRevealCount"], "0x1");
     }
 }

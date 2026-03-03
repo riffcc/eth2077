@@ -1,3 +1,4 @@
 import ETH2077Proofs.ExecutionOptimization
 import ETH2077Proofs.InclusionList
+import ETH2077Proofs.PayloadTimeliness
 import ETH2077Proofs.TestnetGates
