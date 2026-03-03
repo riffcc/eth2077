@@ -24,6 +24,10 @@ Date: 2026-03-03
   - added `engine_getExecutionPayloadEnvelopesBySlotV1` for linked/missing/orphan envelope snapshots at a slot.
   - added `engine_getExecutionPayloadEnvelopesByRangeV1` with deterministic max-window clamp (`256` slots).
   - wired both methods into JSON-RPC dispatch, HTTP engine endpoints, and capability advertisement.
+- 2026-03-03 (Phase 2 timeliness range hooks landed in devnetd):
+  - added `engine_getPayloadTimelinessByRangeV1` for bounded slot-window timeliness snapshots.
+  - method supports deterministic `currentUnixS` override and returns clamped-window metadata.
+  - wired into JSON-RPC dispatch, HTTP engine endpoints, and capability advertisement.
 
 ## Primary Sources
 

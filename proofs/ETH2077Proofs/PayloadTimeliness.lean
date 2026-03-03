@@ -144,4 +144,18 @@ theorem clamped_window_does_not_expand
     ClampedWindow requestedSlots <= requestedSlots := by
   simpa [ClampedWindow, MaxSlotWindow] using Nat.min_le_left requestedSlots 256
 
+def TimelinessRangeValid (startSlot endSlot : Nat) : Prop :=
+  startSlot <= endSlot
+
+theorem timeliness_range_rejects_invalid_bounds
+    (startSlot endSlot : Nat)
+    (h : endSlot < startSlot) :
+    ¬ TimelinessRangeValid startSlot endSlot := by
+  exact Nat.not_le_of_lt h
+
+theorem timeliness_range_accepts_equal_bounds
+    (slot : Nat) :
+    TimelinessRangeValid slot slot := by
+  simp [TimelinessRangeValid]
+
 end ETH2077Proofs.PayloadTimeliness
