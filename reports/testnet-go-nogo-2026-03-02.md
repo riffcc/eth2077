@@ -21,7 +21,18 @@ PASS: no placeholder debt detected
 ## Benchmark Command Output (tail)
 
 ```
-    Finished `release` profile [optimized] target(s) in 0.07s
+   Compiling revm-context v13.0.0
+   Compiling ark-poly v0.5.0
+   Compiling ark-ec v0.5.0
+   Compiling ark-bls12-381 v0.5.0
+   Compiling ark-bn254 v0.5.0
+   Compiling revm-precompile v32.0.0
+   Compiling revm-handler v15.0.0
+   Compiling revm-inspector v15.0.0
+   Compiling revm v34.0.0
+   Compiling eth2077-node v0.1.0 (/mnt/riffcastle/castle/garage/ETH2077/crates/eth2077-node)
+   Compiling eth2077-bench v0.1.0 (/mnt/riffcastle/castle/garage/ETH2077/crates/eth2077-bench)
+    Finished `release` profile [optimized] target(s) in 21.25s
      Running `target/release/eth2077-bench --scenario-set default --seed 2077 --tx-count 600000 --output-json /mnt/riffcastle/castle/garage/ETH2077/reports/testnet-go-nogo-bench-2026-03-02.json --output-md /mnt/riffcastle/castle/garage/ETH2077/reports/testnet-go-nogo-bench-2026-03-02.md`
 Wrote JSON report: /mnt/riffcastle/castle/garage/ETH2077/reports/testnet-go-nogo-bench-2026-03-02.json
 Wrote Markdown report: /mnt/riffcastle/castle/garage/ETH2077/reports/testnet-go-nogo-bench-2026-03-02.md
@@ -42,7 +53,7 @@ Building deterministic ETH2077 testnet artifacts
 - chain_id: 2077001
 - validators: 48
 - bootnodes: 8
-    Finished `release` profile [optimized] target(s) in 0.05s
+    Finished `release` profile [optimized] target(s) in 0.15s
      Running `target/release/eth2077-testnet --output-dir /mnt/riffcastle/castle/garage/ETH2077/artifacts/testnet-alpha --network eth2077-alpha --seed 2077 --chain-id 2077001 --genesis-ts 1772409600 --fork-epoch 0 --validators 48 --bootnodes 8 --alloc-accounts 512`
 Wrote deterministic testnet artifacts to: /mnt/riffcastle/castle/garage/ETH2077/artifacts/testnet-alpha
 - chain-spec: /mnt/riffcastle/castle/garage/ETH2077/artifacts/testnet-alpha/chain-spec.json

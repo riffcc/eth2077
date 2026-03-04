@@ -99,15 +99,9 @@ fn main() {
     let genesis_timestamp: u64 = arg_value(&args, "--genesis-ts", "1772409600")
         .parse()
         .unwrap_or(1772409600);
-    let fork_epoch: u64 = arg_value(&args, "--fork-epoch", "0")
-        .parse()
-        .unwrap_or(0);
-    let validator_count: usize = arg_value(&args, "--validators", "48")
-        .parse()
-        .unwrap_or(48);
-    let bootnode_count: usize = arg_value(&args, "--bootnodes", "8")
-        .parse()
-        .unwrap_or(8);
+    let fork_epoch: u64 = arg_value(&args, "--fork-epoch", "0").parse().unwrap_or(0);
+    let validator_count: usize = arg_value(&args, "--validators", "48").parse().unwrap_or(48);
+    let bootnode_count: usize = arg_value(&args, "--bootnodes", "8").parse().unwrap_or(8);
     let user_alloc_count: usize = arg_value(&args, "--alloc-accounts", "512")
         .parse()
         .unwrap_or(512);
@@ -202,8 +196,11 @@ fn main() {
     write_pretty_json(format!("{output_dir}/chain-spec.json"), &chain_spec);
     write_pretty_json(format!("{output_dir}/genesis.json"), &genesis);
     write_pretty_json(format!("{output_dir}/metadata.json"), &metadata);
-    fs::write(format!("{output_dir}/bootnodes.txt"), bootnodes.join("\n") + "\n")
-        .expect("write bootnodes");
+    fs::write(
+        format!("{output_dir}/bootnodes.txt"),
+        bootnodes.join("\n") + "\n",
+    )
+    .expect("write bootnodes");
 
     println!("Wrote deterministic testnet artifacts to: {}", output_dir);
     println!("- chain-spec: {}/chain-spec.json", output_dir);

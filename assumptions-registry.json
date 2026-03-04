@@ -1,0 +1,49 @@
+{
+  "assumptions": [
+    {
+      "id": "A-001",
+      "name": "Deterministic state transition function",
+      "description": "Given identical pre-state and transaction input, transition execution is deterministic.",
+      "threat_model_anchor": "TM-SAFETY-001",
+      "referenced_by": [
+        "THM-001"
+      ]
+    },
+    {
+      "id": "A-002",
+      "name": "Canonical transaction sorting rule",
+      "description": "Nodes use the same tie-break and ordering policy for equivalent mempool snapshots.",
+      "threat_model_anchor": "TM-SAFETY-002",
+      "referenced_by": [
+        "THM-002"
+      ]
+    },
+    {
+      "id": "A-003",
+      "name": "Partial synchrony network bound",
+      "description": "Message delay eventually falls below a known bound in steady-state conditions.",
+      "threat_model_anchor": "TM-LIVENESS-001",
+      "referenced_by": [
+        "THM-003"
+      ]
+    },
+    {
+      "id": "A-004",
+      "name": "Nominal load envelope",
+      "description": "Ingress load and hardware capacity remain within measured benchmark envelopes.",
+      "threat_model_anchor": "TM-PERF-001",
+      "referenced_by": [
+        "THM-004"
+      ]
+    },
+    {
+      "id": "A-005",
+      "name": "Compaction fairness invariant",
+      "description": "Compaction policy does not starve eligible transactions over compaction windows.",
+      "threat_model_anchor": "TM-OPT-001",
+      "referenced_by": [
+        "THM-005"
+      ]
+    }
+  ]
+}

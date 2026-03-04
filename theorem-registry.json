@@ -1,0 +1,72 @@
+{
+  "version": "1.0.0",
+  "entries": [
+    {
+      "id": "THM-001",
+      "name": "State root integrity",
+      "description": "Applying a valid block transition yields a deterministic state root.",
+      "tier": "Tier1",
+      "status": "Verified",
+      "dependencies": [],
+      "proof_artifact_path": "proofs/ETH2077Proofs/StateRootIntegrity.lean",
+      "tags": [
+        "state",
+        "safety"
+      ]
+    },
+    {
+      "id": "THM-002",
+      "name": "Transaction ordering determinism",
+      "description": "Given identical mempool snapshots and rules, ordering is deterministic.",
+      "tier": "Tier1",
+      "status": "ProofInProgress",
+      "dependencies": [],
+      "proof_artifact_path": null,
+      "tags": [
+        "ordering",
+        "safety"
+      ]
+    },
+    {
+      "id": "THM-003",
+      "name": "Finality liveness bound",
+      "description": "Under bounded delay and less than one-third Byzantine nodes, finality remains eventual.",
+      "tier": "Tier2",
+      "status": "Proposed",
+      "dependencies": [
+        "THM-001"
+      ],
+      "proof_artifact_path": null,
+      "tags": [
+        "liveness",
+        "finality"
+      ]
+    },
+    {
+      "id": "THM-004",
+      "name": "Batch commit throughput lower bound",
+      "description": "Batch commit strategy maintains minimum throughput under nominal load.",
+      "tier": "Tier2",
+      "status": "Proposed",
+      "dependencies": [],
+      "proof_artifact_path": null,
+      "tags": [
+        "throughput",
+        "performance"
+      ]
+    },
+    {
+      "id": "THM-005",
+      "name": "Memory pool compaction efficiency",
+      "description": "Compaction preserves fairness while reducing memory pressure.",
+      "tier": "Tier3",
+      "status": "Proposed",
+      "dependencies": [],
+      "proof_artifact_path": null,
+      "tags": [
+        "mempool",
+        "optimization"
+      ]
+    }
+  ]
+}

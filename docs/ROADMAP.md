@@ -84,3 +84,4 @@ Exit criteria:
 2. Port first critical Citadel module with placeholder removal plan.
 3. Define theorem-by-theorem acceptance checklist tied to CI jobs.
 4. Stand up deterministic benchmark harness with fixed seeds.
+5. Execute EIP parity work one EIP at a time using `docs/EIP_EXECUTION_MATRIX.md` (EIP-4844/7702 runtime lanes complete; next is sidecar/DA + conformance depth).

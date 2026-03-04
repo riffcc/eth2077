@@ -1,0 +1,54 @@
+services:
+  archivist-site:
+    image: nginx:alpine
+    container_name: eth2077-archivist-site
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:3104:80"
+    volumes:
+      - ./archivist:/usr/share/nginx/html:ro
+
+  neverust-site:
+    image: nginx:alpine
+    container_name: eth2077-neverust-site
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:3105:80"
+    volumes:
+      - ./neverust:/usr/share/nginx/html:ro
+
+  archcluster-site:
+    image: nginx:alpine
+    container_name: eth2077-archcluster-site
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:3106:80"
+    volumes:
+      - ./archcluster:/usr/share/nginx/html:ro
+
+  dashboard-site:
+    image: nginx:alpine
+    container_name: eth2077-dashboard-site
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:3103:80"
+    volumes:
+      - ./2077:/usr/share/nginx/html:ro
+
+  wallet-site:
+    image: nginx:alpine
+    container_name: eth2077-wallet-site
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:3101:80"
+    volumes:
+      - ./wallet:/usr/share/nginx/html:ro
+
+  market-site:
+    image: nginx:alpine
+    container_name: eth2077-market-site
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:3102:80"
+    volumes:
+      - ./market:/usr/share/nginx/html:ro

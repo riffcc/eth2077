@@ -1,0 +1,936 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ETH2077 Network Observatory</title>
+  <style>
+    :root {
+      --bg: #f2f4f7;
+      --panel: #ffffff;
+      --ink: #17202a;
+      --muted: #5b6676;
+      --border: #d7deea;
+      --ok: #179d6f;
+      --warn: #d97a1f;
+      --bad: #c23f3f;
+      --accent: #1e7ad0;
+      --accent-2: #0f4e8e;
+      --chart-a: #1e7ad0;
+      --chart-b: #15a772;
+      --chart-c: #b56a1f;
+      --chart-d: #8a5bd4;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: "IBM Plex Sans", "Segoe UI", Tahoma, sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(1200px 600px at 0% 0%, #e9f1fa 0%, transparent 60%),
+        radial-gradient(900px 500px at 100% 10%, #edf7f2 0%, transparent 60%),
+        var(--bg);
+    }
+
+    .shell {
+      width: min(1360px, 96vw);
+      margin: 18px auto 42px;
+      display: grid;
+      gap: 14px;
+    }
+
+    .header {
+      background: linear-gradient(125deg, #0d2d46 0%, #194568 50%, #2f678e 100%);
+      color: #eff8ff;
+      border-radius: 18px;
+      padding: 16px;
+      box-shadow: 0 18px 44px rgba(5, 24, 42, 0.2);
+    }
+
+    .title-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: space-between;
+      align-items: baseline;
+    }
+
+    .title {
+      margin: 0;
+      font-size: clamp(24px, 3.4vw, 38px);
+      letter-spacing: 0.01em;
+      font-weight: 800;
+    }
+
+    .subtitle {
+      margin: 6px 0 0;
+      color: #cbe5fa;
+      font-size: 14px;
+    }
+
+    .controls {
+      margin-top: 14px;
+      display: grid;
+      gap: 8px;
+      grid-template-columns: 1.8fr auto auto auto auto;
+      align-items: center;
+    }
+
+    input, select, button {
+      border-radius: 10px;
+      border: 1px solid rgba(255, 255, 255, 0.35);
+      padding: 10px 12px;
+      font-size: 14px;
+      font-family: inherit;
+    }
+
+    input, select {
+      background: rgba(255, 255, 255, 0.12);
+      color: #fff;
+      backdrop-filter: blur(2px);
+    }
+
+    input::placeholder {
+      color: #c4d5e6;
+    }
+
+    option {
+      color: #1f2b36;
+      background: #ffffff;
+    }
+
+    button {
+      cursor: pointer;
+      color: #fff;
+      background: linear-gradient(135deg, #3187db, #1b5fa7);
+      border-color: rgba(255, 255, 255, 0.28);
+    }
+
+    button.secondary {
+      background: rgba(255, 255, 255, 0.14);
+    }
+
+    .status-row {
+      margin-top: 10px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+      font-size: 13px;
+    }
+
+    .pill {
+      border-radius: 999px;
+      padding: 5px 10px;
+      font-weight: 600;
+      border: 1px solid transparent;
+    }
+
+    .pill.ok {
+      background: rgba(23, 157, 111, 0.16);
+      color: #6be6b8;
+      border-color: rgba(115, 248, 193, 0.35);
+    }
+
+    .pill.warn {
+      background: rgba(217, 122, 31, 0.18);
+      color: #ffd29d;
+      border-color: rgba(255, 193, 124, 0.35);
+    }
+
+    .pill.bad {
+      background: rgba(194, 63, 63, 0.2);
+      color: #ffb5b5;
+      border-color: rgba(255, 153, 153, 0.4);
+    }
+
+    .slot-grid {
+      display: grid;
+      gap: 10px;
+      grid-template-columns: 1.4fr 1fr;
+    }
+
+    .slot-card, .kpi-grid .kpi, .panel {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      box-shadow: 0 8px 18px rgba(21, 31, 45, 0.07);
+    }
+
+    .slot-card {
+      padding: 14px 16px;
+      display: grid;
+      gap: 8px;
+    }
+
+    .slot-label {
+      color: var(--muted);
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .slot-main {
+      display: flex;
+      align-items: baseline;
+      gap: 12px;
+    }
+
+    .slot-number {
+      font-size: clamp(28px, 5vw, 54px);
+      font-weight: 800;
+      line-height: 1;
+      letter-spacing: 0.01em;
+    }
+
+    .slot-meta {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(140px, 1fr));
+      gap: 10px;
+    }
+
+    .kpi {
+      padding: 10px 12px;
+      min-height: 88px;
+    }
+
+    .kpi .name {
+      color: var(--muted);
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .kpi .value {
+      margin-top: 8px;
+      font-size: 24px;
+      font-weight: 700;
+      line-height: 1.1;
+    }
+
+    .kpi .sub {
+      margin-top: 5px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .chart-grid {
+      display: grid;
+      gap: 10px;
+      grid-template-columns: repeat(2, minmax(260px, 1fr));
+    }
+
+    .panel {
+      padding: 10px 12px 12px;
+    }
+
+    .panel h3 {
+      margin: 0 0 8px;
+      font-size: 14px;
+      letter-spacing: 0.03em;
+      color: #213346;
+      text-transform: uppercase;
+    }
+
+    canvas {
+      width: 100%;
+      height: 180px;
+      border-radius: 10px;
+      background: #fbfcff;
+      border: 1px solid #e7edf8;
+      display: block;
+    }
+
+    .legend {
+      margin-top: 8px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .legend .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 99px;
+      display: inline-block;
+      margin-right: 6px;
+      vertical-align: middle;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+
+    th, td {
+      text-align: left;
+      border-bottom: 1px solid #e8eef7;
+      padding: 8px 6px;
+    }
+
+    th {
+      color: var(--muted);
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    code {
+      font-family: "IBM Plex Mono", "SFMono-Regular", Consolas, monospace;
+      font-size: 12px;
+      color: #2a4f73;
+    }
+
+    details {
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: var(--panel);
+      box-shadow: 0 8px 18px rgba(21, 31, 45, 0.07);
+      overflow: hidden;
+    }
+
+    summary {
+      cursor: pointer;
+      padding: 10px 12px;
+      font-weight: 700;
+      color: #213346;
+    }
+
+    pre {
+      margin: 0;
+      padding: 10px 12px 14px;
+      max-height: 280px;
+      overflow: auto;
+      background: #f8fbff;
+      border-top: 1px solid #e6eef8;
+      font-size: 12px;
+      color: #1c3147;
+    }
+
+    @media (max-width: 1000px) {
+      .controls {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .slot-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .kpi-grid {
+        grid-template-columns: repeat(2, minmax(120px, 1fr));
+      }
+    }
+
+    @media (max-width: 700px) {
+      .chart-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .kpi-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <section class="header">
+      <div class="title-row">
+        <div>
+          <h1 class="title">2077.riff.cc</h1>
+          <p class="subtitle">ETH2077 Network Observatory: live slot display, finality, throughput, latency, and block debug telemetry.</p>
+        </div>
+      </div>
+      <div class="controls">
+        <input id="rpcUrl" value="https://rpc.riff.cc" placeholder="RPC URL" />
+        <select id="pollMs">
+          <option value="1000">1s Poll</option>
+          <option value="1500" selected>1.5s Poll</option>
+          <option value="2500">2.5s Poll</option>
+          <option value="5000">5s Poll</option>
+        </select>
+        <button id="applyBtn">Apply</button>
+        <button id="pauseBtn" class="secondary">Pause</button>
+        <button id="refreshBtn" class="secondary">Refresh</button>
+      </div>
+      <div class="status-row">
+        <span id="healthPill" class="pill warn">Booting</span>
+        <span id="statusText">Waiting for first sample...</span>
+      </div>
+    </section>
+
+    <section class="slot-grid">
+      <article class="slot-card">
+        <div class="slot-label">Head Slot</div>
+        <div class="slot-main">
+          <div id="headSlot" class="slot-number">-</div>
+          <div id="headMeta" class="slot-meta">No chain data yet</div>
+        </div>
+      </article>
+      <article class="slot-card">
+        <div class="slot-label">Finalized Slot</div>
+        <div class="slot-main">
+          <div id="finalizedSlot" class="slot-number">-</div>
+          <div id="finalizedMeta" class="slot-meta">No finality data yet</div>
+        </div>
+      </article>
+    </section>
+
+    <section class="kpi-grid">
+      <article class="kpi"><div class="name">Chain</div><div id="kpiChain" class="value">-</div><div id="kpiClient" class="sub">-</div></article>
+      <article class="kpi"><div class="name">Peers</div><div id="kpiPeers" class="value">-</div><div id="kpiPeersSub" class="sub">-</div></article>
+      <article class="kpi"><div class="name">Pending Tx</div><div id="kpiPending" class="value">-</div><div id="kpiPendingSub" class="sub">-</div></article>
+      <article class="kpi"><div class="name">Latest Block Tx</div><div id="kpiBlockTx" class="value">-</div><div id="kpiBlockTxSub" class="sub">-</div></article>
+      <article class="kpi"><div class="name">Window TPS</div><div id="kpiTps" class="value">-</div><div id="kpiTpsSub" class="sub">-</div></article>
+      <article class="kpi"><div class="name">Finality p-ish</div><div id="kpiFinality" class="value">-</div><div id="kpiFinalitySub" class="sub">-</div></article>
+      <article class="kpi"><div class="name">RPC Latency</div><div id="kpiLatency" class="value">-</div><div id="kpiLatencySub" class="sub">-</div></article>
+      <article class="kpi"><div class="name">Block Interval</div><div id="kpiInterval" class="value">-</div><div id="kpiIntervalSub" class="sub">-</div></article>
+      <article class="kpi"><div class="name">Known Txs</div><div id="kpiKnownTxs" class="value">-</div><div id="kpiKnownTxsSub" class="sub">-</div></article>
+    </section>
+
+    <section class="chart-grid">
+      <article class="panel">
+        <h3>Head vs Finalized Slots</h3>
+        <canvas id="slotsChart"></canvas>
+        <div class="legend">
+          <span><span class="dot" style="background:var(--chart-a);"></span>Head</span>
+          <span><span class="dot" style="background:var(--chart-b);"></span>Finalized</span>
+        </div>
+      </article>
+      <article class="panel">
+        <h3>Tx Per Block (Recent Samples)</h3>
+        <canvas id="txChart"></canvas>
+        <div class="legend">
+          <span><span class="dot" style="background:var(--chart-c);"></span>Latest block tx count</span>
+        </div>
+      </article>
+      <article class="panel">
+        <h3>Finality Lag and Pending Tx</h3>
+        <canvas id="lagChart"></canvas>
+        <div class="legend">
+          <span><span class="dot" style="background:var(--chart-d);"></span>Lag (blocks)</span>
+          <span><span class="dot" style="background:var(--chart-c);"></span>Pending tx</span>
+        </div>
+      </article>
+      <article class="panel">
+        <h3>RPC Latency and Block Interval</h3>
+        <canvas id="latencyChart"></canvas>
+        <div class="legend">
+          <span><span class="dot" style="background:var(--chart-a);"></span>RPC latency (ms)</span>
+          <span><span class="dot" style="background:var(--chart-b);"></span>Block interval (s)</span>
+        </div>
+      </article>
+    </section>
+
+    <section class="panel">
+      <h3>Recent Blocks</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Height</th>
+            <th>Age</th>
+            <th>Txs</th>
+            <th>Gas Used</th>
+            <th>Hash</th>
+          </tr>
+        </thead>
+        <tbody id="blocksBody">
+          <tr><td colspan="5">Waiting for chain data...</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <details>
+      <summary>Raw Status Snapshot</summary>
+      <pre id="rawJson">{}</pre>
+    </details>
+  </main>
+
+  <script>
+    const state = {
+      rpcUrl: "https://rpc.riff.cc",
+      pollMs: 1500,
+      timer: null,
+      paused: false,
+      samples: [],
+      recentBlocks: [],
+      latestStatus: null,
+      lastHeadTs: null,
+      lastHeadHeight: null,
+      tick: 0
+    };
+
+    const MAX_SAMPLES = 120;
+    const RECENT_BLOCKS = 12;
+
+    const el = {
+      rpcUrl: document.getElementById("rpcUrl"),
+      pollMs: document.getElementById("pollMs"),
+      applyBtn: document.getElementById("applyBtn"),
+      pauseBtn: document.getElementById("pauseBtn"),
+      refreshBtn: document.getElementById("refreshBtn"),
+      healthPill: document.getElementById("healthPill"),
+      statusText: document.getElementById("statusText"),
+      headSlot: document.getElementById("headSlot"),
+      headMeta: document.getElementById("headMeta"),
+      finalizedSlot: document.getElementById("finalizedSlot"),
+      finalizedMeta: document.getElementById("finalizedMeta"),
+      kpiChain: document.getElementById("kpiChain"),
+      kpiClient: document.getElementById("kpiClient"),
+      kpiPeers: document.getElementById("kpiPeers"),
+      kpiPeersSub: document.getElementById("kpiPeersSub"),
+      kpiPending: document.getElementById("kpiPending"),
+      kpiPendingSub: document.getElementById("kpiPendingSub"),
+      kpiBlockTx: document.getElementById("kpiBlockTx"),
+      kpiBlockTxSub: document.getElementById("kpiBlockTxSub"),
+      kpiTps: document.getElementById("kpiTps"),
+      kpiTpsSub: document.getElementById("kpiTpsSub"),
+      kpiFinality: document.getElementById("kpiFinality"),
+      kpiFinalitySub: document.getElementById("kpiFinalitySub"),
+      kpiLatency: document.getElementById("kpiLatency"),
+      kpiLatencySub: document.getElementById("kpiLatencySub"),
+      kpiInterval: document.getElementById("kpiInterval"),
+      kpiIntervalSub: document.getElementById("kpiIntervalSub"),
+      kpiKnownTxs: document.getElementById("kpiKnownTxs"),
+      kpiKnownTxsSub: document.getElementById("kpiKnownTxsSub"),
+      blocksBody: document.getElementById("blocksBody"),
+      rawJson: document.getElementById("rawJson"),
+      slotsChart: document.getElementById("slotsChart"),
+      txChart: document.getElementById("txChart"),
+      lagChart: document.getElementById("lagChart"),
+      latencyChart: document.getElementById("latencyChart")
+    };
+
+    function hexToNumber(value) {
+      if (typeof value !== "string") return Number(value || 0);
+      if (value.startsWith("0x")) return Number(BigInt(value));
+      const n = Number(value);
+      return Number.isFinite(n) ? n : 0;
+    }
+
+    function setHealth(kind, text) {
+      el.healthPill.className = "pill " + kind;
+      el.healthPill.textContent = text;
+    }
+
+    function shortHash(h) {
+      if (!h || typeof h !== "string") return "-";
+      if (h.length <= 14) return h;
+      return h.slice(0, 10) + "..." + h.slice(-6);
+    }
+
+    function formatMs(ms) {
+      if (!Number.isFinite(ms)) return "-";
+      if (ms < 1000) return ms.toFixed(0) + " ms";
+      return (ms / 1000).toFixed(2) + " s";
+    }
+
+    function formatAge(seconds) {
+      if (!Number.isFinite(seconds)) return "-";
+      if (seconds < 60) return seconds + "s";
+      const m = Math.floor(seconds / 60);
+      const s = seconds % 60;
+      return m + "m " + s + "s";
+    }
+
+    async function rpcBatch(calls) {
+      const payload = calls.map((c, i) => ({
+        jsonrpc: "2.0",
+        id: i + 1,
+        method: c.method,
+        params: c.params || []
+      }));
+      const response = await fetch(state.rpcUrl, {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify(payload)
+      });
+      if (!response.ok) {
+        throw new Error("HTTP " + response.status + " from RPC");
+      }
+      const json = await response.json();
+      const list = Array.isArray(json) ? json : [json];
+      const byId = new Map();
+      for (const item of list) byId.set(item.id, item);
+      return payload.map((p) => byId.get(p.id) || { error: { message: "missing response" } });
+    }
+
+    function pushSample(sample) {
+      state.samples.push(sample);
+      if (state.samples.length > MAX_SAMPLES) {
+        state.samples.splice(0, state.samples.length - MAX_SAMPLES);
+      }
+    }
+
+    async function loadRecentBlocks(head) {
+      const start = Math.max(0, head - (RECENT_BLOCKS - 1));
+      const calls = [];
+      for (let h = head; h >= start; h -= 1) {
+        calls.push({ method: "eth_getBlockByNumber", params: ["0x" + h.toString(16), false] });
+      }
+      const results = await rpcBatch(calls);
+      const now = Math.floor(Date.now() / 1000);
+      state.recentBlocks = results
+        .map((r) => r.result)
+        .filter(Boolean)
+        .map((b) => {
+          const ts = hexToNumber(b.timestamp);
+          return {
+            height: hexToNumber(b.number),
+            age: Math.max(0, now - ts),
+            txs: Array.isArray(b.transactions) ? b.transactions.length : 0,
+            gasUsed: hexToNumber(b.gasUsed),
+            hash: b.hash || "-"
+          };
+        });
+    }
+
+    function drawAxes(ctx, width, height) {
+      ctx.strokeStyle = "#e4ecf8";
+      ctx.lineWidth = 1;
+      for (let i = 1; i < 5; i += 1) {
+        const y = (height / 5) * i;
+        ctx.beginPath();
+        ctx.moveTo(0, y);
+        ctx.lineTo(width, y);
+        ctx.stroke();
+      }
+    }
+
+    function drawLineChart(canvas, series, options = {}) {
+      const ctx = canvas.getContext("2d");
+      const dpr = window.devicePixelRatio || 1;
+      const width = Math.max(300, Math.floor(canvas.clientWidth * dpr));
+      const height = Math.max(160, Math.floor(canvas.clientHeight * dpr));
+      if (canvas.width !== width || canvas.height !== height) {
+        canvas.width = width;
+        canvas.height = height;
+      }
+
+      ctx.clearRect(0, 0, width, height);
+      drawAxes(ctx, width, height);
+
+      const points = state.samples.length;
+      if (points < 2) return;
+
+      let min = Number.POSITIVE_INFINITY;
+      let max = Number.NEGATIVE_INFINITY;
+      for (const s of series) {
+        for (const v of s.values) {
+          if (Number.isFinite(v)) {
+            if (v < min) min = v;
+            if (v > max) max = v;
+          }
+        }
+      }
+
+      if (!Number.isFinite(min) || !Number.isFinite(max)) return;
+      if (max === min) max = min + 1;
+      if (options.zeroBase) min = 0;
+
+      const padY = (max - min) * 0.08;
+      min -= padY;
+      max += padY;
+
+      const xStep = width / (points - 1);
+      const yScale = height / (max - min);
+
+      for (const s of series) {
+        ctx.beginPath();
+        ctx.strokeStyle = s.color;
+        ctx.lineWidth = 2;
+        s.values.forEach((v, i) => {
+          const x = i * xStep;
+          const y = height - (v - min) * yScale;
+          if (i === 0) ctx.moveTo(x, y);
+          else ctx.lineTo(x, y);
+        });
+        ctx.stroke();
+      }
+    }
+
+    function drawBarChart(canvas, values, color) {
+      const ctx = canvas.getContext("2d");
+      const dpr = window.devicePixelRatio || 1;
+      const width = Math.max(300, Math.floor(canvas.clientWidth * dpr));
+      const height = Math.max(160, Math.floor(canvas.clientHeight * dpr));
+      if (canvas.width !== width || canvas.height !== height) {
+        canvas.width = width;
+        canvas.height = height;
+      }
+
+      ctx.clearRect(0, 0, width, height);
+      drawAxes(ctx, width, height);
+
+      if (!values.length) return;
+      const max = Math.max(1, ...values);
+      const barW = width / values.length;
+
+      ctx.fillStyle = color;
+      values.forEach((v, i) => {
+        const h = (v / max) * (height - 8);
+        const x = i * barW + 1;
+        const y = height - h;
+        ctx.fillRect(x, y, Math.max(2, barW - 2), h);
+      });
+    }
+
+    function renderBlocks() {
+      if (!state.recentBlocks.length) {
+        el.blocksBody.innerHTML = "<tr><td colspan='5'>No block data yet.</td></tr>";
+        return;
+      }
+      el.blocksBody.innerHTML = state.recentBlocks
+        .map((b) => (
+          "<tr>" +
+          "<td><strong>" + b.height + "</strong></td>" +
+          "<td>" + formatAge(b.age) + "</td>" +
+          "<td>" + b.txs + "</td>" +
+          "<td>" + b.gasUsed + "</td>" +
+          "<td><code>" + shortHash(b.hash) + "</code></td>" +
+          "</tr>"
+        ))
+        .join("");
+    }
+
+    function renderCharts() {
+      const head = state.samples.map((s) => s.head);
+      const finalized = state.samples.map((s) => s.finalized);
+      const txLatest = state.samples.map((s) => s.latestBlockTxs);
+      const lag = state.samples.map((s) => s.lagBlocks);
+      const pending = state.samples.map((s) => s.pendingTxs);
+      const latency = state.samples.map((s) => s.rpcLatencyMs);
+      const interval = state.samples.map((s) => s.blockIntervalS);
+
+      drawLineChart(el.slotsChart, [
+        { color: "#1e7ad0", values: head },
+        { color: "#15a772", values: finalized }
+      ]);
+      drawBarChart(el.txChart, txLatest, "#b56a1f");
+      drawLineChart(el.lagChart, [
+        { color: "#8a5bd4", values: lag },
+        { color: "#b56a1f", values: pending }
+      ], { zeroBase: true });
+      drawLineChart(el.latencyChart, [
+        { color: "#1e7ad0", values: latency },
+        { color: "#15a772", values: interval }
+      ], { zeroBase: true });
+    }
+
+    function renderKpis(snapshot) {
+      el.headSlot.textContent = snapshot.head.toLocaleString();
+      el.finalizedSlot.textContent = snapshot.finalized.toLocaleString();
+      el.headMeta.textContent = "Lag " + snapshot.lagBlocks + " blocks | head age " + snapshot.headAgeSec + "s";
+      el.finalizedMeta.textContent = "Finality estimate " + formatMs(snapshot.finalityLagMs);
+
+      el.kpiChain.textContent = snapshot.chainHex;
+      el.kpiClient.textContent = snapshot.clientVersion;
+      el.kpiPeers.textContent = String(snapshot.peersConnected);
+      el.kpiPeersSub.textContent = "target " + snapshot.peersTarget;
+      el.kpiPending.textContent = String(snapshot.pendingTxs);
+      el.kpiPendingSub.textContent = "queued for next block";
+      el.kpiBlockTx.textContent = String(snapshot.latestBlockTxs);
+      el.kpiBlockTxSub.textContent = "tx in head block";
+      el.kpiTps.textContent = snapshot.windowTps.toFixed(2);
+      el.kpiTpsSub.textContent = "window avg over ~" + snapshot.windowSpanS + "s";
+      el.kpiFinality.textContent = formatMs(snapshot.finalityLagMs);
+      el.kpiFinalitySub.textContent = "head-finalized gap";
+      el.kpiLatency.textContent = formatMs(snapshot.rpcLatencyMs);
+      el.kpiLatencySub.textContent = "batch RPC round trip";
+      el.kpiInterval.textContent = snapshot.blockIntervalS.toFixed(2) + " s";
+      el.kpiIntervalSub.textContent = "observed between head blocks";
+      el.kpiKnownTxs.textContent = String(snapshot.knownTxs);
+      el.kpiKnownTxsSub.textContent = "node tx cache size";
+    }
+
+    async function collect() {
+      const started = performance.now();
+      const calls = [
+        { method: "web3_clientVersion", params: [] },
+        { method: "eth_chainId", params: [] },
+        { method: "net_peerCount", params: [] },
+        { method: "eth_blockNumber", params: [] },
+        { method: "eth_getBlockByNumber", params: ["latest", false] },
+        { method: "eth_getBlockByNumber", params: ["finalized", false] },
+        { method: "eth_getBlockTransactionCountByNumber", params: ["latest"] },
+        { method: "eth2077_status", params: [] }
+      ];
+
+      const results = await rpcBatch(calls);
+      const rpcLatencyMs = performance.now() - started;
+
+      const getRes = (idx) => results[idx] && results[idx].result;
+      const status = getRes(7) || {};
+      const latestBlock = getRes(4) || {};
+      const finalizedBlock = getRes(5) || {};
+
+      const head = hexToNumber(getRes(3));
+      const finalized = hexToNumber(finalizedBlock.number || getRes(5)?.number || status.finalizedBlock);
+      const lagBlocks = Math.max(0, head - finalized);
+      const latestTs = hexToNumber(latestBlock.timestamp);
+
+      let blockIntervalS = 0;
+      if (state.lastHeadHeight !== null && state.lastHeadTs !== null && head > state.lastHeadHeight) {
+        const deltaHeight = head - state.lastHeadHeight;
+        const deltaTs = Math.max(1, latestTs - state.lastHeadTs);
+        blockIntervalS = deltaTs / deltaHeight;
+      } else {
+        blockIntervalS = 12;
+      }
+      state.lastHeadHeight = head;
+      state.lastHeadTs = latestTs;
+
+      const now = Math.floor(Date.now() / 1000);
+      const headAgeSec = Math.max(0, now - latestTs);
+      const latestBlockTxs = hexToNumber(getRes(6));
+      const pendingTxs = Number(status.txPoolPending || 0);
+      const peersConnected = hexToNumber(getRes(2));
+      const peersTarget = Number(status.peersTarget || peersConnected);
+      const finalityLagMs = Number(status.finalityLagMsEstimate || lagBlocks * 12000);
+      const windowTps = Number(status.window?.avgTpsApprox || 0);
+      const windowSpanS = Number(status.window?.spanSeconds || 0);
+      const knownTxs = Number(status.knownTransactions || 0);
+      const chainHex = String(getRes(1) || "-");
+      const clientVersion = String(getRes(0) || "-");
+
+      const snapshot = {
+        head,
+        finalized,
+        lagBlocks,
+        finalityLagMs,
+        latestBlockTxs,
+        pendingTxs,
+        peersConnected,
+        peersTarget,
+        windowTps,
+        windowSpanS,
+        knownTxs,
+        rpcLatencyMs,
+        blockIntervalS,
+        headAgeSec,
+        chainHex,
+        clientVersion,
+        rawStatus: status
+      };
+
+      pushSample({
+        t: Date.now(),
+        head,
+        finalized,
+        lagBlocks,
+        latestBlockTxs,
+        pendingTxs,
+        rpcLatencyMs,
+        blockIntervalS
+      });
+
+      renderKpis(snapshot);
+      renderCharts();
+
+      state.tick += 1;
+      if (state.tick % 3 === 1) {
+        await loadRecentBlocks(head);
+      }
+      renderBlocks();
+      el.rawJson.textContent = JSON.stringify({
+        snapshot,
+        latestBlock,
+        finalizedBlock
+      }, null, 2);
+
+      const healthy =
+        rpcLatencyMs < 600 &&
+        lagBlocks <= 3 &&
+        headAgeSec < Math.max(25, state.pollMs / 1000 * 4);
+      if (healthy) {
+        setHealth("ok", "Healthy");
+      } else if (lagBlocks <= 8 && rpcLatencyMs < 1500) {
+        setHealth("warn", "Degraded");
+      } else {
+        setHealth("bad", "Unhealthy");
+      }
+
+      el.statusText.textContent =
+        "Updated " + new Date().toLocaleTimeString() +
+        " | head " + head +
+        " | finalized " + finalized +
+        " | " + state.rpcUrl;
+    }
+
+    function stopTimer() {
+      if (state.timer) {
+        clearInterval(state.timer);
+        state.timer = null;
+      }
+    }
+
+    function startTimer() {
+      stopTimer();
+      state.timer = setInterval(async () => {
+        if (state.paused) return;
+        try {
+          await collect();
+        } catch (err) {
+          setHealth("bad", "RPC Error");
+          el.statusText.textContent = err.message || String(err);
+        }
+      }, state.pollMs);
+    }
+
+    async function boot() {
+      state.rpcUrl = el.rpcUrl.value.trim() || "https://rpc.riff.cc";
+      state.pollMs = Number(el.pollMs.value) || 1500;
+      setHealth("warn", "Syncing");
+      try {
+        await collect();
+      } catch (err) {
+        setHealth("bad", "RPC Error");
+        el.statusText.textContent = err.message || String(err);
+      }
+      startTimer();
+    }
+
+    el.applyBtn.onclick = () => {
+      state.rpcUrl = el.rpcUrl.value.trim() || "https://rpc.riff.cc";
+      state.pollMs = Number(el.pollMs.value) || 1500;
+      boot();
+    };
+
+    el.pauseBtn.onclick = () => {
+      state.paused = !state.paused;
+      el.pauseBtn.textContent = state.paused ? "Resume" : "Pause";
+      if (!state.paused) {
+        collect().catch((err) => {
+          setHealth("bad", "RPC Error");
+          el.statusText.textContent = err.message || String(err);
+        });
+      }
+    };
+
+    el.refreshBtn.onclick = () => {
+      collect().catch((err) => {
+        setHealth("bad", "RPC Error");
+        el.statusText.textContent = err.message || String(err);
+      });
+    };
+
+    window.addEventListener("resize", () => {
+      renderCharts();
+    });
+
+    boot();
+  </script>
+</body>
+</html>

@@ -37,6 +37,10 @@ Build the first Ethereum client where high-scale claims are gated by theorem che
 ## Documents
 
 - `docs/ETH2077_ARCHITECTURE.md`
+- `docs/DEVNET.md`
+- `docs/BLOCKSCOUT_DEVNET.md`
+- `docs/INVESTOR_DEMO_MODE.md`
+- `docs/NETWORK_OBSERVATORY.md`
 - `docs/FORMAL_VERIFICATION_GATES.md`
 - `docs/ROADMAP.md`
 - `docs/STRAWMAP_DEMOLITION_MATRIX.md`
@@ -49,6 +53,12 @@ Build the first Ethereum client where high-scale claims are gated by theorem che
 - `scripts/check_eth2077_formal_gates.sh` - enforces ETH2077 local formal proof policy.
 - `scripts/build_testnet_artifacts.sh` - generates deterministic testnet chain artifacts + checksums.
 - `scripts/check_testnet_go_nogo.sh` - runs formal gates, benchmark gates, and testnet artifact gates.
+- `scripts/devnet_up.sh` - deploys a local multi-node ETH2077 devnet.
+- `scripts/devnet_status.sh` - queries live devnet node status.
+- `scripts/devnet_down.sh` - stops local devnet processes.
+- `scripts/blockscout_up.sh` - deploys Blockscout against local ETH2077 devnet.
+- `scripts/blockscout_down.sh` - stops Blockscout stack.
+- `scripts/investor_demo_mode.sh` - one-command 5-minute interactive demo prep + proof checklist.
 
 ## Benchmark Commands
 

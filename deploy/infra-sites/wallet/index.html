@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ETH2077 Wallet Demo</title>
+  <style>
+    :root {
+      --bg: #0b1020;
+      --card: #141b34;
+      --fg: #f4f6ff;
+      --muted: #9aa3c7;
+      --accent: #4ac7ff;
+      --ok: #2fd17a;
+    }
+    body {
+      margin: 0;
+      font-family: "IBM Plex Sans", "Segoe UI", sans-serif;
+      color: var(--fg);
+      background: radial-gradient(circle at 20% 0%, #1d2b5e 0%, var(--bg) 45%);
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+    }
+    .card {
+      width: min(760px, 92vw);
+      background: color-mix(in srgb, var(--card) 92%, black);
+      border: 1px solid #2a3a74;
+      border-radius: 16px;
+      padding: 24px;
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.35);
+    }
+    h1 { margin: 0 0 8px; font-size: 28px; }
+    p { margin: 0 0 16px; color: var(--muted); }
+    .row { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 16px; }
+    button {
+      border: 1px solid #3652a0;
+      background: #1f2f60;
+      color: var(--fg);
+      border-radius: 10px;
+      padding: 10px 14px;
+      cursor: pointer;
+      font-weight: 600;
+    }
+    button:hover { border-color: var(--accent); }
+    code {
+      display: block;
+      padding: 10px 12px;
+      background: #0d1430;
+      border: 1px solid #27386f;
+      border-radius: 10px;
+      margin-bottom: 10px;
+      overflow-wrap: anywhere;
+    }
+    .ok { color: var(--ok); }
+    a { color: var(--accent); }
+  </style>
+</head>
+<body>
+  <main class="card">
+    <h1>wallet.riff.cc</h1>
+    <p>ETH2077 tiny wallet demo. Connect MetaMask, check balance, and send a small self-transfer.</p>
+
+    <div class="row">
+      <button id="connectBtn">Connect MetaMask</button>
+      <button id="refreshBtn">Refresh Balance</button>
+      <button id="selfTxBtn">Send 0.001 ETH to Self</button>
+      <button id="addChainBtn">Add ETH2077 Network</button>
+    </div>
+
+    <code id="network">Network: not connected</code>
+    <code id="address">Address: not connected</code>
+    <code id="balance">Balance: -</code>
+    <code id="status">Status: waiting</code>
+  </main>
+
+  <script>
+    const chainHex = "0x1fb14b";
+    const rpcUrl = "https://rpc.riff.cc";
+    const explorer = "https://explorer.riff.cc";
+    let activeAddress = null;
+
+    const el = (id) => document.getElementById(id);
+    const set = (id, text) => { el(id).textContent = text; };
+
+    async function request(method, params = []) {
+      if (!window.ethereum) throw new Error("MetaMask not found");
+      return window.ethereum.request({ method, params });
+    }
+
+    async function ensureChain() {
+      const current = await request("eth_chainId");
+      if (current !== chainHex) {
+        await request("wallet_switchEthereumChain", [{ chainId: chainHex }]);
+      }
+    }
+
+    async function ensureChainReady() {
+      try {
+        await ensureChain();
+      } catch (err) {
+        if (err && err.code === 4902) {
+          await addChain();
+          await ensureChain();
+          return;
+        }
+        throw err;
+      }
+    }
+
+    async function addChain() {
+      await request("wallet_addEthereumChain", [{
+        chainId: chainHex,
+        chainName: "ETH2077 Devnet",
+        nativeCurrency: { name: "Ether", symbol: "ETH", decimals: 18 },
+        rpcUrls: [rpcUrl],
+        blockExplorerUrls: [explorer]
+      }]);
+      set("status", "Status: ETH2077 network added");
+    }
+
+    async function connect() {
+      const accounts = await request("eth_requestAccounts");
+      activeAddress = accounts[0] || null;
+      await ensureChainReady();
+      const net = await request("eth_chainId");
+      set("network", "Network: " + net + (net === chainHex ? " (ETH2077)" : " (not ETH2077)"));
+      set("address", "Address: " + (activeAddress || "none"));
+      await refreshBalance();
+      set("status", "Status: connected");
+    }
+
+    function formatEth(hexWei) {
+      const wei = BigInt(hexWei);
+      const whole = wei / 1000000000000000000n;
+      const frac = (wei % 1000000000000000000n).toString().padStart(18, "0").slice(0, 6);
+      return whole.toString() + "." + frac + " ETH";
+    }
+
+    async function refreshBalance() {
+      if (!activeAddress) throw new Error("Connect first");
+      await ensureChainReady();
+      const bal = await request("eth_getBalance", [activeAddress, "latest"]);
+      set("balance", "Balance: " + formatEth(bal) + " (" + bal + ")");
+      set("status", "Status: balance refreshed");
+    }
+
+    async function sendSelfTx() {
+      if (!activeAddress) throw new Error("Connect first");
+      await ensureChain();
+      const txHash = await request("eth_sendTransaction", [{
+        from: activeAddress,
+        to: activeAddress,
+        value: "0x38d7ea4c68000"
+      }]);
+      set("status", "Status: tx sent " + txHash);
+      set("status", "Status: tx sent " + txHash + " | " + explorer + "/tx/" + txHash);
+    }
+
+    el("connectBtn").onclick = () => connect().catch(e => set("status", "Status: " + e.message));
+    el("refreshBtn").onclick = () => refreshBalance().catch(e => set("status", "Status: " + e.message));
+    el("selfTxBtn").onclick = () => sendSelfTx().catch(e => set("status", "Status: " + e.message));
+    el("addChainBtn").onclick = () => addChain().catch(e => set("status", "Status: " + e.message));
+  </script>
+</body>
+</html>

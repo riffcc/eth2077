@@ -1,0 +1,269 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Neverust Control Surface</title>
+  <style>
+    :root {
+      --bg: #f6f7fa;
+      --panel: #ffffff;
+      --ink: #17202b;
+      --muted: #5d6774;
+      --border: #dce4ef;
+      --accent: #0a6c97;
+      --ok: #1b9d67;
+      --warn: #c77a22;
+      --bad: #cc4040;
+    }
+
+    body {
+      margin: 0;
+      background:
+        radial-gradient(1000px 520px at 100% 0, #ebf6ff 0, transparent 60%),
+        radial-gradient(900px 440px at 0 0, #f2f7ed 0, transparent 60%),
+        var(--bg);
+      color: var(--ink);
+      font-family: "IBM Plex Sans", "Segoe UI", sans-serif;
+    }
+
+    .wrap {
+      width: min(1100px, 95vw);
+      margin: 18px auto 34px;
+      display: grid;
+      gap: 12px;
+    }
+
+    .hero, .panel {
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      background: var(--panel);
+      box-shadow: 0 10px 24px rgba(20, 37, 53, 0.08);
+    }
+
+    .hero {
+      padding: 14px;
+      background: linear-gradient(130deg, #0f4452, #19718a);
+      color: #eefaff;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(22px, 3.2vw, 32px);
+    }
+
+    .hero p {
+      margin: 6px 0 0;
+      color: #cff0ff;
+    }
+
+    .controls {
+      margin-top: 10px;
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    button {
+      border: 1px solid rgba(255,255,255,0.34);
+      border-radius: 10px;
+      background: rgba(255,255,255,0.14);
+      color: #fff;
+      font: inherit;
+      padding: 8px 12px;
+      cursor: pointer;
+    }
+
+    .pill {
+      font-size: 12px;
+      font-weight: 700;
+      border-radius: 999px;
+      padding: 5px 10px;
+      display: inline-block;
+    }
+
+    .ok { background: #def8ea; color: var(--ok); }
+    .warn { background: #fff2df; color: var(--warn); }
+    .bad { background: #ffe1e1; color: var(--bad); }
+
+    .grid {
+      display: grid;
+      gap: 10px;
+      grid-template-columns: repeat(3, minmax(180px, 1fr));
+    }
+
+    .card {
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: var(--panel);
+      padding: 10px;
+    }
+
+    .k {
+      color: var(--muted);
+      text-transform: uppercase;
+      font-size: 12px;
+      letter-spacing: 0.06em;
+    }
+
+    .v {
+      margin-top: 8px;
+      font-size: 26px;
+      font-weight: 700;
+      line-height: 1;
+    }
+
+    .s {
+      margin-top: 6px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .panel {
+      padding: 12px;
+    }
+
+    pre {
+      margin: 0;
+      max-height: 300px;
+      overflow: auto;
+      border: 1px solid #e7eef8;
+      border-radius: 10px;
+      background: #f8fbff;
+      padding: 10px;
+      font-size: 12px;
+      color: #21384f;
+    }
+
+    @media (max-width: 860px) {
+      .grid { grid-template-columns: 1fr 1fr; }
+    }
+
+    @media (max-width: 560px) {
+      .grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <section class="hero">
+      <h1>neverust.riff.cc</h1>
+      <p>Rust Archivist protocol implementation control surface and live node diagnostics.</p>
+      <div class="controls">
+        <button id="refreshBtn">Refresh</button>
+        <span id="health" class="pill warn">Checking</span>
+        <span id="status">Booting...</span>
+      </div>
+    </section>
+
+    <section class="grid">
+      <article class="card"><div class="k">Health</div><div id="healthValue" class="v">-</div><div class="s">/health</div></article>
+      <article class="card"><div class="k">Block Count</div><div id="blockCount" class="v">-</div><div class="s">/api/archivist/v1/stats</div></article>
+      <article class="card"><div class="k">Total Size</div><div id="totalSize" class="v">-</div><div class="s">Storage footprint</div></article>
+      <article class="card"><div class="k">Peer ID</div><div id="peerId" class="v" style="font-size:14px;line-height:1.35;">-</div><div class="s">Protocol identity</div></article>
+      <article class="card"><div class="k">Space Used</div><div id="spaceUsed" class="v">-</div><div class="s">quotaUsedBytes</div></article>
+      <article class="card"><div class="k">Quota Max</div><div id="quotaMax" class="v">-</div><div class="s">quotaMaxBytes</div></article>
+    </section>
+
+    <section class="panel">
+      <h3 style="margin:0 0 8px;">Prometheus Metrics Preview</h3>
+      <pre id="metricsPreview">loading...</pre>
+    </section>
+
+    <section class="panel">
+      <h3 style="margin:0 0 8px;">Combined JSON Snapshot</h3>
+      <pre id="jsonPreview">{}</pre>
+    </section>
+  </main>
+
+  <script>
+    function fmtBytes(bytes) {
+      const n = Number(bytes || 0);
+      if (n < 1024) return n + " B";
+      if (n < 1024 * 1024) return (n / 1024).toFixed(1) + " KiB";
+      if (n < 1024 * 1024 * 1024) return (n / (1024 * 1024)).toFixed(2) + " MiB";
+      return (n / (1024 * 1024 * 1024)).toFixed(2) + " GiB";
+    }
+
+    async function getJson(path) {
+      const sep = path.includes("?") ? "&" : "?";
+      const url = `${path}${sep}_=${Date.now()}`;
+      const res = await fetch(url, {
+        cache: "no-store",
+        headers: {
+          "accept": "application/json",
+          "cache-control": "no-cache"
+        }
+      });
+      const raw = await res.text();
+      if (!res.ok) throw new Error(path + " -> HTTP " + res.status);
+      try {
+        return JSON.parse(raw);
+      } catch (_err) {
+        throw new Error(path + " -> non-JSON response: " + raw.slice(0, 80));
+      }
+    }
+
+    async function getText(path) {
+      const sep = path.includes("?") ? "&" : "?";
+      const url = `${path}${sep}_=${Date.now()}`;
+      const res = await fetch(url, {
+        cache: "no-store",
+        headers: { "cache-control": "no-cache" }
+      });
+      if (!res.ok) throw new Error(path + " -> HTTP " + res.status);
+      return res.text();
+    }
+
+    async function refresh() {
+      const healthPill = document.getElementById("health");
+      const status = document.getElementById("status");
+      healthPill.className = "pill warn";
+      healthPill.textContent = "Checking";
+      try {
+        const [health, stats, space, peerIdRaw, metricsRaw] = await Promise.all([
+          getJson("/health"),
+          getJson("/api/archivist/v1/stats"),
+          getJson("/api/archivist/v1/space"),
+          getJson("/api/archivist/v1/peer-id"),
+          getText("/metrics")
+        ]);
+
+        const peerId = typeof peerIdRaw === "string" ? peerIdRaw : (peerIdRaw?.id || JSON.stringify(peerIdRaw));
+        const used = space.quotaUsedBytes ?? space.quota_used_bytes ?? 0;
+        const max = space.quotaMaxBytes ?? space.quota_max_bytes ?? 0;
+
+        document.getElementById("healthValue").textContent = health.status || "unknown";
+        document.getElementById("blockCount").textContent = String(stats.block_count ?? 0);
+        document.getElementById("totalSize").textContent = fmtBytes(stats.total_size ?? 0);
+        document.getElementById("peerId").textContent = (peerId || "").trim() || "-";
+        document.getElementById("spaceUsed").textContent = fmtBytes(used);
+        document.getElementById("quotaMax").textContent = fmtBytes(max);
+        document.getElementById("metricsPreview").textContent = metricsRaw.split("\n").slice(0, 30).join("\n");
+        document.getElementById("jsonPreview").textContent = JSON.stringify({
+          health,
+          stats,
+          space,
+          peer_id: (peerId || "").trim()
+        }, null, 2);
+
+        healthPill.className = "pill ok";
+        healthPill.textContent = "Online";
+        status.textContent = "Updated " + new Date().toLocaleTimeString();
+      } catch (err) {
+        healthPill.className = "pill bad";
+        healthPill.textContent = "Offline";
+        status.textContent = err.message || String(err);
+      }
+    }
+
+    document.getElementById("refreshBtn").onclick = refresh;
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker.getRegistrations().then((regs) => regs.forEach((r) => r.unregister())).catch(() => {});
+    }
+    refresh();
+    setInterval(refresh, 5000);
+  </script>
+</body>
+</html>

@@ -1,0 +1,23 @@
+FROM rust:1.93-trixie AS builder
+
+WORKDIR /app
+COPY . .
+
+RUN cargo build --release -p eth2077-testnet \
+  && cargo build --release -p eth2077-node --bin eth2077-devnetd
+
+FROM debian:trixie-slim
+
+RUN apt-get update \
+  && apt-get install -y --no-install-recommends ca-certificates bash \
+  && rm -rf /var/lib/apt/lists/*
+
+COPY --from=builder /app/target/release/eth2077-testnet /usr/local/bin/eth2077-testnet
+COPY --from=builder /app/target/release/eth2077-devnetd /usr/local/bin/eth2077-devnetd
+COPY deploy/blockscout/devnet-entrypoint.sh /usr/local/bin/devnet-entrypoint.sh
+
+RUN chmod +x /usr/local/bin/devnet-entrypoint.sh
+
+EXPOSE 8545
+
+ENTRYPOINT ["/usr/local/bin/devnet-entrypoint.sh"]

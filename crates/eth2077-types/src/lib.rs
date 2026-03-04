@@ -1,5 +1,8 @@
 use serde::{Deserialize, Serialize};
 
+pub mod assumption_checker;
+pub mod theorem_registry;
+
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct ScenarioConfig {
     pub name: String,

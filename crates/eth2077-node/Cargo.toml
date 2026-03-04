@@ -10,3 +10,8 @@ eth2077-types = { path = "../eth2077-types" }
 eth2077-execution = { path = "../eth2077-execution" }
 eth2077-oob-consensus = { path = "../eth2077-oob-consensus" }
 eth2077-bridge = { path = "../eth2077-bridge" }
+serde = { workspace = true }
+serde_json = { workspace = true }
+hex = "0.4"
+rlp = "0.5"
+revm = { version = "34", default-features = true, features = ["std"] }

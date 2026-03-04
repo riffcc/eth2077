@@ -1,3 +1,8 @@
+pub mod engine_api;
+pub mod forkchoice;
+pub mod payload_converter;
+pub mod traits;
+
 use eth2077_types::ScenarioConfig;
 
 #[derive(Debug, Clone)]

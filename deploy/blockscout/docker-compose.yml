@@ -1,0 +1,116 @@
+services:
+  eth2077-devnet:
+    image: eth2077/devnet:local
+    container_name: eth2077-devnet
+    restart: unless-stopped
+    environment:
+      NETWORK: "${NETWORK:-eth2077-devnet-docker}"
+      SEED: "${SEED:-2077}"
+      CHAIN_ID: "${CHAIN_ID:-2077003}"
+      GENESIS_TS: "${GENESIS_TS:-1772409600}"
+      FORK_EPOCH: "${FORK_EPOCH:-0}"
+      VALIDATORS: "${VALIDATORS:-4}"
+      BOOTNODES: "${BOOTNODES:-3}"
+      ALLOC_ACCOUNTS: "${ALLOC_ACCOUNTS:-128}"
+      NODE_COUNT: "${NODE_COUNT:-4}"
+      RPC_PORT: "8545"
+      P2P_PORT: "30303"
+      TICK_MS: "${TICK_MS:-1000}"
+    ports:
+      - "8545:8545"
+    volumes:
+      - eth2077_devnet_data:/data
+
+  blockscout-db:
+    image: postgres:17
+    container_name: eth2077-blockscout-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: blockscout
+      POSTGRES_USER: blockscout
+      POSTGRES_PASSWORD: blockscout
+    volumes:
+      - blockscout_db_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U blockscout -d blockscout"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
+
+  blockscout-redis:
+    image: redis:alpine
+    container_name: eth2077-blockscout-redis
+    restart: unless-stopped
+    command: redis-server
+    volumes:
+      - blockscout_redis_data:/data
+
+  blockscout-backend:
+    image: ghcr.io/blockscout/blockscout:latest
+    container_name: eth2077-blockscout-backend
+    restart: unless-stopped
+    depends_on:
+      eth2077-devnet:
+        condition: service_started
+      blockscout-db:
+        condition: service_healthy
+      blockscout-redis:
+        condition: service_started
+    command: >
+      sh -c "bin/blockscout eval \"Elixir.Explorer.ReleaseTasks.create_and_migrate()\" &&
+      bin/blockscout start"
+    ports:
+      - "4000:4000"
+    environment:
+      DATABASE_URL: postgresql://blockscout:blockscout@blockscout-db:5432/blockscout
+      SECRET_KEY_BASE: 56NtB48ear7+wMSf0IQuWDAAazhpb31qyc7GiyspBP2vh7t5zlCsF5QDv76chXeN
+      ECTO_USE_SSL: "false"
+      PORT: "4000"
+      ETHEREUM_JSONRPC_VARIANT: geth
+      ETHEREUM_JSONRPC_TRANSPORT: http
+      ETHEREUM_JSONRPC_HTTP_URL: http://eth2077-devnet:8545/
+      ETHEREUM_JSONRPC_TRACE_URL: http://eth2077-devnet:8545/
+      ETHEREUM_JSONRPC_WS_URL: ws://eth2077-devnet:8545/
+      CHAIN_ID: "${CHAIN_ID:-2077003}"
+      COIN: ETH
+      COIN_NAME: ETH
+      DISABLE_MARKET: "true"
+      DISABLE_INDEXER: "${DISABLE_INDEXER:-false}"
+      INDEXER_DISABLE_INTERNAL_TRANSACTIONS_FETCHER: "${INDEXER_DISABLE_INTERNAL_TRANSACTIONS_FETCHER:-true}"
+      API_V1_READ_METHODS_DISABLED: "false"
+      API_V1_WRITE_METHODS_DISABLED: "false"
+      POOL_SIZE: "20"
+
+  blockscout-frontend:
+    image: ghcr.io/blockscout/frontend:latest
+    platform: linux/amd64
+    container_name: eth2077-blockscout-frontend
+    restart: unless-stopped
+    depends_on:
+      - blockscout-backend
+    ports:
+      - "3000:3000"
+    environment:
+      NEXT_PUBLIC_API_HOST: "${NEXT_PUBLIC_API_HOST:-explorer.riff.cc}"
+      NEXT_PUBLIC_API_PORT: "${NEXT_PUBLIC_API_PORT:-443}"
+      NEXT_PUBLIC_API_PROTOCOL: "${NEXT_PUBLIC_API_PROTOCOL:-https}"
+      NEXT_PUBLIC_API_WEBSOCKET_PROTOCOL: "${NEXT_PUBLIC_API_WEBSOCKET_PROTOCOL:-wss}"
+      NEXT_PUBLIC_API_BASE_PATH: /
+      NEXT_PUBLIC_APP_HOST: "${NEXT_PUBLIC_APP_HOST:-explorer.riff.cc}"
+      NEXT_PUBLIC_APP_PORT: "${NEXT_PUBLIC_APP_PORT:-443}"
+      NEXT_PUBLIC_APP_PROTOCOL: "${NEXT_PUBLIC_APP_PROTOCOL:-https}"
+      NEXT_PUBLIC_NETWORK_NAME: ETH2077 Devnet
+      NEXT_PUBLIC_NETWORK_SHORT_NAME: ETH2077
+      NEXT_PUBLIC_NETWORK_ID: "${CHAIN_ID:-2077003}"
+      NEXT_PUBLIC_NETWORK_CURRENCY_NAME: Ether
+      NEXT_PUBLIC_NETWORK_CURRENCY_SYMBOL: ETH
+      NEXT_PUBLIC_NETWORK_CURRENCY_DECIMALS: "18"
+      NEXT_PUBLIC_IS_TESTNET: "true"
+      NEXT_PUBLIC_AD_BANNER_PROVIDER: "${NEXT_PUBLIC_AD_BANNER_PROVIDER:-none}"
+      NEXT_PUBLIC_AD_TEXT_PROVIDER: "${NEXT_PUBLIC_AD_TEXT_PROVIDER:-none}"
+
+volumes:
+  eth2077_devnet_data:
+  blockscout_db_data:
+  blockscout_redis_data:

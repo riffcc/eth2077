@@ -1,0 +1,606 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ETH2077 NFT Market</title>
+  <style>
+    :root {
+      --bg: #120f08;
+      --card: #221a0f;
+      --fg: #fff6e5;
+      --muted: #c7b58f;
+      --accent: #ffb347;
+      --ok: #5ce09b;
+      --line: #63471a;
+    }
+    body {
+      margin: 0;
+      font-family: "Source Sans 3", "Segoe UI", sans-serif;
+      color: var(--fg);
+      background: radial-gradient(circle at 80% 0%, #5a3c00 0%, var(--bg) 45%);
+      min-height: 100vh;
+      padding: 24px;
+    }
+    h1 { margin: 0 0 6px; }
+    p { margin: 0 0 16px; color: var(--muted); }
+    .top {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 14px;
+      align-items: center;
+    }
+    .meta-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+      margin-bottom: 14px;
+    }
+    .tab {
+      border: 1px solid #8c5d1c;
+      background: #2e200b;
+      color: var(--fg);
+      border-radius: 999px;
+      padding: 7px 12px;
+      cursor: pointer;
+      font-weight: 600;
+    }
+    .tab.active {
+      border-color: var(--accent);
+      background: #4c330f;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 14px;
+      margin-top: 10px;
+    }
+    .hidden { display: none; }
+    .item {
+      background: color-mix(in srgb, var(--card) 90%, black);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .img {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      object-fit: cover;
+      border-radius: 10px;
+      border: 1px solid var(--line);
+      background: #1a140a;
+    }
+    .name { font-size: 18px; font-weight: 700; }
+    .meta { color: var(--muted); font-size: 14px; }
+    .price { color: var(--accent); font-weight: 700; }
+    button {
+      border: 1px solid #8c5d1c;
+      background: #4c330f;
+      color: var(--fg);
+      border-radius: 10px;
+      padding: 8px 12px;
+      cursor: pointer;
+      font-weight: 600;
+    }
+    button:hover { border-color: var(--accent); }
+    input, textarea {
+      width: 100%;
+      border: 1px solid var(--line);
+      background: #1a140a;
+      color: var(--fg);
+      border-radius: 8px;
+      padding: 8px 10px;
+      box-sizing: border-box;
+    }
+    textarea {
+      min-height: 74px;
+      resize: vertical;
+    }
+    .mint {
+      margin-top: 8px;
+      background: color-mix(in srgb, var(--card) 90%, black);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 14px;
+    }
+    .mint h2 {
+      margin: 0 0 10px;
+      font-size: 20px;
+    }
+    .mint-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 10px;
+    }
+    .chip {
+      display: inline-block;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 3px 8px;
+      font-size: 12px;
+      color: var(--muted);
+    }
+    .section-title {
+      margin-top: 12px;
+      font-size: 18px;
+      color: #ffd28a;
+    }
+    #status {
+      margin-top: 16px;
+      color: var(--ok);
+      word-break: break-all;
+      min-height: 22px;
+    }
+    #receiptPanel {
+      margin-top: 12px;
+      background: #1a140a;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 10px;
+    }
+    #receiptPanel h3 {
+      margin: 0 0 8px;
+      font-size: 15px;
+      color: #ffd28a;
+    }
+    #receiptJson {
+      margin: 0;
+      white-space: pre-wrap;
+      word-break: break-word;
+      color: #f6ddb6;
+      font-size: 12px;
+    }
+    a { color: #ffd28a; }
+  </style>
+</head>
+<body>
+  <h1>market.riff.cc NFT</h1>
+  <p>ETH2077 devnet NFT marketplace. Buy, mint, relist, transfer, and capture signed receipts.</p>
+
+  <div class="top">
+    <button id="connectBtn">Connect MetaMask</button>
+    <button id="addChainBtn">Add ETH2077 Network</button>
+    <button id="refreshBtn">Refresh</button>
+    <span id="account" style="color:#ffd28a;">not connected</span>
+  </div>
+
+  <div class="meta-bar">
+    <span class="chip" id="modeBadge">Mode: loading</span>
+    <button id="tabMarket" class="tab active">Marketplace</button>
+    <button id="tabMine" class="tab">My NFTs</button>
+  </div>
+
+  <section class="mint" id="mintPanel">
+    <h2>Mint NFT</h2>
+    <div class="mint-grid">
+      <input id="mintName" placeholder="NFT name (e.g. Citadel Artifact)" />
+      <input id="mintPrice" placeholder="Price in ETH (e.g. 0.0042)" value="0.0042" />
+      <input id="mintImage" placeholder="Image URL (optional)" />
+      <textarea id="mintDescription" placeholder="Description (optional)"></textarea>
+    </div>
+    <div style="margin-top:10px;">
+      <button id="mintBtn">Mint + List</button>
+    </div>
+  </section>
+
+  <h2 class="section-title" id="marketTitle">Marketplace</h2>
+  <section class="grid" id="marketItems"></section>
+
+  <h2 class="section-title hidden" id="myTitle">My NFTs</h2>
+  <section class="grid hidden" id="myItems"></section>
+
+  <section id="receiptPanel" class="hidden">
+    <h3>Last Signed Receipt</h3>
+    <pre id="receiptJson"></pre>
+  </section>
+
+  <div id="status">Ready.</div>
+
+  <script>
+    const chainHex = "0x1fb14b";
+    const rpcUrl = "https://rpc.riff.cc";
+    const explorer = "https://explorer.riff.cc";
+    const merchant = "0x1111111111111111111111111111111111111111";
+
+    let activeAddress = null;
+    let marketItems = [];
+    let myItems = [];
+    let activeTab = "market";
+
+    const setStatus = (msg) => { document.getElementById("status").textContent = msg; };
+    const accountEl = document.getElementById("account");
+    const modeBadgeEl = document.getElementById("modeBadge");
+
+    function canonical(address) {
+      return (address || "").toLowerCase();
+    }
+
+    function shortAddr(address) {
+      if (!address || address.length < 10) return address || "unknown";
+      return address.slice(0, 6) + "..." + address.slice(-4);
+    }
+
+    function toHexWei(ethStr) {
+      const [whole, fracRaw = ""] = String(ethStr).trim().split(".");
+      const frac = (fracRaw + "000000000000000000").slice(0, 18);
+      const wei = BigInt(whole || "0") * 1000000000000000000n + BigInt(frac || "0");
+      return "0x" + wei.toString(16);
+    }
+
+    function formatEthFromHex(hexWei) {
+      const wei = BigInt(hexWei || "0x0");
+      const whole = wei / 1000000000000000000n;
+      const frac = (wei % 1000000000000000000n).toString().padStart(18, "0").slice(0, 5);
+      return whole.toString() + "." + frac;
+    }
+
+    function showReceipt(receipt) {
+      const panel = document.getElementById("receiptPanel");
+      const pre = document.getElementById("receiptJson");
+      if (!receipt) {
+        panel.classList.add("hidden");
+        pre.textContent = "";
+        return;
+      }
+      panel.classList.remove("hidden");
+      pre.textContent = JSON.stringify(receipt, null, 2);
+    }
+
+    function setTab(tab) {
+      activeTab = tab;
+      const isMarket = tab === "market";
+
+      document.getElementById("tabMarket").classList.toggle("active", isMarket);
+      document.getElementById("tabMine").classList.toggle("active", !isMarket);
+
+      document.getElementById("mintPanel").classList.toggle("hidden", !isMarket);
+      document.getElementById("marketTitle").classList.toggle("hidden", !isMarket);
+      document.getElementById("marketItems").classList.toggle("hidden", !isMarket);
+      document.getElementById("myTitle").classList.toggle("hidden", isMarket);
+      document.getElementById("myItems").classList.toggle("hidden", isMarket);
+    }
+
+    async function request(method, params = []) {
+      if (!window.ethereum) throw new Error("MetaMask not found");
+      return window.ethereum.request({ method, params });
+    }
+
+    async function rpcRequest(method, params = []) {
+      const resp = await fetch(rpcUrl, {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({
+          jsonrpc: "2.0",
+          id: Date.now(),
+          method,
+          params
+        })
+      });
+      const json = await resp.json();
+      if (json.error) {
+        throw new Error(json.error.message || ("RPC error for " + method));
+      }
+      return json.result;
+    }
+
+    async function marketRpc(method, params = []) {
+      const isMetaMask = !!(window.ethereum && window.ethereum.isMetaMask);
+      if (isMetaMask && method.startsWith("eth2077_")) {
+        return rpcRequest(method, params);
+      }
+
+      try {
+        return await request(method, params);
+      } catch (err) {
+        const msg = (err && err.message ? err.message : "").toLowerCase();
+        if (
+          (err && err.code === -32601) ||
+          msg.includes("does not exist") ||
+          msg.includes("not available") ||
+          msg.includes("method not found")
+        ) {
+          return rpcRequest(method, params);
+        }
+        throw err;
+      }
+    }
+
+    async function loadMarketMode() {
+      try {
+        const mode = await marketRpc("eth2077_marketMode", []);
+        modeBadgeEl.textContent = "Mode: " + mode.mode + " | ERC-721 ready: " + (mode.erc721Ready ? "yes" : "no");
+      } catch (_err) {
+        modeBadgeEl.textContent = "Mode: unknown";
+      }
+    }
+
+    async function addChain() {
+      await request("wallet_addEthereumChain", [{
+        chainId: chainHex,
+        chainName: "ETH2077 Devnet",
+        nativeCurrency: { name: "Ether", symbol: "ETH", decimals: 18 },
+        rpcUrls: [rpcUrl],
+        blockExplorerUrls: [explorer]
+      }]);
+      setStatus("ETH2077 network added.");
+    }
+
+    async function ensureChain() {
+      const chain = await request("eth_chainId");
+      if (chain !== chainHex) {
+        await request("wallet_switchEthereumChain", [{ chainId: chainHex }]);
+      }
+    }
+
+    async function ensureChainReady() {
+      try {
+        await ensureChain();
+      } catch (err) {
+        if (err && err.code === 4902) {
+          await addChain();
+          await ensureChain();
+          return;
+        }
+        throw err;
+      }
+    }
+
+    async function connect() {
+      const accounts = await request("eth_requestAccounts");
+      activeAddress = canonical(accounts[0] || null);
+      await ensureChainReady();
+      accountEl.textContent = activeAddress || "not connected";
+      await loadMarketMode();
+      await loadMarket();
+      setStatus("Connected.");
+    }
+
+    async function loadMarket(silent = false) {
+      if (!window.ethereum) {
+        marketItems = [];
+        myItems = [];
+        renderMarket();
+        renderMine();
+        if (!silent) setStatus("MetaMask is required to use the NFT market.");
+        return;
+      }
+
+      const chain = await request("eth_chainId");
+      if (chain !== chainHex) {
+        marketItems = [];
+        myItems = [];
+        renderMarket();
+        renderMine();
+        if (!silent) setStatus("Connect MetaMask and switch to ETH2077 to load NFTs.");
+        return;
+      }
+
+      const list = await marketRpc("eth2077_marketList", []);
+      marketItems = Array.isArray(list) ? list.slice() : [];
+      marketItems.sort((a, b) => (BigInt(a.tokenId) < BigInt(b.tokenId) ? 1 : -1));
+
+      if (activeAddress) {
+        const mine = await marketRpc("eth2077_marketByOwner", [activeAddress]);
+        myItems = Array.isArray(mine) ? mine.slice() : [];
+        myItems.sort((a, b) => (BigInt(a.tokenId) < BigInt(b.tokenId) ? 1 : -1));
+      } else {
+        myItems = [];
+      }
+
+      renderMarket();
+      renderMine();
+      if (!silent) setStatus("Market refreshed.");
+    }
+
+    async function buyNft(nft) {
+      if (!activeAddress) throw new Error("Connect first");
+      await ensureChainReady();
+
+      const txHash = await request("eth_sendTransaction", [{
+        from: activeAddress,
+        to: merchant,
+        value: nft.priceWei
+      }]);
+
+      const buyResult = await marketRpc("eth2077_marketBuy", [nft.tokenId, activeAddress, txHash]);
+      let receipt = buyResult && buyResult.receipt ? buyResult.receipt : null;
+      if (!receipt) {
+        receipt = await marketRpc("eth2077_marketReceipt", [txHash]);
+      }
+      showReceipt(receipt);
+
+      await loadMarket(true);
+      setStatus("Bought " + nft.name + " | tx: " + txHash + " | " + explorer + "/tx/" + txHash);
+    }
+
+    async function relistNft(nft, priceInputId) {
+      if (!activeAddress) throw new Error("Connect first");
+      const priceEth = document.getElementById(priceInputId).value || "0.001";
+      const priceWei = toHexWei(priceEth);
+      const updated = await marketRpc("eth2077_marketRelist", [nft.tokenId, activeAddress, priceWei]);
+      await loadMarket(true);
+      setStatus("Relisted " + updated.name + " at " + formatEthFromHex(updated.priceWei) + " ETH");
+    }
+
+    async function transferNft(nft, toInputId) {
+      if (!activeAddress) throw new Error("Connect first");
+      await ensureChainReady();
+
+      const to = canonical(document.getElementById(toInputId).value.trim());
+      if (!/^0x[a-f0-9]{40}$/.test(to)) {
+        throw new Error("Enter a valid destination address (0x...)");
+      }
+
+      const txHash = await request("eth_sendTransaction", [{
+        from: activeAddress,
+        to,
+        value: "0x0"
+      }]);
+
+      const updated = await marketRpc("eth2077_marketTransfer", [nft.tokenId, activeAddress, to, txHash]);
+      await loadMarket(true);
+      setStatus("Transferred " + updated.name + " to " + shortAddr(to) + " | tx: " + txHash);
+    }
+
+    async function mintNft() {
+      if (!activeAddress) throw new Error("Connect first");
+      await ensureChainReady();
+
+      const name = document.getElementById("mintName").value.trim();
+      const description = document.getElementById("mintDescription").value.trim();
+      const image = document.getElementById("mintImage").value.trim();
+      const priceEth = document.getElementById("mintPrice").value.trim() || "0.0042";
+
+      const minted = await marketRpc("eth2077_marketMint", [
+        activeAddress,
+        name,
+        description,
+        image,
+        toHexWei(priceEth)
+      ]);
+
+      document.getElementById("mintName").value = "";
+      document.getElementById("mintDescription").value = "";
+      await loadMarket(true);
+      setStatus("Minted " + minted.name + " (" + minted.tokenId + ")");
+    }
+
+    function appendCommonActions(actions, nft) {
+      if (nft.lastTxHash) {
+        const a = document.createElement("a");
+        a.href = explorer + "/tx/" + nft.lastTxHash;
+        a.target = "_blank";
+        a.rel = "noreferrer";
+        a.textContent = "Last tx";
+        actions.appendChild(a);
+      }
+    }
+
+    function renderCard(root, nft, options) {
+      const card = document.createElement("article");
+      card.className = "item";
+      card.innerHTML =
+        "<img class='img' src='" + (nft.image || "") + "' alt='" + (nft.name || "NFT") + "' />" +
+        "<div class='name'>" + (nft.name || ("Token " + nft.tokenId)) + "</div>" +
+        "<div class='meta'>Token: <code>" + nft.tokenId + "</code></div>" +
+        "<div class='meta'>" + (nft.description || "No description") + "</div>" +
+        "<div class='meta'>Owner: <code>" + shortAddr(nft.owner) + "</code></div>" +
+        "<div class='price'>" + formatEthFromHex(nft.priceWei || "0x0") + " ETH</div>" +
+        "<div><span class='chip'>" + (nft.listed ? "Listed" : "Unlisted") + "</span></div>";
+
+      const actions = document.createElement("div");
+      actions.style.marginTop = "6px";
+      actions.style.display = "flex";
+      actions.style.gap = "8px";
+      actions.style.flexWrap = "wrap";
+
+      options(actions);
+      appendCommonActions(actions, nft);
+
+      card.appendChild(actions);
+      root.appendChild(card);
+    }
+
+    function renderMarket() {
+      const root = document.getElementById("marketItems");
+      root.innerHTML = "";
+
+      if (!marketItems.length) {
+        root.innerHTML = "<article class='item'><div class='name'>No NFTs yet</div><div class='meta'>Mint the first one.</div></article>";
+        return;
+      }
+
+      for (const nft of marketItems) {
+        const isOwner = activeAddress && canonical(nft.owner) === canonical(activeAddress);
+        renderCard(root, nft, (actions) => {
+          const relistInputId = "market-relist-" + nft.tokenId.replace("0x", "");
+
+          if (!activeAddress) {
+            const btn = document.createElement("button");
+            btn.textContent = "Connect to Trade";
+            btn.onclick = () => connect().catch(e => setStatus(e.message));
+            actions.appendChild(btn);
+            return;
+          }
+
+          if (!isOwner && nft.listed) {
+            const btn = document.createElement("button");
+            btn.textContent = "Buy NFT";
+            btn.onclick = () => buyNft(nft).catch(e => setStatus(e.message));
+            actions.appendChild(btn);
+            return;
+          }
+
+          if (isOwner) {
+            const relistInput = document.createElement("input");
+            relistInput.id = relistInputId;
+            relistInput.placeholder = "Price ETH";
+            relistInput.value = formatEthFromHex(nft.priceWei || "0x0");
+            relistInput.style.maxWidth = "140px";
+            actions.appendChild(relistInput);
+
+            const relistBtn = document.createElement("button");
+            relistBtn.textContent = nft.listed ? "Update Price" : "Relist";
+            relistBtn.onclick = () => relistNft(nft, relistInputId).catch(e => setStatus(e.message));
+            actions.appendChild(relistBtn);
+            return;
+          }
+
+          const sold = document.createElement("span");
+          sold.className = "chip";
+          sold.textContent = "Sold";
+          actions.appendChild(sold);
+        });
+      }
+    }
+
+    function renderMine() {
+      const root = document.getElementById("myItems");
+      root.innerHTML = "";
+
+      if (!activeAddress) {
+        root.innerHTML = "<article class='item'><div class='name'>Connect MetaMask</div><div class='meta'>Your owned NFTs appear here.</div></article>";
+        return;
+      }
+
+      if (!myItems.length) {
+        root.innerHTML = "<article class='item'><div class='name'>No NFTs yet</div><div class='meta'>Buy or mint one on the Marketplace tab.</div></article>";
+        return;
+      }
+
+      for (const nft of myItems) {
+        renderCard(root, nft, (actions) => {
+          const toInputId = "to-" + nft.tokenId.replace("0x", "");
+
+          const toInput = document.createElement("input");
+          toInput.id = toInputId;
+          toInput.placeholder = "Transfer to 0x...";
+          toInput.style.minWidth = "220px";
+          actions.appendChild(toInput);
+
+          const transferBtn = document.createElement("button");
+          transferBtn.textContent = "Transfer";
+          transferBtn.onclick = () => transferNft(nft, toInputId).catch(e => setStatus(e.message));
+          actions.appendChild(transferBtn);
+        });
+      }
+    }
+
+    document.getElementById("connectBtn").onclick = () => connect().catch(e => setStatus(e.message));
+    document.getElementById("addChainBtn").onclick = () => addChain().catch(e => setStatus(e.message));
+    document.getElementById("refreshBtn").onclick = () => loadMarket().catch(e => setStatus(e.message));
+    document.getElementById("mintBtn").onclick = () => mintNft().catch(e => setStatus(e.message));
+    document.getElementById("tabMarket").onclick = () => setTab("market");
+    document.getElementById("tabMine").onclick = () => setTab("mine");
+
+    setTab("market");
+    loadMarketMode().catch(() => {});
+    loadMarket(true).catch(e => setStatus("Market unavailable: " + e.message));
+  </script>
+</body>
+</html>

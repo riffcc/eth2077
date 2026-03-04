@@ -6,6 +6,7 @@ members = [
   "crates/eth2077-oob-consensus",
   "crates/eth2077-bridge",
   "crates/eth2077-bench",
+  "crates/eth2077-live-bench",
   "crates/eth2077-node",
   "crates/eth2077-testnet",
 ]

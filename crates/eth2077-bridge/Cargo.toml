@@ -7,3 +7,9 @@ authors.workspace = true
 
 [dependencies]
 eth2077-types = { path = "../eth2077-types" }
+serde = { workspace = true }
+serde_json = { workspace = true }
+jsonrpsee = { version = "0.24", features = ["server", "http-client", "macros"] }
+
+[dev-dependencies]
+tokio = { version = "1", features = ["macros", "rt-multi-thread"] }
