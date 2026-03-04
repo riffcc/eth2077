@@ -1,0 +1,49 @@
+name: Formal Gate
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  cargo-check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install Rust stable
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Cargo check (workspace)
+        run: cargo check --workspace
+
+      - name: Cargo test (workspace)
+        run: cargo test --workspace
+
+  proof-debt:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install Rust stable
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Check proof debt
+        run: ./scripts/check_proof_debt.sh
+
+  theorem-registry-lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install Rust stable
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Lint theorem registry
+        run: ./scripts/lint_theorem_registry.sh
