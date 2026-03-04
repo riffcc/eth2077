@@ -1,7 +1,9 @@
 use serde::{Deserialize, Serialize};
 
 pub mod assumption_checker;
+pub mod eip7999;
 pub mod eip7919;
+pub mod eip7938;
 pub mod epbs;
 pub mod focil;
 pub mod spore_sync;

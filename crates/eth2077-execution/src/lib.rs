@@ -3,6 +3,7 @@ pub mod ingress;
 pub mod blob_sidecar;
 pub mod eip7702;
 pub mod eip7864;
+pub mod eip7928;
 
 use eth2077_types::ScenarioConfig;
 
