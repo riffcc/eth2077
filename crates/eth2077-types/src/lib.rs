@@ -1,9 +1,12 @@
 use serde::{Deserialize, Serialize};
 
 pub mod assumption_checker;
+pub mod eip7919;
+pub mod epbs;
+pub mod focil;
+pub mod spore_sync;
 pub mod theorem_registry;
 pub mod witness;
-pub mod spore_sync;
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct ScenarioConfig {
