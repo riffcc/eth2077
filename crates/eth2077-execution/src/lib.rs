@@ -1,4 +1,5 @@
 pub mod traits;
+pub mod ingress;
 
 use eth2077_types::ScenarioConfig;
 

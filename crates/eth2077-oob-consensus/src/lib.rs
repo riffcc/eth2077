@@ -3,6 +3,7 @@ use eth2077_types::ScenarioConfig;
 pub mod mock;
 pub mod traits;
 pub mod types;
+pub mod fast_path;
 
 #[derive(Debug, Clone)]
 pub struct OobPlan {
