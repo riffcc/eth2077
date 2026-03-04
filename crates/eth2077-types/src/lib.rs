@@ -1,10 +1,12 @@
 use serde::{Deserialize, Serialize};
 
 pub mod assumption_checker;
-pub mod eip8025;
-pub mod eip7999;
 pub mod eip7919;
 pub mod eip7938;
+pub mod eip7999;
+pub mod eip8025;
+pub mod eip8141;
+pub mod eip8077;
 pub mod epbs;
 pub mod focil;
 pub mod spore_sync;

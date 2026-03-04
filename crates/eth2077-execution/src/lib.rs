@@ -4,6 +4,7 @@ pub mod eip7864;
 pub mod eip7928;
 pub mod eip8007;
 pub mod eip8070;
+pub mod eip8079;
 pub mod ingress;
 pub mod traits;
 
