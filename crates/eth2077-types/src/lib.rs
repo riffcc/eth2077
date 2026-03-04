@@ -1,6 +1,8 @@
 use serde::{Deserialize, Serialize};
 
 pub mod assumption_checker;
+pub mod attester_includer;
+pub mod blob_streaming;
 pub mod eip7919;
 pub mod eip7938;
 pub mod eip7999;
@@ -11,6 +13,7 @@ pub mod epbs;
 pub mod focil;
 pub mod hyperscale_state;
 pub mod lucid_mempool;
+pub mod ntt_crypto;
 pub mod quick_slots;
 pub mod vops;
 pub mod riscv_migration;
