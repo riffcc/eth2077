@@ -47,3 +47,9 @@ jobs:
 
       - name: Lint theorem registry
         run: ./scripts/lint_theorem_registry.sh
+
+  theorem-assumption-gate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: bash scripts/check_theorem_assumption_matrix.sh
