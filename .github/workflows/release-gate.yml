@@ -1,0 +1,131 @@
+name: Release Gate (Strict)
+
+on:
+  push:
+    branches:
+      - 'release/**'
+  pull_request:
+    branches:
+      - 'release/**'
+
+jobs:
+  cargo-check-strict:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install Rust stable
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Cargo check (workspace, deny warnings)
+        env:
+          RUSTFLAGS: "-D warnings"
+        run: cargo check --workspace
+
+  cargo-test-strict:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install Rust stable
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Cargo test (workspace, deny warnings)
+        env:
+          RUSTFLAGS: "-D warnings"
+        run: cargo test --workspace
+
+  proof-debt-zero:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install Rust stable
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Check proof debt (no sorry)
+        run: ./scripts/check_proof_debt.sh
+
+      - name: Check proof debt (no axiom)
+        run: |
+          if [ ! -d proofs ]; then
+            echo "No proofs directory found at 'proofs'; nothing to check."
+            exit 0
+          fi
+
+          matches="$(find proofs -type f -name '*.lean' -exec grep -nH -w 'axiom' {} + 2>/dev/null || true)"
+          if [ -n "$matches" ]; then
+            echo "Proof debt detected: found 'axiom' in Lean files:"
+            printf '%s\n' "$matches" | awk -F: '{print $1 ":" $2}'
+            exit 1
+          fi
+
+          echo "Proof debt check passed: no 'axiom' placeholders found."
+
+  no-todo-fixme:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install Rust stable
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Fail on TODO/FIXME/HACK/XXX in crates/
+        run: |
+          if rg -n --color=never --glob 'crates/**/*.rs' '\b(TODO|FIXME|HACK|XXX)\b'; then
+            echo "Found TODO/FIXME/HACK/XXX markers in crates/ Rust source."
+            exit 1
+          fi
+          echo "No TODO/FIXME/HACK/XXX markers found in crates/ Rust source."
+
+  no-placeholder-code:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install Rust stable
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Fail on placeholder Rust code in crates/
+        run: |
+          if rg -n --color=never --glob 'crates/**/*.rs' 'unimplemented!\s*\(\s*\)|todo!\s*\(\s*\)|panic!\s*\(\s*"not yet"\s*\)|unreachable!\s*\(\s*"placeholder"\s*\)'; then
+            echo "Found placeholder code markers in crates/ Rust source."
+            exit 1
+          fi
+          echo "No placeholder code markers found in crates/ Rust source."
+
+  theorem-registry-lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install Rust stable
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Lint theorem registry
+        run: ./scripts/lint_theorem_registry.sh
+
+  clippy-pedantic:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install Rust stable
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Cargo clippy (workspace, pedantic)
+        run: |
+          cargo clippy --workspace -- \
+            -D warnings \
+            -W clippy::pedantic \
+            -A clippy::module_name_repetitions \
+            -A clippy::must_use_candidate \
+            -A clippy::missing_errors_doc \
+            -A clippy::missing_panics_doc
