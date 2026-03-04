@@ -9,16 +9,19 @@ pub mod eip7999;
 pub mod eip8025;
 pub mod eip8077;
 pub mod eip8141;
+pub mod eip_delta_review;
+pub mod eip_portability;
 pub mod epbs;
 pub mod focil;
 pub mod hyperscale_state;
 pub mod lucid_mempool;
 pub mod ntt_crypto;
 pub mod quick_slots;
-pub mod vops;
 pub mod riscv_migration;
 pub mod spore_sync;
 pub mod theorem_registry;
+pub mod vops;
+pub mod whisk_ssle;
 pub mod witness;
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
