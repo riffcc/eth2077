@@ -1,5 +1,7 @@
 pub mod traits;
 pub mod ingress;
+pub mod blob_sidecar;
+pub mod eip7702;
 
 use eth2077_types::ScenarioConfig;
 

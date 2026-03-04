@@ -7,3 +7,6 @@ authors.workspace = true
 
 [dependencies]
 eth2077-types = { path = "../eth2077-types" }
+serde = { workspace = true }
+serde_json = { workspace = true }
+sha2 = "0.10"
