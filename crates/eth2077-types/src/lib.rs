@@ -1,9 +1,12 @@
 use serde::{Deserialize, Serialize};
 
+pub mod aggregate_throughput;
 pub mod assumption_checker;
 pub mod attester_includer;
 pub mod blob_streaming;
+pub mod da_throughput;
 pub mod ec_broadcast;
+pub mod ef_architecture;
 pub mod eip7919;
 pub mod eip7938;
 pub mod eip7999;
