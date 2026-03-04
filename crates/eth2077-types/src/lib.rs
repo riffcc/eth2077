@@ -6,6 +6,7 @@ pub mod aps_integration;
 pub mod attester_includer;
 pub mod bals_integration;
 pub mod blob_streaming;
+pub mod citadel_port;
 pub mod claim_integrity;
 pub mod da_throughput;
 pub mod ec_broadcast;
@@ -21,6 +22,7 @@ pub mod eip_portability;
 pub mod epbs;
 pub mod epbs_integration;
 pub mod fast_l1;
+pub mod fault_injection;
 pub mod focil;
 pub mod focil_integration;
 pub mod formal_verification;
@@ -41,6 +43,7 @@ pub mod threat_model;
 pub mod vops;
 pub mod whisk_ssle;
 pub mod witness;
+pub mod witness_integration;
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct ScenarioConfig {
