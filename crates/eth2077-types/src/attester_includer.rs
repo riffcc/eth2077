@@ -353,27 +353,36 @@ fn max_inclusion_list_limit(resistance: CensorshipResistance) -> usize {
 }
 
 fn max_delay_for_config(config: &AISConfig) -> u64 {
-    let resistance_cap = match config.censorship_resistance {
+    match config.censorship_resistance {
         CensorshipResistance::ThresholdEncryption => 10,
         CensorshipResistance::ForcedInclusion => 12,
         _ => DEFAULT_MAX_DELAY_SLOTS,
-    };
-
-    resistance_cap
+    }
 }
 
 fn is_model_resistance_compatible(
     model: SeparationModel,
     resistance: CensorshipResistance,
 ) -> bool {
-    match (model, resistance) {
-        (SeparationModel::CurrentUnified, CensorshipResistance::FocilStyle) => false,
-        (SeparationModel::CurrentUnified, CensorshipResistance::ThresholdEncryption) => false,
-        (SeparationModel::CurrentUnified, CensorshipResistance::MultiProposer) => false,
-        (SeparationModel::SoftSeparation, CensorshipResistance::ThresholdEncryption) => false,
-        (SeparationModel::AuctionedIncluder, CensorshipResistance::MultiProposer) => false,
-        _ => true,
-    }
+    !matches!(
+        (model, resistance),
+        (
+            SeparationModel::CurrentUnified,
+            CensorshipResistance::FocilStyle
+        ) | (
+            SeparationModel::CurrentUnified,
+            CensorshipResistance::ThresholdEncryption,
+        ) | (
+            SeparationModel::CurrentUnified,
+            CensorshipResistance::MultiProposer,
+        ) | (
+            SeparationModel::SoftSeparation,
+            CensorshipResistance::ThresholdEncryption,
+        ) | (
+            SeparationModel::AuctionedIncluder,
+            CensorshipResistance::MultiProposer,
+        )
+    )
 }
 
 fn estimate_centralization_risk_for_compare(config: &AISConfig) -> f64 {

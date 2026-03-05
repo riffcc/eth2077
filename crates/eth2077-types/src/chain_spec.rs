@@ -343,14 +343,14 @@ pub fn validate_chain_spec_config(
             }
 
             let normalized = token.to_uppercase();
-            if seen_eips.contains_key(&normalized) {
+            if let std::collections::hash_map::Entry::Vacant(entry) = seen_eips.entry(normalized) {
+                entry.insert(1);
+            } else {
                 push_error(
                     &mut errors,
                     "forks.eips",
                     &format!("fork '{}' contains duplicate EIP '{}'", name, token),
                 );
-            } else {
-                seen_eips.insert(normalized, 1);
             }
         }
 

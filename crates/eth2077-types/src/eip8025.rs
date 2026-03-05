@@ -146,7 +146,7 @@ pub fn compute_attestation_stats(
         total_proof_bytes = total_proof_bytes.saturating_add(proof.proof_data.len());
     }
 
-    let state_roots_consistent = attestation.proofs.first().map_or(true, |first| {
+    let state_roots_consistent = attestation.proofs.first().is_none_or(|first| {
         attestation
             .proofs
             .iter()

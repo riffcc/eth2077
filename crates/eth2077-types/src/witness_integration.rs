@@ -235,7 +235,7 @@ pub fn compute_witness_stats(config: &WitnessIntegrationConfig) -> WitnessIntegr
     let raw_total_size = config
         .witness_types
         .iter()
-        .map(|witness_type| base_witness_size_bytes(witness_type))
+        .map(base_witness_size_bytes)
         .sum::<f64>()
         .max(1.0);
     let effective_compression = (raw_total_size / total_size_bytes.max(1.0)).max(1.0);

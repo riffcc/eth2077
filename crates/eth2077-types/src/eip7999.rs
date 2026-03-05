@@ -175,10 +175,7 @@ pub fn compute_fee_allocation(
     })
 }
 
-pub fn update_base_fees(
-    params: &mut [DimensionParams],
-    actual_usage: &[(ResourceDimension, u64)],
-) -> () {
+pub fn update_base_fees(params: &mut [DimensionParams], actual_usage: &[(ResourceDimension, u64)]) {
     for dimension_params in params {
         let usage = actual_usage
             .iter()

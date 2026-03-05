@@ -242,7 +242,7 @@ impl UpgradeProposal {
         }
 
         if matches!(self.fork_strategy, ForkStrategy::EpochBoundary)
-            && !self.activation_epoch.is_some_and(|epoch| epoch > 0)
+            && self.activation_epoch.is_none_or(|epoch| epoch == 0)
         {
             return false;
         }

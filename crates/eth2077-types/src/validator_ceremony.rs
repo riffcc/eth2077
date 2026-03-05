@@ -35,7 +35,7 @@ use std::collections::HashMap;
 ///
 /// This module is intended for testnet coordinator control planes and not for
 /// direct cryptographic key handling.
-
+///
 /// High-level lifecycle phases for a validator key ceremony.
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub enum CeremonyPhase {

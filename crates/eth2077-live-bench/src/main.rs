@@ -475,7 +475,7 @@ fn main() -> Result<(), Box<dyn Error>> {
             "eth2077_setBalance",
             json!([sender_addr, args.fund_wei_hex]),
         ) {
-            Ok(v) if v == Value::Bool(true) => {}
+            Ok(Value::Bool(true)) => {}
             Ok(v) => notes.push(format!(
                 "eth2077_setBalance non-true for sender {sender_addr} on {endpoint}: {v}"
             )),
@@ -504,13 +504,11 @@ fn main() -> Result<(), Box<dyn Error>> {
         let sender_counts = Arc::clone(&sender_counts);
         let endpoint_counts = Arc::clone(&endpoint_counts);
         let endpoint_locks = Arc::clone(&endpoint_locks);
-        let to_bytes = to_bytes;
         let gas_limit = args.gas_limit;
         let max_priority_fee_per_gas = args.max_priority_fee_per_gas;
         let max_fee_per_gas = args.max_fee_per_gas;
         let value_wei = args.value_wei;
         let tx_count = args.tx_count;
-        let chain_id = chain_id;
 
         let handle = thread::spawn(move || {
             let client = match Client::builder().timeout(Duration::from_secs(30)).build() {

@@ -453,7 +453,7 @@ fn is_gate_passed(
                 .iter()
                 .filter(|node| node.role == NodeRole::Validator && node.is_healthy)
                 .count();
-            let minimum_healthy = ((config.min_validators * 2) + 2) / 3;
+            let minimum_healthy = (config.min_validators * 2).div_ceil(3);
             validators >= config.min_validators && healthy_validators >= minimum_healthy
         }
         ReadinessGate::GenesisLocked => {

@@ -19,7 +19,7 @@ use std::collections::HashMap;
 /// - Tier 1: safety-critical and deployment blocking when unsatisfied.
 /// - Tier 2: liveness and correctness progress requirements for sustained operation.
 /// - Tier 3: performance and optimization assurances that support confidence.
-
+///
 /// Defines the semantic family for a theorem statement.
 ///
 /// Families allow ETH2077 to report verification coverage in business-relevant buckets

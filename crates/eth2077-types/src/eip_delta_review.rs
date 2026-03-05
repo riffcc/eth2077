@@ -111,13 +111,13 @@ pub fn validate_delta_review(
         }
 
         let key = (entry.eip_number, entry.pr_number);
-        if seen_pairs.contains_key(&key) {
+        if let std::collections::hash_map::Entry::Vacant(entry) = seen_pairs.entry(key) {
+            entry.insert(index);
+        } else {
             errors.push(DeltaReviewError::DuplicateEntry {
                 eip: entry.eip_number,
                 pr: entry.pr_number,
             });
-        } else {
-            seen_pairs.insert(key, index);
         }
     }
 

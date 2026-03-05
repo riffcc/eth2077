@@ -423,22 +423,22 @@ pub fn compute_epbs_commitment(config: &EpbsIntegrationConfig) -> [u8; 32] {
 }
 
 fn is_model_role_compatible(model: SeparationModel, role: BuilderRole) -> bool {
-    match (model, role) {
+    !matches!(
+        (model, role),
         (
             SeparationModel::ProposerBuilderSplit,
             BuilderRole::MEVAuctioneer | BuilderRole::BlockAuctionBuilder,
-        ) => false,
-        (SeparationModel::ExecutionTickets, BuilderRole::InclusionListBuilder) => false,
-        (
+        ) | (
+            SeparationModel::ExecutionTickets,
+            BuilderRole::InclusionListBuilder
+        ) | (
             SeparationModel::AttesterProposerSplit,
             BuilderRole::MEVAuctioneer | BuilderRole::BlockAuctionBuilder,
-        ) => false,
-        (
+        ) | (
             SeparationModel::SlotAuction,
             BuilderRole::InclusionListBuilder | BuilderRole::SharedSequencer,
-        ) => false,
-        _ => true,
-    }
+        )
+    )
 }
 
 fn all_separation_models() -> [SeparationModel; 6] {

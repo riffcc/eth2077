@@ -176,6 +176,17 @@ pub struct BootnodeDiscoveryStats {
     pub network_partitioned: bool,
     pub commitment: [u8; 32],
 }
+
+#[derive(Debug, Clone, Copy)]
+struct BootnodeDerivedStats {
+    total_bootnodes: usize,
+    healthy_bootnodes: usize,
+    discovered_peers: usize,
+    reachable_peers: usize,
+    avg_latency_ms: f64,
+    avg_peer_count: f64,
+    network_partitioned: bool,
+}
 impl Default for BootnodeDiscoveryConfig {
     fn default() -> Self {
         Self {
@@ -208,33 +219,24 @@ pub fn compute_stats(
     peers: &[DiscoveredPeer],
     snapshot: Option<&TopologySnapshot>,
 ) -> BootnodeDiscoveryStats {
-    let total_bootnodes = bootnodes.len();
-    let healthy_bootnodes = bootnodes.iter().filter(|node| node.is_healthy()).count();
-    let discovered_peers = peers.len();
-    let reachable_peers = peers.iter().filter(|peer| peer.is_reachable()).count();
-    let avg_latency_ms = compute_average_latency(peers);
-    let avg_peer_count = resolve_average_peer_count(bootnodes, snapshot);
-    let network_partitioned = snapshot.is_some_and(|topology| topology.partitioned);
-    let commitment = compute_commitment(
-        bootnodes,
-        peers,
-        snapshot,
-        total_bootnodes,
-        healthy_bootnodes,
-        discovered_peers,
-        reachable_peers,
-        avg_latency_ms,
-        avg_peer_count,
-        network_partitioned,
-    );
+    let derived = BootnodeDerivedStats {
+        total_bootnodes: bootnodes.len(),
+        healthy_bootnodes: bootnodes.iter().filter(|node| node.is_healthy()).count(),
+        discovered_peers: peers.len(),
+        reachable_peers: peers.iter().filter(|peer| peer.is_reachable()).count(),
+        avg_latency_ms: compute_average_latency(peers),
+        avg_peer_count: resolve_average_peer_count(bootnodes, snapshot),
+        network_partitioned: snapshot.is_some_and(|topology| topology.partitioned),
+    };
+    let commitment = compute_commitment(bootnodes, peers, snapshot, &derived);
     BootnodeDiscoveryStats {
-        total_bootnodes,
-        healthy_bootnodes,
-        discovered_peers,
-        reachable_peers,
-        avg_latency_ms,
-        avg_peer_count,
-        network_partitioned,
+        total_bootnodes: derived.total_bootnodes,
+        healthy_bootnodes: derived.healthy_bootnodes,
+        discovered_peers: derived.discovered_peers,
+        reachable_peers: derived.reachable_peers,
+        avg_latency_ms: derived.avg_latency_ms,
+        avg_peer_count: derived.avg_peer_count,
+        network_partitioned: derived.network_partitioned,
         commitment,
     }
 }
@@ -506,25 +508,35 @@ fn compute_commitment(
     bootnodes: &[Bootnode],
     peers: &[DiscoveredPeer],
     snapshot: Option<&TopologySnapshot>,
-    total_bootnodes: usize,
-    healthy_bootnodes: usize,
-    discovered_peers: usize,
-    reachable_peers: usize,
-    avg_latency_ms: f64,
-    avg_peer_count: f64,
-    network_partitioned: bool,
+    derived: &BootnodeDerivedStats,
 ) -> [u8; 32] {
     let mut hasher = Sha256::new();
-    append_usize(&mut hasher, "stats.total_bootnodes", total_bootnodes);
-    append_usize(&mut hasher, "stats.healthy_bootnodes", healthy_bootnodes);
-    append_usize(&mut hasher, "stats.discovered_peers", discovered_peers);
-    append_usize(&mut hasher, "stats.reachable_peers", reachable_peers);
-    append_f64(&mut hasher, "stats.avg_latency_ms", avg_latency_ms);
-    append_f64(&mut hasher, "stats.avg_peer_count", avg_peer_count);
+    append_usize(
+        &mut hasher,
+        "stats.total_bootnodes",
+        derived.total_bootnodes,
+    );
+    append_usize(
+        &mut hasher,
+        "stats.healthy_bootnodes",
+        derived.healthy_bootnodes,
+    );
+    append_usize(
+        &mut hasher,
+        "stats.discovered_peers",
+        derived.discovered_peers,
+    );
+    append_usize(
+        &mut hasher,
+        "stats.reachable_peers",
+        derived.reachable_peers,
+    );
+    append_f64(&mut hasher, "stats.avg_latency_ms", derived.avg_latency_ms);
+    append_f64(&mut hasher, "stats.avg_peer_count", derived.avg_peer_count);
     append_bool(
         &mut hasher,
         "stats.network_partitioned",
-        network_partitioned,
+        derived.network_partitioned,
     );
     append_bootnodes(&mut hasher, bootnodes);
     append_peers(&mut hasher, peers);

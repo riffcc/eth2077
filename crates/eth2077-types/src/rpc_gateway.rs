@@ -345,9 +345,7 @@ impl GatewayClient {
             return false;
         }
 
-        self.allowed_namespaces
-            .iter()
-            .any(|allowed| *allowed == namespace)
+        self.allowed_namespaces.contains(&namespace)
     }
 }
 
