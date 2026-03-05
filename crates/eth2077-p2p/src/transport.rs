@@ -3,12 +3,14 @@ use std::io;
 use std::net::{SocketAddr, TcpListener as StdTcpListener};
 use std::sync::Arc;
 
+use async_trait::async_trait;
+use futures::{SinkExt, StreamExt};
 use tokio::net::{TcpListener, TcpStream};
-use tokio::sync::RwLock;
+use tokio::sync::{broadcast, RwLock};
 use tokio_util::codec::Framed;
 use tracing::{debug, warn};
 
-use crate::codec::MessageCodec;
+use crate::codec::{MessageCodec, WireMessage};
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
 pub struct PeerAddr {
@@ -26,7 +28,7 @@ impl Connection {
     fn new(stream: TcpStream, peer_addr: SocketAddr) -> Self {
         Self {
             peer_addr,
-            framed: Framed::new(stream, MessageCodec::default()),
+            framed: Framed::new(stream, MessageCodec),
         }
     }
 
@@ -54,31 +56,62 @@ impl Default for TransportConfig {
     }
 }
 
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
+pub enum TransportEvent {
+    PeerConnected(SocketAddr),
+    PeerDisconnected(SocketAddr),
+}
+
+#[async_trait]
+pub trait Transport: Clone + Send + Sync + 'static {
+    async fn accept(&self) -> io::Result<Connection>;
+    async fn connect(&self, addr: SocketAddr) -> io::Result<Connection>;
+    async fn disconnect(&self, addr: SocketAddr);
+    async fn peers(&self) -> Vec<SocketAddr>;
+    fn local_addr(&self) -> io::Result<SocketAddr>;
+    fn subscribe_events(&self) -> broadcast::Receiver<TransportEvent>;
+    async fn send(
+        &self,
+        framed: &mut Framed<TcpStream, MessageCodec>,
+        msg: WireMessage,
+    ) -> io::Result<()>;
+    async fn recv(
+        &self,
+        framed: &mut Framed<TcpStream, MessageCodec>,
+    ) -> io::Result<Option<WireMessage>>;
+}
+
 #[derive(Clone)]
-pub struct Transport {
+pub struct GossipTransport {
     config: TransportConfig,
     listener: Arc<TcpListener>,
     active_peers: Arc<RwLock<HashSet<SocketAddr>>>,
+    events_tx: broadcast::Sender<TransportEvent>,
 }
 
-impl Transport {
+impl GossipTransport {
     pub fn bind(config: TransportConfig) -> io::Result<Self> {
         let std_listener = StdTcpListener::bind(config.listen_addr)?;
         std_listener.set_nonblocking(true)?;
         let listener = TcpListener::from_std(std_listener)?;
+        let (events_tx, _events_rx) = broadcast::channel(512);
 
         Ok(Self {
             config,
             listener: Arc::new(listener),
             active_peers: Arc::new(RwLock::new(HashSet::new())),
+            events_tx,
         })
     }
+}
 
-    pub fn local_addr(&self) -> io::Result<SocketAddr> {
+#[async_trait]
+impl Transport for GossipTransport {
+    fn local_addr(&self) -> io::Result<SocketAddr> {
         self.listener.local_addr()
     }
 
-    pub async fn accept(&self) -> io::Result<Connection> {
+    async fn accept(&self) -> io::Result<Connection> {
         loop {
             let (stream, peer_addr) = self.listener.accept().await?;
 
@@ -89,11 +122,14 @@ impl Transport {
 
             self.active_peers.write().await.insert(peer_addr);
             debug!(?peer_addr, "accepted inbound peer connection");
+            let _ = self
+                .events_tx
+                .send(TransportEvent::PeerConnected(peer_addr));
             return Ok(Connection::new(stream, peer_addr));
         }
     }
 
-    pub async fn connect(&self, addr: SocketAddr) -> io::Result<Connection> {
+    async fn connect(&self, addr: SocketAddr) -> io::Result<Connection> {
         if !self.has_capacity().await {
             return Err(io::Error::new(
                 io::ErrorKind::ConnectionRefused,
@@ -105,23 +141,101 @@ impl Transport {
         let peer_addr = stream.peer_addr()?;
         self.active_peers.write().await.insert(peer_addr);
         debug!(?peer_addr, "established outbound peer connection");
+        let _ = self
+            .events_tx
+            .send(TransportEvent::PeerConnected(peer_addr));
 
         Ok(Connection::new(stream, peer_addr))
     }
 
-    pub async fn unregister_peer(&self, addr: SocketAddr) {
+    async fn disconnect(&self, addr: SocketAddr) {
         self.active_peers.write().await.remove(&addr);
+        let _ = self.events_tx.send(TransportEvent::PeerDisconnected(addr));
     }
 
-    pub async fn active_peer_count(&self) -> usize {
-        self.active_peers.read().await.len()
-    }
-
-    pub async fn active_peers(&self) -> Vec<SocketAddr> {
+    async fn peers(&self) -> Vec<SocketAddr> {
         self.active_peers.read().await.iter().copied().collect()
     }
 
+    fn subscribe_events(&self) -> broadcast::Receiver<TransportEvent> {
+        self.events_tx.subscribe()
+    }
+
+    async fn send(
+        &self,
+        framed: &mut Framed<TcpStream, MessageCodec>,
+        msg: WireMessage,
+    ) -> io::Result<()> {
+        framed.send(msg).await.map_err(io::Error::other)
+    }
+
+    async fn recv(
+        &self,
+        framed: &mut Framed<TcpStream, MessageCodec>,
+    ) -> io::Result<Option<WireMessage>> {
+        match framed.next().await {
+            Some(Ok(msg)) => Ok(Some(msg)),
+            Some(Err(error)) => Err(io::Error::other(error)),
+            None => Ok(None),
+        }
+    }
+}
+
+impl GossipTransport {
     async fn has_capacity(&self) -> bool {
         self.active_peers.read().await.len() < self.config.max_peers
+    }
+}
+
+#[derive(Clone)]
+pub struct SpiralTransport;
+
+#[async_trait]
+impl Transport for SpiralTransport {
+    async fn accept(&self) -> io::Result<Connection> {
+        // TODO: integrate Citadel's SPIRAL mesh transport once the networking backend is wired in.
+        todo!("SpiralTransport::accept is not implemented yet");
+    }
+
+    async fn connect(&self, _addr: SocketAddr) -> io::Result<Connection> {
+        // TODO: integrate Citadel's SPIRAL mesh transport once the networking backend is wired in.
+        todo!("SpiralTransport::connect is not implemented yet");
+    }
+
+    async fn disconnect(&self, _addr: SocketAddr) {
+        // TODO: integrate Citadel's SPIRAL mesh transport once the networking backend is wired in.
+        todo!("SpiralTransport::disconnect is not implemented yet");
+    }
+
+    async fn peers(&self) -> Vec<SocketAddr> {
+        // TODO: integrate Citadel's SPIRAL mesh transport once the networking backend is wired in.
+        todo!("SpiralTransport::peers is not implemented yet");
+    }
+
+    fn local_addr(&self) -> io::Result<SocketAddr> {
+        // TODO: integrate Citadel's SPIRAL mesh transport once the networking backend is wired in.
+        todo!("SpiralTransport::local_addr is not implemented yet");
+    }
+
+    fn subscribe_events(&self) -> broadcast::Receiver<TransportEvent> {
+        // TODO: integrate Citadel's SPIRAL mesh transport once the networking backend is wired in.
+        todo!("SpiralTransport::subscribe_events is not implemented yet");
+    }
+
+    async fn send(
+        &self,
+        _framed: &mut Framed<TcpStream, MessageCodec>,
+        _msg: WireMessage,
+    ) -> io::Result<()> {
+        // TODO: integrate Citadel's SPIRAL mesh transport once the networking backend is wired in.
+        todo!("SpiralTransport::send is not implemented yet");
+    }
+
+    async fn recv(
+        &self,
+        _framed: &mut Framed<TcpStream, MessageCodec>,
+    ) -> io::Result<Option<WireMessage>> {
+        // TODO: integrate Citadel's SPIRAL mesh transport once the networking backend is wired in.
+        todo!("SpiralTransport::recv is not implemented yet");
     }
 }

@@ -4,7 +4,6 @@ use std::sync::Arc;
 
 use eth2077_oob_consensus::consensus::ConsensusMessage;
 use eth2077_types::canonical::{Block, Transaction};
-use futures::{SinkExt, StreamExt};
 use sha2::{Digest, Sha256};
 use tokio::sync::{mpsc, Mutex, RwLock};
 use tokio::time::{sleep, Duration};
@@ -14,7 +13,7 @@ use crate::codec::WireMessage;
 use crate::gossip::{GossipConfig, GossipEngine};
 use crate::peer::{PeerInfo, PeerManager, PeerState};
 use crate::sync_protocol::{SyncEngine, SyncState};
-use crate::transport::{Connection, Transport, TransportConfig};
+use crate::transport::{Connection, GossipTransport, Transport, TransportConfig};
 
 #[derive(Debug, Clone)]
 pub struct P2pConfig {
@@ -41,11 +40,11 @@ impl Default for P2pConfig {
 pub enum P2pEvent {
     BlockReceived {
         from_peer: u64,
-        block: Block,
+        block: Box<Block>,
     },
     TransactionReceived {
         from_peer: u64,
-        tx: Transaction,
+        tx: Box<Transaction>,
     },
     ConsensusMessageReceived {
         from_peer: u64,
@@ -117,9 +116,9 @@ impl ConsensusRelayCache {
     }
 }
 
-pub struct P2pNode {
+pub struct P2pNode<T: Transport = GossipTransport> {
     config: P2pConfig,
-    transport: Transport,
+    transport: T,
     peer_manager: Arc<Mutex<PeerManager>>,
     gossip_engine: Arc<Mutex<GossipEngine>>,
     sync_engine: Arc<Mutex<SyncEngine>>,
@@ -128,9 +127,9 @@ pub struct P2pNode {
     started: bool,
 }
 
-impl P2pNode {
+impl P2pNode<GossipTransport> {
     pub fn new(config: P2pConfig) -> Self {
-        let transport = Transport::bind(TransportConfig {
+        let transport = GossipTransport::bind(TransportConfig {
             listen_addr: config.listen_addr,
             max_peers: config.max_peers,
         })
@@ -141,6 +140,12 @@ impl P2pNode {
             )
         });
 
+        Self::with_transport(config, transport)
+    }
+}
+
+impl<T: Transport> P2pNode<T> {
+    pub fn with_transport(config: P2pConfig, transport: T) -> Self {
         Self {
             peer_manager: Arc::new(Mutex::new(PeerManager::new(config.max_peers))),
             gossip_engine: Arc::new(Mutex::new(GossipEngine::new(GossipConfig::default()))),
@@ -306,7 +311,7 @@ impl P2pNode {
 
     fn spawn_connection_task(
         connection: Connection,
-        transport: Transport,
+        transport: T,
         inbound_tx: mpsc::Sender<NodeInbound>,
         sync_engine: Arc<Mutex<SyncEngine>>,
         local_peer_id: u64,
@@ -324,9 +329,9 @@ impl P2pNode {
                 best_hash: [0u8; 32],
             };
 
-            if let Err(error) = framed.send(hello).await {
+            if let Err(error) = transport.send(&mut framed, hello).await {
                 debug!(%error, ?peer_addr, "failed to send hello");
-                transport.unregister_peer(peer_addr).await;
+                transport.disconnect(peer_addr).await;
                 return;
             }
 
@@ -338,7 +343,7 @@ impl P2pNode {
                     outbound = receiver.recv() => {
                         match outbound {
                             Some(message) => {
-                                if let Err(error) = framed.send(message).await {
+                                if let Err(error) = transport.send(&mut framed, message).await {
                                     debug!(%error, ?peer_addr, "failed to send message to peer");
                                     break;
                                 }
@@ -346,9 +351,9 @@ impl P2pNode {
                             None => break,
                         }
                     }
-                    inbound = framed.next() => {
+                    inbound = transport.recv(&mut framed) => {
                         match inbound {
-                            Some(Ok(message)) => {
+                            Ok(Some(message)) => {
                                 match message {
                                     WireMessage::Hello {
                                         peer_id,
@@ -393,17 +398,17 @@ impl P2pNode {
                                     }
                                 }
                             }
-                            Some(Err(error)) => {
+                            Err(error) => {
                                 debug!(%error, ?peer_addr, "failed to decode frame");
                                 break;
                             }
-                            None => break,
+                            Ok(None) => break,
                         }
                     }
                 }
             }
 
-            transport.unregister_peer(peer_addr).await;
+            transport.disconnect(peer_addr).await;
             if let Some(peer_id) = remote_peer_id {
                 let _ = inbound_tx
                     .send(NodeInbound::PeerDisconnected { peer_id })
@@ -508,7 +513,10 @@ impl P2pNode {
                                         }
 
                                         let _ = event_tx
-                                            .send(P2pEvent::BlockReceived { from_peer, block })
+                                            .send(P2pEvent::BlockReceived {
+                                                from_peer,
+                                                block: Box::new(block),
+                                            })
                                             .await;
                                     }
                                     Err(error) => {
@@ -533,7 +541,10 @@ impl P2pNode {
                                         }
 
                                         let _ = event_tx
-                                            .send(P2pEvent::TransactionReceived { from_peer, tx })
+                                            .send(P2pEvent::TransactionReceived {
+                                                from_peer,
+                                                tx: Box::new(tx),
+                                            })
                                             .await;
                                     }
                                     Err(error) => {
