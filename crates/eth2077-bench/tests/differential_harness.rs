@@ -1,6 +1,5 @@
 use std::sync::atomic::{AtomicU64, Ordering};
 
-use async_trait::async_trait;
 use eth2077_bench::microbench::{deterministic_blocks, MockExecutionEngine};
 use eth2077_execution::traits::{ExecutionEngine, ExecutionError, ExecutionResult};
 use eth2077_types::ScenarioConfig;
@@ -19,7 +18,6 @@ impl ReferenceExecutionEngine {
     }
 }
 
-#[async_trait]
 impl ExecutionEngine for ReferenceExecutionEngine {
     async fn execute_block(&self, block: &[u8]) -> Result<ExecutionResult, ExecutionError> {
         if block.is_empty() {

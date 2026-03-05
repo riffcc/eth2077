@@ -70,7 +70,7 @@ async fn recv_block_event(rx: &mut mpsc::Receiver<P2pEvent>, expected_hash: B256
     loop {
         match rx.recv().await {
             Some(P2pEvent::BlockReceived { block, .. }) if block.hash() == expected_hash => {
-                return block;
+                return *block;
             }
             Some(_) => continue,
             None => panic!("event channel closed before block event"),
