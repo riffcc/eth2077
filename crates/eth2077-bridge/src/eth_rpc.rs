@@ -31,7 +31,12 @@ impl EthRpcState {
         }
     }
 
-    pub fn append_block(&mut self, block: Block, receipts: Vec<Receipt>, new_state: InMemoryStateDB) {
+    pub fn append_block(
+        &mut self,
+        block: Block,
+        receipts: Vec<Receipt>,
+        new_state: InMemoryStateDB,
+    ) {
         for receipt in receipts {
             self.receipts.insert(receipt.tx_hash, receipt);
         }
@@ -124,7 +129,11 @@ fn tx_to_json(tx: &Transaction) -> Value {
 
 fn block_to_json(block: &Block, full_txs: bool) -> Value {
     let transactions = if full_txs {
-        block.transactions.iter().map(tx_to_json).collect::<Vec<_>>()
+        block
+            .transactions
+            .iter()
+            .map(tx_to_json)
+            .collect::<Vec<_>>()
     } else {
         block
             .transactions
@@ -146,7 +155,9 @@ fn block_to_json(block: &Block, full_txs: bool) -> Value {
     })
 }
 
-pub fn build_eth_rpc_module(state: Arc<RwLock<EthRpcState>>) -> RpcModule<Arc<RwLock<EthRpcState>>> {
+pub fn build_eth_rpc_module(
+    state: Arc<RwLock<EthRpcState>>,
+) -> RpcModule<Arc<RwLock<EthRpcState>>> {
     let mut module = RpcModule::new(state);
 
     module
@@ -164,61 +175,51 @@ pub fn build_eth_rpc_module(state: Arc<RwLock<EthRpcState>>) -> RpcModule<Arc<Rw
         .expect("method names are static and unique");
 
     module
-        .register_async_method(
-            "eth_getBalance",
-            |params, state, _| async move {
-                let (address, _block_tag): (String, Option<String>) = params.parse()?;
-                let address = parse_address(&address)?;
-                let state = state.read().await;
-                let account = state.state_db.get_account(&address);
-                Ok::<String, ErrorObjectOwned>(format!("0x{:x}", account.balance))
-            },
-        )
+        .register_async_method("eth_getBalance", |params, state, _| async move {
+            let (address, _block_tag): (String, Option<String>) = params.parse()?;
+            let address = parse_address(&address)?;
+            let state = state.read().await;
+            let account = state.state_db.get_account(&address);
+            Ok::<String, ErrorObjectOwned>(format!("0x{:x}", account.balance))
+        })
         .expect("method names are static and unique");
 
     module
-        .register_async_method(
-            "eth_getBlockByNumber",
-            |params, state, _| async move {
-                let (block_tag, full_txs): (String, bool) = params.parse()?;
-                let state = state.read().await;
-                let number = parse_block_tag(&block_tag, state.latest_block().map(Block::number))?;
-                Ok::<Value, ErrorObjectOwned>(match number.and_then(|num| state.get_block_by_number(num)) {
+        .register_async_method("eth_getBlockByNumber", |params, state, _| async move {
+            let (block_tag, full_txs): (String, bool) = params.parse()?;
+            let state = state.read().await;
+            let number = parse_block_tag(&block_tag, state.latest_block().map(Block::number))?;
+            Ok::<Value, ErrorObjectOwned>(
+                match number.and_then(|num| state.get_block_by_number(num)) {
                     Some(block) => block_to_json(block, full_txs),
                     None => Value::Null,
-                })
-            },
-        )
+                },
+            )
+        })
         .expect("method names are static and unique");
 
     module
-        .register_async_method(
-            "eth_getTransactionReceipt",
-            |params, state, _| async move {
-                let tx_hash: String = params.one()?;
-                let tx_hash = B256::from_str(&tx_hash)
-                    .map_err(|_| invalid_params(format!("invalid tx hash: {tx_hash}")))?;
+        .register_async_method("eth_getTransactionReceipt", |params, state, _| async move {
+            let tx_hash: String = params.one()?;
+            let tx_hash = B256::from_str(&tx_hash)
+                .map_err(|_| invalid_params(format!("invalid tx hash: {tx_hash}")))?;
 
-                let state = state.read().await;
-                Ok::<Value, ErrorObjectOwned>(match state.receipts.get(&tx_hash) {
-                    Some(receipt) => receipt_to_json(receipt),
-                    None => Value::Null,
-                })
-            },
-        )
+            let state = state.read().await;
+            Ok::<Value, ErrorObjectOwned>(match state.receipts.get(&tx_hash) {
+                Some(receipt) => receipt_to_json(receipt),
+                None => Value::Null,
+            })
+        })
         .expect("method names are static and unique");
 
     module
-        .register_async_method(
-            "eth_getTransactionCount",
-            |params, state, _| async move {
-                let (address, _block_tag): (String, Option<String>) = params.parse()?;
-                let address = parse_address(&address)?;
-                let state = state.read().await;
-                let account = state.state_db.get_account(&address);
-                Ok::<String, ErrorObjectOwned>(hex_u64(account.nonce))
-            },
-        )
+        .register_async_method("eth_getTransactionCount", |params, state, _| async move {
+            let (address, _block_tag): (String, Option<String>) = params.parse()?;
+            let address = parse_address(&address)?;
+            let state = state.read().await;
+            let account = state.state_db.get_account(&address);
+            Ok::<String, ErrorObjectOwned>(hex_u64(account.nonce))
+        })
         .expect("method names are static and unique");
 
     module

@@ -51,17 +51,21 @@ impl PeerManager {
     }
 
     pub fn add_peer(&mut self, peer: PeerInfo) -> bool {
-        if self.peers.contains_key(&peer.peer_id) {
-            self.peers.insert(peer.peer_id, peer);
-            return true;
+        let at_capacity = self.peers.len() >= self.max_peers;
+        match self.peers.entry(peer.peer_id) {
+            std::collections::hash_map::Entry::Occupied(mut entry) => {
+                entry.insert(peer);
+                true
+            }
+            std::collections::hash_map::Entry::Vacant(entry) => {
+                if at_capacity {
+                    false
+                } else {
+                    entry.insert(peer);
+                    true
+                }
+            }
         }
-
-        if self.peers.len() >= self.max_peers {
-            return false;
-        }
-
-        self.peers.insert(peer.peer_id, peer);
-        true
     }
 
     pub fn remove_peer(&mut self, peer_id: u64) -> Option<PeerInfo> {

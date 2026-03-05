@@ -152,20 +152,15 @@ pub struct PayloadAttributesV3 {
     pub parent_beacon_block_root: Bytes32,
 }
 
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
+#[derive(Debug, Clone, Copy, Default, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(rename_all = "SCREAMING_SNAKE_CASE")]
 pub enum PayloadExecutionStatus {
+    #[default]
     Valid,
     Invalid,
     Syncing,
     Accepted,
     InvalidBlockHash,
-}
-
-impl Default for PayloadExecutionStatus {
-    fn default() -> Self {
-        Self::Valid
-    }
 }
 
 #[derive(Debug, Clone, Default, PartialEq, Eq, Serialize, Deserialize)]

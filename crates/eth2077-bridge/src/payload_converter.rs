@@ -106,7 +106,7 @@ fn decode_hex_bytes(input: &str) -> Option<Vec<u8>> {
         return Some(Vec::new());
     }
 
-    if raw.len() % 2 != 0 {
+    if !raw.len().is_multiple_of(2) {
         return None;
     }
 

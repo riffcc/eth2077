@@ -80,7 +80,7 @@ pub fn validate_state_access_request(
     }
 
     // Merkle proof is encoded as 32-byte branch nodes.
-    if proof_size == 0 || proof_size % 32 != 0 {
+    if proof_size == 0 || !proof_size.is_multiple_of(32) {
         return Err(StateAccessError::InvalidProofEncoding);
     }
 

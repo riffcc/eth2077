@@ -98,6 +98,10 @@ impl Mempool {
         self.transactions.len()
     }
 
+    pub fn is_empty(&self) -> bool {
+        self.transactions.is_empty()
+    }
+
     pub fn is_full(&self) -> bool {
         self.len() >= self.config.max_size
     }

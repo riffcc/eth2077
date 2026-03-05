@@ -237,6 +237,18 @@ pub struct GoNogoGateStats {
     pub commitment: [u8; 32],
 }
 
+#[derive(Debug, Clone, Copy)]
+struct GoNogoDerivedStats {
+    total_items: usize,
+    approved_items: usize,
+    rejected_items: usize,
+    pending_items: usize,
+    go_gates: usize,
+    nogo_gates: usize,
+    critical_risks_open: usize,
+    approval_rate: f64,
+}
+
 pub fn compute_stats(checklist: &LaunchChecklist) -> GoNogoGateStats {
     let total_items = checklist.items.len();
     let approved_items = checklist
@@ -278,8 +290,7 @@ pub fn compute_stats(checklist: &LaunchChecklist) -> GoNogoGateStats {
         approved_items as f64 / total_items as f64
     };
 
-    let commitment = compute_commitment(
-        checklist,
+    let derived = GoNogoDerivedStats {
         total_items,
         approved_items,
         rejected_items,
@@ -288,17 +299,18 @@ pub fn compute_stats(checklist: &LaunchChecklist) -> GoNogoGateStats {
         nogo_gates,
         critical_risks_open,
         approval_rate,
-    );
+    };
+    let commitment = compute_commitment(checklist, &derived);
 
     GoNogoGateStats {
-        total_items,
-        approved_items,
-        rejected_items,
-        pending_items,
-        go_gates,
-        nogo_gates,
-        critical_risks_open,
-        approval_rate,
+        total_items: derived.total_items,
+        approved_items: derived.approved_items,
+        rejected_items: derived.rejected_items,
+        pending_items: derived.pending_items,
+        go_gates: derived.go_gates,
+        nogo_gates: derived.nogo_gates,
+        critical_risks_open: derived.critical_risks_open,
+        approval_rate: derived.approval_rate,
         commitment,
     }
 }
@@ -484,17 +496,7 @@ fn final_verdict_allows_launch(verdict: Option<GateVerdict>) -> bool {
     !matches!(verdict, Some(GateVerdict::NoGo | GateVerdict::Deferred))
 }
 
-fn compute_commitment(
-    checklist: &LaunchChecklist,
-    total_items: usize,
-    approved_items: usize,
-    rejected_items: usize,
-    pending_items: usize,
-    go_gates: usize,
-    nogo_gates: usize,
-    critical_risks_open: usize,
-    approval_rate: f64,
-) -> [u8; 32] {
+fn compute_commitment(checklist: &LaunchChecklist, stats: &GoNogoDerivedStats) -> [u8; 32] {
     let mut item_signatures = checklist
         .items
         .iter()
@@ -516,14 +518,14 @@ fn compute_commitment(
         created_at_unix: checklist.created_at_unix,
         target_launch_unix: checklist.target_launch_unix,
         final_verdict: checklist.final_verdict.map(GateVerdict::as_str),
-        total_items,
-        approved_items,
-        rejected_items,
-        pending_items,
-        go_gates,
-        nogo_gates,
-        critical_risks_open,
-        approval_rate,
+        total_items: stats.total_items,
+        approved_items: stats.approved_items,
+        rejected_items: stats.rejected_items,
+        pending_items: stats.pending_items,
+        go_gates: stats.go_gates,
+        nogo_gates: stats.nogo_gates,
+        critical_risks_open: stats.critical_risks_open,
+        approval_rate: stats.approval_rate,
         item_signatures,
         gate_signatures,
     };

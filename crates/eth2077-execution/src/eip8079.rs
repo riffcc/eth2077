@@ -96,7 +96,7 @@ pub fn validate_execute_input(
             expected_block: 0,
             actual_block: input.anchor.l1_block_number,
         });
-    } else if input.anchor.l1_block_number % frequency != 0 {
+    } else if !input.anchor.l1_block_number.is_multiple_of(frequency) {
         errors.push(NativeRollupError::AnchorFrequencyViolation {
             expected_block: (input.anchor.l1_block_number / frequency) * frequency,
             actual_block: input.anchor.l1_block_number,

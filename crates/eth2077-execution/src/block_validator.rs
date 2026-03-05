@@ -33,8 +33,8 @@ pub enum ValidationError {
         actual: u64,
     },
     LogsBloomMismatch {
-        expected: Bloom,
-        actual: Bloom,
+        expected: Box<Bloom>,
+        actual: Box<Bloom>,
     },
 }
 
@@ -73,7 +73,9 @@ impl core::fmt::Display for ValidationError {
             Self::LogsBloomMismatch { expected, actual } => {
                 write!(
                     f,
-                    "logs bloom mismatch: expected {expected:#x}, got {actual:#x}"
+                    "logs bloom mismatch: expected {:#x}, got {:#x}",
+                    expected.as_ref(),
+                    actual.as_ref()
                 )
             }
         }
@@ -142,8 +144,8 @@ impl BlockValidator {
 
         if logs_bloom != block.header.logs_bloom {
             return Err(ValidationError::LogsBloomMismatch {
-                expected: block.header.logs_bloom,
-                actual: logs_bloom,
+                expected: Box::new(block.header.logs_bloom),
+                actual: Box::new(logs_bloom),
             });
         }
 

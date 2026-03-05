@@ -62,8 +62,8 @@ impl Database for RevmDatabase<'_> {
     }
 
     fn code_by_hash(&mut self, code_hash: B256) -> Result<Bytecode, Self::Error> {
-        for address in self.state.accounts().copied() {
-            let account = self.state.get_account(&address);
+        for address in self.state.accounts() {
+            let account = self.state.get_account(address);
             if account.code_hash == code_hash {
                 if let Some(code) = account.code {
                     return Ok(Bytecode::new_raw(Bytes::from(code)));

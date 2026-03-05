@@ -201,13 +201,14 @@ async fn main() {
         genesis_state.clone(),
     )));
 
-    let (rpc_addr, _rpc_handle) = match spawn_eth_rpc_server(config.rpc_bind(), rpc_state.clone()).await {
-        Ok(server) => server,
-        Err(error) => {
-            error!(%error, "failed to start JSON-RPC server");
-            return;
-        }
-    };
+    let (rpc_addr, _rpc_handle) =
+        match spawn_eth_rpc_server(config.rpc_bind(), rpc_state.clone()).await {
+            Ok(server) => server,
+            Err(error) => {
+                error!(%error, "failed to start JSON-RPC server");
+                return;
+            }
+        };
     info!(%rpc_addr, "JSON-RPC server started");
 
     let p2p_config = P2pConfig {
@@ -334,7 +335,7 @@ async fn main() {
 
                         {
                             let mut state = rpc_state.write().await;
-                            state.append_block(block.clone(), Vec::new(), execution_state.clone());
+                            state.append_block((*block).clone(), Vec::new(), execution_state.clone());
                         }
 
                         info!(

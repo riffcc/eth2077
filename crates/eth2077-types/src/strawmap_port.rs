@@ -293,6 +293,15 @@ pub struct StrawmapPortStats {
     pub commitment: [u8; 32],
 }
 
+#[derive(Debug, Clone, Copy)]
+struct StrawmapDerivedStats {
+    verified_count: usize,
+    benchmarked_count: usize,
+    integrated_count: usize,
+    avg_effort_days: f64,
+    completion_pct: f64,
+}
+
 #[derive(Debug, Clone, Serialize)]
 struct ItemCommitmentRecord {
     id: String,
@@ -415,17 +424,14 @@ pub fn compute_stats(items: &[StrawmapItem], tasks: &[PortingTask]) -> StrawmapP
         .map(|phase| (phase, phase_counts[phase.index()]))
         .collect();
 
-    let commitment = compute_commitment(
-        items,
-        tasks,
-        &items_by_domain,
-        &items_by_phase,
+    let derived = StrawmapDerivedStats {
         verified_count,
         benchmarked_count,
         integrated_count,
         avg_effort_days,
         completion_pct,
-    );
+    };
+    let commitment = compute_commitment(items, tasks, &items_by_domain, &items_by_phase, &derived);
 
     StrawmapPortStats {
         total_items: items.len(),
@@ -451,11 +457,7 @@ fn compute_commitment(
     tasks: &[PortingTask],
     items_by_domain: &[(StrawmapDomain, usize)],
     items_by_phase: &[(PortingPhase, usize)],
-    verified_count: usize,
-    benchmarked_count: usize,
-    integrated_count: usize,
-    avg_effort_days: f64,
-    completion_pct: f64,
+    stats: &StrawmapDerivedStats,
 ) -> [u8; 32] {
     let mut normalized_items: Vec<ItemCommitmentRecord> =
         items.iter().map(StrawmapItem::commitment_record).collect();
@@ -486,11 +488,11 @@ fn compute_commitment(
         total_tasks: tasks.len(),
         counts_by_domain,
         counts_by_phase,
-        verified_count,
-        benchmarked_count,
-        integrated_count,
-        avg_effort_days_bits: finite_bits(avg_effort_days),
-        completion_pct_bits: finite_bits(completion_pct),
+        verified_count: stats.verified_count,
+        benchmarked_count: stats.benchmarked_count,
+        integrated_count: stats.integrated_count,
+        avg_effort_days_bits: finite_bits(stats.avg_effort_days),
+        completion_pct_bits: finite_bits(stats.completion_pct),
         items: normalized_items,
         tasks: normalized_tasks,
     };

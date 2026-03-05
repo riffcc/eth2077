@@ -154,6 +154,13 @@ pub struct CiFormalGateStats {
     pub blocked_modules: Vec<String>,
 }
 
+#[derive(Debug, Clone, Copy)]
+struct CiFormalDebtCounts {
+    total_debt: usize,
+    tier1_count: usize,
+    tier2_count: usize,
+}
+
 /// Returns ETH2077 default formal gate policy.
 ///
 /// The default profile is practical but strict where it matters:
@@ -357,12 +364,15 @@ pub fn compute_ci_formal_gate_stats(
     let config_invalid = validate_ci_formal_gate_config(config).is_err();
     let verdict = compute_verdict(config, total_debt, tier1_count, tier2_count, config_invalid);
 
-    let blocked_modules = compute_blocked_modules(
-        config,
-        &verdict,
+    let counts = CiFormalDebtCounts {
         total_debt,
         tier1_count,
         tier2_count,
+    };
+    let blocked_modules = compute_blocked_modules(
+        config,
+        &verdict,
+        &counts,
         &all_modules,
         &tier1_modules,
         &tier2_modules,
@@ -515,9 +525,7 @@ fn compute_verdict(
 fn compute_blocked_modules(
     config: &CiFormalGateConfig,
     verdict: &GateVerdict,
-    total_debt: usize,
-    tier1_count: usize,
-    tier2_count: usize,
+    counts: &CiFormalDebtCounts,
     all_modules: &[String],
     tier1_modules: &[String],
     tier2_modules: &[String],
@@ -536,17 +544,17 @@ fn compute_blocked_modules(
     }
 
     let mut blocked = Vec::new();
-    if tier1_count > config.max_tier1_debt {
+    if counts.tier1_count > config.max_tier1_debt {
         for module in tier1_modules {
             push_unique(&mut blocked, module.clone());
         }
     }
-    if tier2_count > config.max_tier2_debt {
+    if counts.tier2_count > config.max_tier2_debt {
         for module in tier2_modules {
             push_unique(&mut blocked, module.clone());
         }
     }
-    if total_debt > config.max_total_debt {
+    if counts.total_debt > config.max_total_debt {
         for module in all_modules {
             push_unique(&mut blocked, module.clone());
         }

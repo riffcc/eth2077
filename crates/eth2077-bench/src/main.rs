@@ -117,7 +117,7 @@ fn simulate(cfg: &ScenarioConfig) -> ScenarioResult {
     };
 
     let bottleneck = {
-        let mut pairs = vec![
+        let mut pairs = [
             ("ingress", ingress_capacity),
             ("execution", execution_capacity),
             ("oob_consensus", oob_capacity),

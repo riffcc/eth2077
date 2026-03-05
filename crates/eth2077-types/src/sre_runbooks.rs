@@ -426,6 +426,17 @@ pub struct SreRunbooksStats {
     pub commitment: [u8; 32],
 }
 
+#[derive(Debug, Clone, Copy)]
+struct SreRunbooksDerivedStats {
+    now_unix: u64,
+    total_runbooks: usize,
+    stale_runbooks: usize,
+    game_days_run: usize,
+    avg_detection_time_s: f64,
+    avg_mitigation_time_s: f64,
+    game_day_success_rate: f64,
+}
+
 impl SreRunbooksStats {
     pub fn fresh_runbooks(&self) -> usize {
         self.total_runbooks.saturating_sub(self.stale_runbooks)
@@ -479,9 +490,7 @@ pub fn compute_stats(
         successes as f64 / game_days_run as f64
     };
 
-    let commitment = compute_stats_commitment(
-        runbooks,
-        exercises,
+    let derived = SreRunbooksDerivedStats {
         now_unix,
         total_runbooks,
         stale_runbooks,
@@ -489,7 +498,8 @@ pub fn compute_stats(
         avg_detection_time_s,
         avg_mitigation_time_s,
         game_day_success_rate,
-    );
+    };
+    let commitment = compute_stats_commitment(runbooks, exercises, &derived);
 
     SreRunbooksStats {
         total_runbooks,
@@ -523,13 +533,7 @@ fn mean_optional_u64(values: impl Iterator<Item = Option<u64>>) -> f64 {
 fn compute_stats_commitment(
     runbooks: &[Runbook],
     exercises: &[GameDayExercise],
-    now_unix: u64,
-    total_runbooks: usize,
-    stale_runbooks: usize,
-    game_days_run: usize,
-    avg_detection_time_s: f64,
-    avg_mitigation_time_s: f64,
-    game_day_success_rate: f64,
+    stats: &SreRunbooksDerivedStats,
 ) -> [u8; 32] {
     #[derive(Serialize)]
     struct CommitmentPayload<'a> {
@@ -547,15 +551,15 @@ fn compute_stats_commitment(
 
     let payload = CommitmentPayload {
         domain: STATS_COMMITMENT_DOMAIN_STR,
-        now_unix,
+        now_unix: stats.now_unix,
         runbooks,
         exercises,
-        total_runbooks,
-        stale_runbooks,
-        game_days_run,
-        avg_detection_time_s,
-        avg_mitigation_time_s,
-        game_day_success_rate,
+        total_runbooks: stats.total_runbooks,
+        stale_runbooks: stats.stale_runbooks,
+        game_days_run: stats.game_days_run,
+        avg_detection_time_s: stats.avg_detection_time_s,
+        avg_mitigation_time_s: stats.avg_mitigation_time_s,
+        game_day_success_rate: stats.game_day_success_rate,
     };
 
     let encoded = serde_json::to_vec(&payload).expect("sre runbooks stats payload must serialize");

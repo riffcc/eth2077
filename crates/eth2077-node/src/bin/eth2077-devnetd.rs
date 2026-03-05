@@ -1323,7 +1323,7 @@ fn dedup_tx_meta_array(value: &Value) -> Vec<EngineTxMeta> {
     out
 }
 
-fn payload_attributes_from_engine_request<'a>(req: &'a Value) -> Option<&'a Value> {
+fn payload_attributes_from_engine_request(req: &Value) -> Option<&Value> {
     req.get("payloadAttributes").or_else(|| {
         req.get("params")
             .and_then(Value::as_array)
@@ -1332,7 +1332,7 @@ fn payload_attributes_from_engine_request<'a>(req: &'a Value) -> Option<&'a Valu
     })
 }
 
-fn execution_payload_from_engine_request<'a>(req: &'a Value) -> Option<&'a Value> {
+fn execution_payload_from_engine_request(req: &Value) -> Option<&Value> {
     req.get("executionPayload").or_else(|| {
         req.get("params")
             .and_then(Value::as_array)
@@ -1448,7 +1448,7 @@ fn normalize_hash32_value(value: Option<&Value>) -> Option<String> {
     value.and_then(Value::as_str).and_then(normalize_hash32)
 }
 
-fn engine_7732_payload_header_source<'a>(req: &'a Value) -> Option<&'a Value> {
+fn engine_7732_payload_header_source(req: &Value) -> Option<&Value> {
     req.get("payloadHeader")
         .or_else(|| req.get("signedExecutionPayloadHeader"))
         .or_else(|| req.get("executionPayloadHeader"))
@@ -1459,7 +1459,7 @@ fn engine_7732_payload_header_source<'a>(req: &'a Value) -> Option<&'a Value> {
         })
 }
 
-fn engine_7732_payload_envelope_source<'a>(req: &'a Value) -> Option<&'a Value> {
+fn engine_7732_payload_envelope_source(req: &Value) -> Option<&Value> {
     req.get("payloadEnvelope")
         .or_else(|| req.get("signedExecutionPayloadEnvelope"))
         .or_else(|| req.get("executionPayloadEnvelope"))
@@ -2909,9 +2909,7 @@ fn handle_jsonrpc(state: &mut NodeState, req: &Value) -> Value {
                 Value::Array(many) => {
                     let mut out = Vec::new();
                     for entry in many {
-                        let Some(addr) = entry.as_str().and_then(canonical_address) else {
-                            return None;
-                        };
+                        let addr = entry.as_str().and_then(canonical_address)?;
                         out.push(addr);
                     }
                     Some(out)
