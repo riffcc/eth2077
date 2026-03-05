@@ -24,7 +24,9 @@ impl ValidatorSet {
     }
 
     pub fn get(&self, index: u64) -> Option<&Validator> {
-        self.validators.iter().find(|validator| validator.index == index)
+        self.validators
+            .iter()
+            .find(|validator| validator.index == index)
     }
 
     pub fn total_weight(&self) -> u64 {
@@ -41,7 +43,8 @@ impl ValidatorSet {
             return 0;
         }
 
-        let leader_position = (height.saturating_add(round as u64) % self.validators.len() as u64) as usize;
+        let leader_position =
+            (height.saturating_add(round as u64) % self.validators.len() as u64) as usize;
         self.validators[leader_position].index
     }
 

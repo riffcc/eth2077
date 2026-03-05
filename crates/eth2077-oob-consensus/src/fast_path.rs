@@ -83,7 +83,8 @@ impl FastPathAccumulator {
         }
 
         let agreed_count = self.agreement_count();
-        if self.config.optimistic_threshold > 0 && agreed_count >= self.config.optimistic_threshold {
+        if self.config.optimistic_threshold > 0 && agreed_count >= self.config.optimistic_threshold
+        {
             let block_hash = self.round_block_hash.unwrap_or(attestation.block_hash);
             let proof = self.build_fast_proof(block_hash, attestation.received_at_ms);
             return Some(FastPathOutcome::FastFinalized(proof));
@@ -134,10 +135,15 @@ impl FastPathAccumulator {
     }
 
     fn build_fast_proof(&self, block_hash: [u8; 32], finalized_at: u64) -> FinalityProof {
-        let mut proof_data = Vec::with_capacity(self.attestations.len() * core::mem::size_of::<u64>());
+        let mut proof_data =
+            Vec::with_capacity(self.attestations.len() * core::mem::size_of::<u64>());
         let mut first_signature = Vec::new();
 
-        for att in self.attestations.iter().filter(|a| a.block_hash == block_hash) {
+        for att in self
+            .attestations
+            .iter()
+            .filter(|a| a.block_hash == block_hash)
+        {
             if first_signature.is_empty() {
                 first_signature = att.signature.clone();
             }
@@ -167,7 +173,11 @@ mod tests {
         [byte; 32]
     }
 
-    fn attestation(block_hash: [u8; 32], attester_index: u64, received_at_ms: u64) -> FastPathAttestation {
+    fn attestation(
+        block_hash: [u8; 32],
+        attester_index: u64,
+        received_at_ms: u64,
+    ) -> FastPathAttestation {
         FastPathAttestation {
             block_hash,
             attester_index,

@@ -1,4 +1,5 @@
 pub mod engine_api;
+pub mod eth_rpc;
 pub mod forkchoice;
 pub mod payload_converter;
 pub mod traits;

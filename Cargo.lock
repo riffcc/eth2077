@@ -1139,6 +1139,8 @@ dependencies = [
 name = "eth2077-bridge"
 version = "0.1.0"
 dependencies = [
+ "alloy-primitives",
+ "eth2077-execution",
  "eth2077-types",
  "jsonrpsee",
  "serde",
@@ -1173,15 +1175,21 @@ dependencies = [
 name = "eth2077-node"
 version = "0.1.0"
 dependencies = [
+ "alloy-primitives",
  "eth2077-bridge",
  "eth2077-execution",
  "eth2077-oob-consensus",
+ "eth2077-p2p",
  "eth2077-types",
  "hex",
+ "jsonrpsee",
  "revm",
  "rlp",
  "serde",
  "serde_json",
+ "tokio",
+ "tracing",
+ "tracing-subscriber 0.3.22",
 ]
 
 [[package]]
