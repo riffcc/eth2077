@@ -1,4 +1,6 @@
 pub mod blob_sidecar;
+pub mod block_builder;
+pub mod block_validator;
 pub mod eip7702;
 pub mod eip7864;
 pub mod eip7928;
@@ -7,6 +9,7 @@ pub mod eip8070;
 pub mod eip8079;
 pub mod eip8142;
 pub mod executor;
+pub mod genesis;
 pub mod ingress;
 pub mod state;
 pub mod traits;
