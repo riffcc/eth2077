@@ -163,8 +163,8 @@ pub fn compute_aps_stats(config: &ApsIntegrationConfig) -> ApsIntegrationStats {
             0.62,
             "design-finalization lag",
             vec![
-                "Finalize APS design and threat model.",
-                "Instrument baseline attestation telemetry.",
+                "Finalize APS design and threat model.".to_string(),
+                "Instrument baseline attestation telemetry.".to_string(),
             ],
         ),
         SeparationPhase::InitialSplit => (
@@ -174,8 +174,8 @@ pub fn compute_aps_stats(config: &ApsIntegrationConfig) -> ApsIntegrationStats {
             0.55,
             "split-duty handoff instability",
             vec![
-                "Launch initial proposer/attester duty split.",
-                "Validate liveness and finality under split roles.",
+                "Launch initial proposer/attester duty split.".to_string(),
+                "Validate liveness and finality under split roles.".to_string(),
             ],
         ),
         SeparationPhase::PartialMigration => (
@@ -185,8 +185,8 @@ pub fn compute_aps_stats(config: &ApsIntegrationConfig) -> ApsIntegrationStats {
             0.49,
             "mixed-mode orchestration complexity",
             vec![
-                "Migrate a minority of validators to APS duties.",
-                "Backtest attestation deadlines and timeout policy.",
+                "Migrate a minority of validators to APS duties.".to_string(),
+                "Backtest attestation deadlines and timeout policy.".to_string(),
             ],
         ),
         SeparationPhase::FullSeparation => (
@@ -196,8 +196,8 @@ pub fn compute_aps_stats(config: &ApsIntegrationConfig) -> ApsIntegrationStats {
             0.43,
             "committee scheduling pressure",
             vec![
-                "Complete validator migration to APS.",
-                "Enforce proposer collateral and penalties.",
+                "Complete validator migration to APS.".to_string(),
+                "Enforce proposer collateral and penalties.".to_string(),
             ],
         ),
         SeparationPhase::OptimizedSeparation => (
@@ -207,8 +207,8 @@ pub fn compute_aps_stats(config: &ApsIntegrationConfig) -> ApsIntegrationStats {
             0.29,
             "cross-client optimization variance",
             vec![
-                "Tune proposer rotations for network efficiency.",
-                "Benchmark safety-check pass rates across clients.",
+                "Tune proposer rotations for network efficiency.".to_string(),
+                "Benchmark safety-check pass rates across clients.".to_string(),
             ],
         ),
         SeparationPhase::PostSeparation => (
@@ -218,8 +218,8 @@ pub fn compute_aps_stats(config: &ApsIntegrationConfig) -> ApsIntegrationStats {
             0.21,
             "long-tail economics drift",
             vec![
-                "Publish APS stability reports.",
-                "Operationalize long-horizon validator economics audits.",
+                "Publish APS stability reports.".to_string(),
+                "Operationalize long-horizon validator economics audits.".to_string(),
             ],
         ),
     };

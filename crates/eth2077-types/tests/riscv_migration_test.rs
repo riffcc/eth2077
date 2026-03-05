@@ -55,11 +55,11 @@ fn empty_phases_rejected() {
 fn phases_out_of_order_rejected() {
     let mut strategy = default_migration_strategy();
     strategy.phases = vec![
-        MigrationPhase::Phase0_Research,
-        MigrationPhase::Phase2_EvmWrapped,
-        MigrationPhase::Phase1_DualDeploy,
-        MigrationPhase::Phase3_EvmDeprecated,
-        MigrationPhase::Phase4_RiscVNative,
+        MigrationPhase::Phase0Research,
+        MigrationPhase::Phase2EvmWrapped,
+        MigrationPhase::Phase1DualDeploy,
+        MigrationPhase::Phase3EvmDeprecated,
+        MigrationPhase::Phase4RiscVNative,
     ];
 
     let errors = validate_migration_strategy(&strategy).unwrap_err();

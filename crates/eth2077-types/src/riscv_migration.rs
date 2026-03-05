@@ -12,11 +12,11 @@ pub enum ExecutionTarget {
 
 #[derive(Debug, Clone, Copy, Serialize, Deserialize, PartialEq, Eq, Hash)]
 pub enum MigrationPhase {
-    Phase0_Research,
-    Phase1_DualDeploy,
-    Phase2_EvmWrapped,
-    Phase3_EvmDeprecated,
-    Phase4_RiscVNative,
+    Phase0Research,
+    Phase1DualDeploy,
+    Phase2EvmWrapped,
+    Phase3EvmDeprecated,
+    Phase4RiscVNative,
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
@@ -67,11 +67,11 @@ pub struct MigrationEvalStats {
 
 fn phase_index(phase: MigrationPhase) -> usize {
     match phase {
-        MigrationPhase::Phase0_Research => 0,
-        MigrationPhase::Phase1_DualDeploy => 1,
-        MigrationPhase::Phase2_EvmWrapped => 2,
-        MigrationPhase::Phase3_EvmDeprecated => 3,
-        MigrationPhase::Phase4_RiscVNative => 4,
+        MigrationPhase::Phase0Research => 0,
+        MigrationPhase::Phase1DualDeploy => 1,
+        MigrationPhase::Phase2EvmWrapped => 2,
+        MigrationPhase::Phase3EvmDeprecated => 3,
+        MigrationPhase::Phase4RiscVNative => 4,
     }
 }
 
@@ -99,29 +99,29 @@ pub fn default_riscv_comparison() -> ArchitectureComparison {
 
 pub fn default_migration_strategy() -> MigrationStrategy {
     let phases = vec![
-        MigrationPhase::Phase0_Research,
-        MigrationPhase::Phase1_DualDeploy,
-        MigrationPhase::Phase2_EvmWrapped,
-        MigrationPhase::Phase3_EvmDeprecated,
-        MigrationPhase::Phase4_RiscVNative,
+        MigrationPhase::Phase0Research,
+        MigrationPhase::Phase1DualDeploy,
+        MigrationPhase::Phase2EvmWrapped,
+        MigrationPhase::Phase3EvmDeprecated,
+        MigrationPhase::Phase4RiscVNative,
     ];
     let estimated_years_per_phase = vec![1.0, 2.0, 2.0, 3.0, 2.0];
     let total_estimated_years = 10.0;
     let risks = vec![
         MigrationRisk {
-            phase: MigrationPhase::Phase1_DualDeploy,
+            phase: MigrationPhase::Phase1DualDeploy,
             risk_description: "Dual runtime divergence could create consensus edge-cases.".into(),
             severity: 0.6,
             mitigation: "Use differential execution traces and client conformance test vectors.".into(),
         },
         MigrationRisk {
-            phase: MigrationPhase::Phase2_EvmWrapped,
+            phase: MigrationPhase::Phase2EvmWrapped,
             risk_description: "Wrapper semantics may mis-handle EVM corner-cases and precompiles.".into(),
             severity: 0.8,
             mitigation: "Ship compatibility suites and phase-gate legacy opcode parity.".into(),
         },
         MigrationRisk {
-            phase: MigrationPhase::Phase3_EvmDeprecated,
+            phase: MigrationPhase::Phase3EvmDeprecated,
             risk_description: "Developer tooling lag can slow migration of production contracts.".into(),
             severity: 0.4,
             mitigation: "Fund compiler/tooling grants and provide long-lived migration SDKs.".into(),

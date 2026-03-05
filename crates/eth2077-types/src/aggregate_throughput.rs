@@ -266,7 +266,7 @@ pub fn generate_caveats(benchmarks: &[LaneBenchmark]) -> Vec<String> {
 
     for lane in all_lanes() {
         let mut min_tps = f64::INFINITY;
-        let mut max_tps = 0.0;
+        let mut max_tps: f64 = 0.0;
         let mut seen = false;
 
         for benchmark in benchmarks {
@@ -409,9 +409,9 @@ fn lane_stats(benchmarks: &[LaneBenchmark], lane: ThroughputLane) -> Option<Lane
         return None;
     }
 
-    let mut sum = 0.0;
-    let mut min = f64::INFINITY;
-    let mut max = 0.0;
+    let mut sum: f64 = 0.0;
+    let mut min: f64 = f64::INFINITY;
+    let mut max: f64 = 0.0;
 
     for benchmark in lane_benchmarks.iter().copied() {
         let tps = benchmark.measured_tps.max(0.0);

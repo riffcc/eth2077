@@ -212,7 +212,7 @@ pub fn score_portability(assessment: &PortabilityAssessment, config: &Portabilit
     } else {
         0.9
     };
-    let mut change_factor = 1.0;
+    let mut change_factor: f64 = 1.0;
     if assessment.requires_consensus_changes {
         change_factor -= 0.15;
     }

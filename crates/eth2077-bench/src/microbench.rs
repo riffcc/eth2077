@@ -310,23 +310,11 @@ where
 
     for _ in 0..passes {
         let pass_start = Instant::now();
-        let mut tasks = Vec::with_capacity(blocks.len());
-
         for block in blocks {
-            let engine = Arc::clone(&engine);
-            let block = block.clone();
-            tasks.push(tokio::spawn(async move {
-                let op_start = Instant::now();
-                let result = engine.execute_block(&block).await;
-                (result, duration_to_ns(op_start.elapsed()))
-            }));
-        }
-
-        for task in tasks {
-            let (res, op_ns) = task.await.map_err(|e| {
-                ExecutionError::InternalError(format!("parallel execute join failed: {e}"))
-            })?;
-            let _ = res?;
+            let op_start = Instant::now();
+            let result = engine.execute_block(block).await;
+            let op_ns = duration_to_ns(op_start.elapsed());
+            let _ = result?;
             op_latencies_ns.push(op_ns);
         }
 

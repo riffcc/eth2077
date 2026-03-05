@@ -277,11 +277,11 @@ pub fn compute_fast_l1_commitment(config: &FastL1Config) -> [u8; 32] {
 }
 
 fn component_budget_map(config: &FastL1Config) -> (f64, f64, f64, f64, f64) {
-    let mut propagation = 0.0;
-    let mut execution = 0.0;
-    let mut consensus = 0.0;
-    let mut attestation = 0.0;
-    let mut finality_voting = 0.0;
+    let mut propagation: f64 = 0.0;
+    let mut execution: f64 = 0.0;
+    let mut consensus: f64 = 0.0;
+    let mut attestation: f64 = 0.0;
+    let mut finality_voting: f64 = 0.0;
 
     for budget in &config.latency_budgets {
         let value = budget.measured_ms.unwrap_or(budget.budget_ms).max(0.0);

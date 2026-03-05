@@ -138,7 +138,7 @@ pub fn compute_epbs_stats(config: &EpbsIntegrationConfig) -> EpbsIntegrationStat
         mut mev_leakage_fraction,
         model_bottleneck,
         model_caveat,
-    ) = match config.separation_model {
+    ): (f64, f64, f64, f64, f64, &str, &str) = match config.separation_model {
         SeparationModel::ProposerBuilderSplit => (
             1_150_000.0,
             0.72,
