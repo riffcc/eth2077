@@ -54,9 +54,9 @@ BOOTNODES="${BOOTNODES}" \
 ALLOC_ACCOUNTS="${ALLOC_ACCOUNTS}" \
   bash "${ROOT_DIR}/scripts/build_testnet_artifacts.sh"
 
-echo "Building eth2077-devnetd binary"
+echo "Building eth2077-devnet binary"
 cd "${ROOT_DIR}"
-cargo build -p eth2077-node --bin eth2077-devnetd
+cargo build -p eth2077-node --bin eth2077-devnet
 
 : > "${PID_FILE}"
 
@@ -67,7 +67,7 @@ for ((i=0; i<NODE_COUNT; i++)); do
   log_file="${LOG_DIR}/node-${i}.log"
   mkdir -p "${node_dir}"
 
-  nohup "${ROOT_DIR}/target/debug/eth2077-devnetd" \
+  nohup "${ROOT_DIR}/target/debug/eth2077-devnet" \
     --node-id "${i}" \
     --nodes "${NODE_COUNT}" \
     --rpc-port "${rpc_port}" \

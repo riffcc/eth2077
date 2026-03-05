@@ -1,0 +1,12 @@
+target/
+external/
+artifacts/
+deploy/
+docs/
+proofs/
+reports/
+scripts/
+security/
+.git/
+*.md
+!README.md

@@ -1,0 +1,51 @@
+# ETH2077 Devnet — 3-node local cluster
+#
+# Usage:
+#   docker compose up --build
+#   docker compose down
+#
+# Each node gets its own PEER_ID and port mapping.
+# Node 0 is the boot node; nodes 1-2 connect to it.
+
+services:
+  node0:
+    build: .
+    environment:
+      PEER_ID: "0"
+      RPC_PORT: "8545"
+      LISTEN_PORT: "30303"
+      CHAIN_ID: "2077"
+      BLOCK_TIME_MS: "2000"
+    ports:
+      - "8545:8545"
+      - "30303:30303"
+
+  node1:
+    build: .
+    environment:
+      PEER_ID: "1"
+      RPC_PORT: "8545"
+      LISTEN_PORT: "30303"
+      CHAIN_ID: "2077"
+      BLOCK_TIME_MS: "2000"
+      BOOT_PEERS: "node0:30303"
+    ports:
+      - "8546:8545"
+      - "30304:30303"
+    depends_on:
+      - node0
+
+  node2:
+    build: .
+    environment:
+      PEER_ID: "2"
+      RPC_PORT: "8545"
+      LISTEN_PORT: "30303"
+      CHAIN_ID: "2077"
+      BLOCK_TIME_MS: "2000"
+      BOOT_PEERS: "node0:30303"
+    ports:
+      - "8547:8545"
+      - "30305:30303"
+    depends_on:
+      - node0

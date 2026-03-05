@@ -4,7 +4,7 @@ WORKDIR /app
 COPY . .
 
 RUN cargo build --release -p eth2077-testnet \
-  && cargo build --release -p eth2077-node --bin eth2077-devnetd
+  && cargo build --release -p eth2077-node --bin eth2077-devnet
 
 FROM debian:trixie-slim
 
@@ -13,7 +13,7 @@ RUN apt-get update \
   && rm -rf /var/lib/apt/lists/*
 
 COPY --from=builder /app/target/release/eth2077-testnet /usr/local/bin/eth2077-testnet
-COPY --from=builder /app/target/release/eth2077-devnetd /usr/local/bin/eth2077-devnetd
+COPY --from=builder /app/target/release/eth2077-devnet /usr/local/bin/eth2077-devnet
 COPY deploy/blockscout/devnet-entrypoint.sh /usr/local/bin/devnet-entrypoint.sh
 
 RUN chmod +x /usr/local/bin/devnet-entrypoint.sh

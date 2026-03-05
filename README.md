@@ -28,11 +28,101 @@ Build the first Ethereum client where high-scale claims are gated by theorem che
 - Runtime/client code: `Rust`.
 - Formal verification lane: `Lean 4`.
 
+## Quick Start
+
+### Prerequisites
+
+- Rust 1.83+ (`rustup update stable`)
+- Or Docker / Docker Compose
+
+### Build from source
+
+```bash
+cargo build --release -p eth2077-node --bin eth2077-devnet
+```
+
+### Run a single devnet node
+
+```bash
+# Defaults: chain ID 2077, RPC on :8545, P2P on :30303, 2s blocks
+./target/release/eth2077-devnet
+
+# Override via environment variables
+PEER_ID=0 RPC_PORT=8545 BLOCK_TIME_MS=1000 ./target/release/eth2077-devnet
+```
+
+### Run with Docker
+
+```bash
+docker build -t eth2077-devnet .
+docker run -p 8545:8545 -p 30303:30303 eth2077-devnet
+```
+
+### Run a 3-node cluster with Docker Compose
+
+```bash
+docker compose up --build
+# Node 0 RPC → localhost:8545
+# Node 1 RPC → localhost:8546
+# Node 2 RPC → localhost:8547
+```
+
+### Interact via JSON-RPC
+
+```bash
+# Chain ID
+curl -s -X POST http://localhost:8545 \
+  -H 'Content-Type: application/json' \
+  -d '{"jsonrpc":"2.0","method":"eth_chainId","params":[],"id":1}'
+
+# Latest block number
+curl -s -X POST http://localhost:8545 \
+  -H 'Content-Type: application/json' \
+  -d '{"jsonrpc":"2.0","method":"eth_blockNumber","params":[],"id":1}'
+
+# Get balance (pre-funded test account)
+curl -s -X POST http://localhost:8545 \
+  -H 'Content-Type: application/json' \
+  -d '{"jsonrpc":"2.0","method":"eth_getBalance","params":["0x1111111111111111111111111111111111111111","latest"],"id":1}'
+```
+
+### Environment Variables
+
+| Variable | Default | Description |
+|---|---|---|
+| `PEER_ID` | `0` | Validator index for this node |
+| `LISTEN_PORT` | `30303` | P2P listen port |
+| `RPC_PORT` | `8545` | JSON-RPC server port |
+| `BLOCK_TIME_MS` | `2000` | Target block interval in milliseconds |
+| `CHAIN_ID` | `2077` | EVM chain ID |
+| `BOOT_PEERS` | *(none)* | Comma-separated peer addresses (e.g. `10.0.0.2:30303`) |
+
+### Run the integration test
+
+```bash
+cargo test --test gate4_devnet -p eth2077-node
+```
+
+## Workspace Crates
+
+| Crate | Description |
+|---|---|
+| `eth2077-types` | Canonical block, header, transaction, and receipt types |
+| `eth2077-execution` | EVM execution via revm, block builder, genesis, state DB |
+| `eth2077-oob-consensus` | Out-of-band BFT consensus engine with Citadel fast-path finality |
+| `eth2077-bridge` | JSON-RPC server (eth_ namespace), Engine API stubs |
+| `eth2077-p2p` | Peer-to-peer networking: block/tx/consensus message gossip |
+| `eth2077-node` | Devnet binary tying all layers together |
+| `eth2077-bench` | Deterministic benchmark suite |
+| `eth2077-live-bench` | Live network benchmarking |
+| `eth2077-testnet` | Testnet tooling |
+
 ## Current Focus
 
-- Analyze ETH2030 claim architecture and gaps.
-- Reuse mature primitives from `citadel` and `lagoon` where appropriate.
-- Formalize ETH2077 obligations and install hard gates for proof debt and claim maturity.
+- Working single-node devnet producing blocks with EVM execution.
+- Out-of-band consensus with fast-path finality (single-validator mode operational).
+- JSON-RPC compatibility: `eth_chainId`, `eth_blockNumber`, `eth_getBalance`, `eth_getBlockByNumber`, `eth_getTransactionReceipt`, `eth_getTransactionCount`, `eth_gasPrice`.
+- Multi-node P2P devnet with block and consensus message gossip.
 
 ## Documents
 
