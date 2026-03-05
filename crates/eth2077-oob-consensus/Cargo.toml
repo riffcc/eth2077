@@ -9,6 +9,7 @@ authors.workspace = true
 eth2077-types = { path = "../eth2077-types" }
 serde = { workspace = true }
 tokio = { version = "1", features = ["rt"] }
+alloy-primitives.workspace = true
 
 [dev-dependencies]
 tokio = { version = "1", features = ["rt", "macros"] }

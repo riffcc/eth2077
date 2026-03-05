@@ -4,6 +4,9 @@ pub mod mock;
 pub mod traits;
 pub mod types;
 pub mod fast_path;
+pub mod validator;
+pub mod consensus;
+pub mod consensus_execution;
 
 #[derive(Debug, Clone)]
 pub struct OobPlan {

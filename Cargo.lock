@@ -1188,6 +1188,7 @@ dependencies = [
 name = "eth2077-oob-consensus"
 version = "0.1.0"
 dependencies = [
+ "alloy-primitives",
  "eth2077-types",
  "serde",
  "tokio",
