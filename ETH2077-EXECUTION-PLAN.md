@@ -16,11 +16,10 @@ ETH2077 today is **~5-8% of a working Ethereum client**. What exists:
 - Consensus fast-path attestation accumulator with quorum logic
 - Mempool/ingress with eviction logic
 - Chain spec validation with SHA-256 commitment
-- A devnetd binary wrapping `revm` as external EVM (glue code)
+- A devnetd binary integrating `revm` for EVM execution (same approach as Reth)
 
 What's completely missing:
 
-- No native EVM bytecode interpreter (delegates to revm — this is fine for now)
 - No Merkle Patricia Trie / state management
 - No P2P networking (devp2p/libp2p)
 - No sync algorithms
@@ -41,7 +40,7 @@ Before writing more code, we need to pick a lane. Three options:
 Keep the type scaffolding, benchmarks, and architecture docs as an opinionated vision document for Ethereum's future. Publish as a "what if" design artifact. **No further implementation needed.**
 
 ### Option B: Execution Layer Client (Reth/Geth competitor)
-Build a full execution client that can sync mainnet, validate blocks, serve JSON-RPC. This is 50,000-200,000 lines of production Rust and 12-24 months of focused engineering even with AI assistance. The EVM alone (without revm) is ~15,000 lines.
+Build a full execution client that can sync mainnet, validate blocks, serve JSON-RPC. This is 50,000-200,000 lines of production Rust and 12-24 months of focused engineering even with AI assistance. (EVM execution via revm — same as Reth — so that's not the bottleneck; it's everything else.)
 
 ### Option C: Modular Execution Extension (Recommended)
 Keep `revm` for EVM execution. Build the *differentiating* pieces: OOB consensus layer, Citadel fast-path finality, the bridge layer to existing CL clients, and a working devnet. This is achievable in 3-6 months and produces something demonstrably novel.
@@ -142,7 +141,7 @@ Stay in the alloy ecosystem for Ethereum primitives. Don't reinvent:
 
 | Need | Crate | Rationale |
 |------|-------|-----------|
-| EVM execution | `revm` | Already integrated. Battle-tested. |
+| EVM execution | `revm` | Already integrated. Same choice as Reth — production-grade Rust EVM. |
 | Ethereum types | `alloy-primitives` | B256, U256, Address, Bloom — standard |
 | RLP encoding | `alloy-rlp` | Derive macros, well-tested |
 | State trie | `alloy-trie` | MPT implementation |
