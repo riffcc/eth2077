@@ -72,10 +72,18 @@ fn validation_reports_multiple_issues() {
     config.max_surge_pct = 20.0;
     config.health_check_interval_s = 2;
     config.metadata.insert(" ".to_string(), "bad".to_string());
-    config.metadata.insert("image_digest".to_string(), " ".to_string());
+    config
+        .metadata
+        .insert("image_digest".to_string(), " ".to_string());
 
     let errors = validate_container_deploy_config(&config).unwrap_err();
-    for field in ["target_replicas", "max_surge_pct", "health_check_interval_s", "image_policy", "metadata"] {
+    for field in [
+        "target_replicas",
+        "max_surge_pct",
+        "health_check_interval_s",
+        "image_policy",
+        "metadata",
+    ] {
         assert!(errors.iter().any(|error| error.field == field));
     }
 }

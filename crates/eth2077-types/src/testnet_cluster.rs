@@ -276,11 +276,7 @@ pub fn validate_testnet_cluster_config(
 
     for (key, value) in &config.metadata {
         if key.trim().is_empty() {
-            push_validation_error(
-                &mut errors,
-                "metadata",
-                "metadata keys must not be empty",
-            );
+            push_validation_error(&mut errors, "metadata", "metadata keys must not be empty");
         }
         if value.trim().is_empty() {
             push_validation_error(
@@ -364,8 +360,11 @@ pub fn compute_testnet_cluster_commitment(config: &TestnetClusterConfig) -> Stri
         config.health_check_interval_s,
     ));
 
-    let mut gate_labels: Vec<&'static str> =
-        config.launch_gates.iter().map(readiness_gate_label).collect();
+    let mut gate_labels: Vec<&'static str> = config
+        .launch_gates
+        .iter()
+        .map(readiness_gate_label)
+        .collect();
     gate_labels.sort_unstable();
     for label in gate_labels {
         hasher.update(label.as_bytes());
@@ -445,7 +444,9 @@ fn is_gate_passed(
         ReadinessGate::SyncComplete => {
             !nodes.is_empty()
                 && avg_sync_pct >= 99.0
-                && nodes.iter().all(|node| node.sync_pct.clamp(0.0, 100.0) >= 97.0)
+                && nodes
+                    .iter()
+                    .all(|node| node.sync_pct.clamp(0.0, 100.0) >= 97.0)
         }
         ReadinessGate::ValidatorQuorum => {
             let healthy_validators = nodes
@@ -582,7 +583,10 @@ fn is_affirmative(value: &str) -> bool {
 /// Parses values commonly used to encode "live service" status.
 fn is_live(value: &str) -> bool {
     let normalized = value.trim().to_ascii_lowercase();
-    matches!(normalized.as_str(), "live" | "up" | "ready" | "online" | "true")
+    matches!(
+        normalized.as_str(),
+        "live" | "up" | "ready" | "online" | "true"
+    )
 }
 
 /// Stable topology label for config commitment hashing.

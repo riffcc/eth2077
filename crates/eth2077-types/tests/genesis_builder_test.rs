@@ -1,11 +1,16 @@
 use eth2077_types::genesis_builder::{
-    compute_genesis_builder_commitment, compute_genesis_builder_stats, default_genesis_builder_config,
-    validate_genesis_builder_config, AllocationKind, ArtifactFormat, GenesisAllocation,
-    GenesisBuilderConfig, SigningScheme,
+    compute_genesis_builder_commitment, compute_genesis_builder_stats,
+    default_genesis_builder_config, validate_genesis_builder_config, AllocationKind,
+    ArtifactFormat, GenesisAllocation, GenesisBuilderConfig, SigningScheme,
 };
 use std::collections::HashMap;
 
-fn alloc(address: &str, kind: AllocationKind, amount_gwei: u64, is_validator: bool) -> GenesisAllocation {
+fn alloc(
+    address: &str,
+    kind: AllocationKind,
+    amount_gwei: u64,
+    is_validator: bool,
+) -> GenesisAllocation {
     GenesisAllocation {
         address: address.to_string(),
         kind,
@@ -43,8 +48,12 @@ fn validation_collects_multiple_errors() {
     assert!(errors.iter().any(|e| e.field == "validator_count"));
     assert!(errors.iter().any(|e| e.field == "deterministic_seed"));
     assert!(errors.iter().any(|e| e.field == "min_deposit_gwei"));
-    assert!(errors.iter().any(|e| e.field == "metadata.multisig.participants"));
-    assert!(errors.iter().any(|e| e.field == "metadata.multisig.threshold"));
+    assert!(errors
+        .iter()
+        .any(|e| e.field == "metadata.multisig.participants"));
+    assert!(errors
+        .iter()
+        .any(|e| e.field == "metadata.multisig.threshold"));
     assert!(errors.iter().any(|e| e.field == "metadata.hex.case"));
 }
 
@@ -54,9 +63,24 @@ fn stats_are_deterministic_and_capture_signing_readiness() {
     config.validator_count = 2;
 
     let ordered = vec![
-        alloc("0xAAA0000000000000000000000000000000000000", AllocationKind::ValidatorDeposit, 32_000_000_000, true),
-        alloc("0xbbb0000000000000000000000000000000000000", AllocationKind::ValidatorDeposit, 32_000_000_000, true),
-        alloc("0xAaA0000000000000000000000000000000000000", AllocationKind::Treasury, 5_000_000_000, false),
+        alloc(
+            "0xAAA0000000000000000000000000000000000000",
+            AllocationKind::ValidatorDeposit,
+            32_000_000_000,
+            true,
+        ),
+        alloc(
+            "0xbbb0000000000000000000000000000000000000",
+            AllocationKind::ValidatorDeposit,
+            32_000_000_000,
+            true,
+        ),
+        alloc(
+            "0xAaA0000000000000000000000000000000000000",
+            AllocationKind::Treasury,
+            5_000_000_000,
+            false,
+        ),
     ];
     let reversed = vec![ordered[2].clone(), ordered[1].clone(), ordered[0].clone()];
 

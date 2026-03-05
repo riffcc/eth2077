@@ -2,11 +2,7 @@ use eth2077_bridge::engine_api::{
     spawn_engine_api_server, Bytes32, EngineApiService, ExecutionPayloadV3, ForkchoiceStateV1,
     PayloadAttributesV3, PayloadId,
 };
-use jsonrpsee::{
-    core::client::ClientT,
-    http_client::HttpClientBuilder,
-    rpc_params,
-};
+use jsonrpsee::{core::client::ClientT, http_client::HttpClientBuilder, rpc_params};
 use serde_json::Value;
 
 async fn start_server() -> (String, jsonrpsee::server::ServerHandle) {
@@ -56,7 +52,10 @@ async fn engine_forkchoice_updated_v3_returns_expected_shape() {
     let result: Value = client
         .request(
             "engine_forkchoiceUpdatedV3",
-            rpc_params![ForkchoiceStateV1::default(), Some(PayloadAttributesV3::default())],
+            rpc_params![
+                ForkchoiceStateV1::default(),
+                Some(PayloadAttributesV3::default())
+            ],
         )
         .await
         .expect("rpc should succeed");

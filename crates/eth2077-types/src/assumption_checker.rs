@@ -145,9 +145,8 @@ fn days_from_civil(year: i32, month: u32, day: u32) -> i64 {
     };
     let year_of_era = adjusted_year - era * 400;
     let month_index = month as i32;
-    let day_of_year = (153 * (month_index + if month_index > 2 { -3 } else { 9 }) + 2) / 5
-        + day as i32
-        - 1;
+    let day_of_year =
+        (153 * (month_index + if month_index > 2 { -3 } else { 9 }) + 2) / 5 + day as i32 - 1;
     let day_of_era = year_of_era * 365 + year_of_era / 4 - year_of_era / 100 + day_of_year;
 
     (era as i64) * 146_097 + day_of_era as i64 - 719_468
@@ -215,7 +214,9 @@ pub fn check_assumption_coverage(
     let mut results = Vec::new();
 
     if !missing_assumptions.is_empty() {
-        results.push(AssumptionCheckResult::MissingAssumptions(missing_assumptions));
+        results.push(AssumptionCheckResult::MissingAssumptions(
+            missing_assumptions,
+        ));
     }
 
     if !orphaned_assumptions.is_empty() {

@@ -3,14 +3,12 @@
 //! These types use alloy-primitives for Ethereum-native representations
 //! and are the source of truth for block processing.
 
-use alloy_primitives::{Address, B256, Bloom, Bytes, U256};
+use alloy_primitives::{Address, Bloom, Bytes, B256, U256};
 use alloy_rlp::{RlpDecodable, RlpEncodable};
 use serde::{Deserialize, Serialize};
 
 /// Canonical Ethereum block header.
-#[derive(
-    Debug, Clone, PartialEq, Eq, Serialize, Deserialize, RlpEncodable, RlpDecodable,
-)]
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize, RlpEncodable, RlpDecodable)]
 #[rlp(trailing)]
 pub struct Header {
     pub parent_hash: B256,

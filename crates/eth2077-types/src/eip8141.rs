@@ -33,11 +33,23 @@ pub struct FrameTransaction {
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
 pub enum FrameTxError {
     EmptyFrames,
-    MissingPhase { phase: FramePhase },
-    DuplicatePhase { phase: FramePhase },
-    InvalidPhaseOrder { expected: FramePhase, found: FramePhase },
-    ZeroGasLimit { frame_index: usize },
-    ExcessiveTotalGas { total: u64, max: u64 },
+    MissingPhase {
+        phase: FramePhase,
+    },
+    DuplicatePhase {
+        phase: FramePhase,
+    },
+    InvalidPhaseOrder {
+        expected: FramePhase,
+        found: FramePhase,
+    },
+    ZeroGasLimit {
+        frame_index: usize,
+    },
+    ExcessiveTotalGas {
+        total: u64,
+        max: u64,
+    },
     EmptySignature,
 }
 

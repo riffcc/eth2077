@@ -251,7 +251,8 @@ pub fn default_citadel_port_config() -> CitadelPortConfig {
                 placeholders: vec![PlaceholderEntry {
                     location: "citadel/slashing_detector.rs:301".to_string(),
                     kind: PlaceholderKind::HardcodedValue,
-                    description: "Hardcoded replay window pending benchmark calibration".to_string(),
+                    description: "Hardcoded replay window pending benchmark calibration"
+                        .to_string(),
                     blocking_proofs: vec!["slashing_completeness".to_string()],
                     severity: 4,
                 }],
@@ -267,7 +268,9 @@ pub fn default_citadel_port_config() -> CitadelPortConfig {
     }
 }
 
-pub fn validate_citadel_port(config: &CitadelPortConfig) -> Result<(), Vec<CitadelPortValidationError>> {
+pub fn validate_citadel_port(
+    config: &CitadelPortConfig,
+) -> Result<(), Vec<CitadelPortValidationError>> {
     let mut errors = Vec::new();
 
     if config.migrations.is_empty() {
@@ -404,7 +407,10 @@ pub fn compute_citadel_port_stats(config: &CitadelPortConfig) -> CitadelPortStat
     }
 
     if let Some(cycle) = find_dependency_cycle(&config.migrations) {
-        blocking_issues.push(format!("Cyclic dependency detected: {}", cycle.join(" -> ")));
+        blocking_issues.push(format!(
+            "Cyclic dependency detected: {}",
+            cycle.join(" -> ")
+        ));
     }
 
     CitadelPortStats {

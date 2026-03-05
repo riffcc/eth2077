@@ -27,10 +27,7 @@ fn entry(
 fn valid_list_passes_validation() {
     let list = InclusionList {
         slot: 100,
-        entries: vec![
-            entry(1, 1, 21_000, 100, 101),
-            entry(2, 2, 30_000, 120, 102),
-        ],
+        entries: vec![entry(1, 1, 21_000, 100, 101), entry(2, 2, 30_000, 120, 102)],
         aggregate_signature: Some(vec![0xAB, 0xCD]),
     };
 
@@ -53,10 +50,7 @@ fn empty_list_rejected() {
 fn duplicate_tx_hashes_detected() {
     let list = InclusionList {
         slot: 100,
-        entries: vec![
-            entry(1, 7, 21_000, 100, 101),
-            entry(2, 7, 21_000, 100, 101),
-        ],
+        entries: vec![entry(1, 7, 21_000, 100, 101), entry(2, 7, 21_000, 100, 101)],
         aggregate_signature: None,
     };
 
@@ -89,10 +83,7 @@ fn expired_deadline_detected() {
 fn gas_limit_exceeded_detected() {
     let list = InclusionList {
         slot: 100,
-        entries: vec![
-            entry(1, 1, 60_000, 100, 101),
-            entry(2, 2, 60_000, 120, 102),
-        ],
+        entries: vec![entry(1, 1, 60_000, 100, 101), entry(2, 2, 60_000, 120, 102)],
         aggregate_signature: None,
     };
 

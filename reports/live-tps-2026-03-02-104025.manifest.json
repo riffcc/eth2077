@@ -1,0 +1,43 @@
+{
+  "kind": "eth2077-benchmark-artifact-manifest-v1",
+  "created_at_utc": "2026-03-02T10:40:35Z",
+  "git_commit": "82bebad63c681102e839be670f1a32687b77ea94",
+  "git_dirty": true,
+  "host": {
+    "hostname": "lon.lagun.co",
+    "kernel": "Linux 6.12.63+deb13-amd64 #1 SMP PREEMPT_DYNAMIC Debian 6.12.63-1 (2025-12-30) x86_64 GNU/Linux"
+  },
+  "toolchain": {
+    "rustc": "rustc 1.93.1 (01f6ddf75 2026-02-11)",
+    "cargo": "cargo 1.93.1 (083ac5135 2025-12-15)"
+  },
+  "files": [
+    {
+      "role": "report_json",
+      "path": "/mnt/riffcastle/castle/garage/ETH2077/reports/live-tps-2026-03-02-104025.json",
+      "sha256": "d80118648f7e1ee95198e86031d01a76cabac2ca55293f16237ae2762a1c1b9a"
+    },
+    {
+      "role": "report_markdown",
+      "path": "/mnt/riffcastle/castle/garage/ETH2077/reports/live-tps-2026-03-02-104025.md",
+      "sha256": "d31ad12a9619decb7c424fe29f1c5eb2fc758533b47dd1db5d5708b8a0c93d1a"
+    },
+    {
+      "role": "checksums",
+      "path": "/mnt/riffcastle/castle/garage/ETH2077/reports/live-tps-2026-03-02-104025.sha256"
+    }
+  ],
+  "benchmark_env": {
+    "rpc_urls": "",
+    "tx_count": "4000",
+    "tick_ms": "",
+    "sender_count": "8",
+    "gas_limit": "21000"
+  },
+  "signing": {
+    "key_path": "",
+    "signature_path": null,
+    "public_key_path": null,
+    "verified": false
+  }
+}

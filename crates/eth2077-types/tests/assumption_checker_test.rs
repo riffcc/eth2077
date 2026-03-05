@@ -2,9 +2,7 @@ use eth2077_types::assumption_checker::{
     check_assumption_coverage, Assumption, AssumptionCheckResult, AssumptionRegistry,
     AssumptionStatus, ValidationMethod,
 };
-use eth2077_types::theorem_registry::{
-    TheoremEntry, TheoremRegistry, TheoremStatus, TheoremTier,
-};
+use eth2077_types::theorem_registry::{TheoremEntry, TheoremRegistry, TheoremStatus, TheoremTier};
 
 fn sample_theorem_registry(tags: &[Vec<&str>]) -> TheoremRegistry {
     TheoremRegistry {
@@ -61,10 +59,8 @@ fn valid_assumption_coverage_passes() {
 
 #[test]
 fn missing_assumption_is_detected() {
-    let theorem_registry = sample_theorem_registry(&[
-        vec!["assumption:A-001"],
-        vec!["assumption:A-404"],
-    ]);
+    let theorem_registry =
+        sample_theorem_registry(&[vec!["assumption:A-001"], vec!["assumption:A-404"]]);
     let assumption_registry = AssumptionRegistry {
         assumptions: vec![assumption("A-001", Some("TM-SAFETY-001"))],
     };

@@ -187,13 +187,7 @@ pub fn validate_faucet_explorer_config(
         );
     }
 
-    validate_metadata(
-        &config.metadata,
-        "metadata",
-        &mut errors,
-        false,
-        false,
-    );
+    validate_metadata(&config.metadata, "metadata", &mut errors, false, false);
 
     if errors.is_empty() {
         Ok(())
@@ -418,7 +412,8 @@ fn validate_explorer_config(
         );
     }
 
-    if config.explorer.status == IntegrationStatus::Retired && !config.explorer.features.is_empty() {
+    if config.explorer.status == IntegrationStatus::Retired && !config.explorer.features.is_empty()
+    {
         push_validation_error(
             errors,
             "explorer.features",
@@ -436,11 +431,7 @@ fn validate_explorer_config(
 }
 
 /// Validates that a URL is non-empty and starts with HTTP(S).
-fn validate_url_field(
-    value: &str,
-    field: &str,
-    errors: &mut Vec<FaucetExplorerValidationError>,
-) {
+fn validate_url_field(value: &str, field: &str, errors: &mut Vec<FaucetExplorerValidationError>) {
     let trimmed = value.trim();
     if trimmed.is_empty() {
         push_validation_error(errors, field, "must not be empty");
@@ -481,11 +472,7 @@ fn validate_metadata(
 }
 
 /// Appends sorted metadata pairs into the commitment hasher.
-fn append_sorted_metadata(
-    hasher: &mut Sha256,
-    scope: &str,
-    metadata: &HashMap<String, String>,
-) {
+fn append_sorted_metadata(hasher: &mut Sha256, scope: &str, metadata: &HashMap<String, String>) {
     let mut entries: Vec<(&String, &String)> = metadata.iter().collect();
     entries.sort_by(|(ka, va), (kb, vb)| ka.cmp(kb).then(va.cmp(vb)));
 

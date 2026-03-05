@@ -1,7 +1,5 @@
 use eth2077_types::spore_sync::SporeFingerprint;
-use eth2077_types::witness::{
-    WitnessCid, WitnessCommitment, WitnessPayload, WitnessVerifyResult,
-};
+use eth2077_types::witness::{WitnessCid, WitnessCommitment, WitnessPayload, WitnessVerifyResult};
 
 fn bytes32(seed: u8) -> [u8; 32] {
     [seed; 32]

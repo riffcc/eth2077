@@ -166,19 +166,18 @@ fn compute_review_stats_reports_expected_counts() {
     assert_eq!(stats.security_critical_count, 1);
     assert!((stats.implementation_coverage - (2.0 / 3.0)).abs() < 1e-9);
     assert!((stats.avg_impact_score - 2.25).abs() < 1e-9);
-    assert!(
-        stats.category_distribution
-            .contains(&(String::from("Normative"), 1))
-    );
-    assert!(
-        stats.category_distribution
-            .contains(&(String::from("SecurityCritical"), 1))
-    );
-    assert!(
-        stats.impact_distribution
-            .contains(&(String::from("Critical"), 1))
-    );
-    assert!(stats.impact_distribution.contains(&(String::from("None"), 1)));
+    assert!(stats
+        .category_distribution
+        .contains(&(String::from("Normative"), 1)));
+    assert!(stats
+        .category_distribution
+        .contains(&(String::from("SecurityCritical"), 1)));
+    assert!(stats
+        .impact_distribution
+        .contains(&(String::from("Critical"), 1)));
+    assert!(stats
+        .impact_distribution
+        .contains(&(String::from("None"), 1)));
 }
 
 #[test]
@@ -190,7 +189,11 @@ fn classify_impact_applies_heuristics() {
     );
     assert_eq!(critical, ImpactLevel::Critical);
 
-    let high = classify_impact(ChangeCategory::Normative, true, &[String::from("api behavior")]);
+    let high = classify_impact(
+        ChangeCategory::Normative,
+        true,
+        &[String::from("api behavior")],
+    );
     assert_eq!(high, ImpactLevel::High);
 
     let none = classify_impact(ChangeCategory::Editorial, false, &[String::from("typos")]);

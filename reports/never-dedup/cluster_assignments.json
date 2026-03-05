@@ -1,0 +1,1484 @@
+[
+  {
+    "sequence_id": 271,
+    "name": "[LOGOS-R#29] Incentives",
+    "cluster": "exploratory",
+    "cluster_seq": 278
+  },
+  {
+    "sequence_id": 270,
+    "name": "[LOGOS-R#34] Zero knowledge proofs",
+    "cluster": "proof_pipeline",
+    "cluster_seq": 273
+  },
+  {
+    "sequence_id": 269,
+    "name": "[LOGOS-R#40] Simulate - can demand and supply steer the network to optimally utilize its resources?",
+    "cluster": "exploratory",
+    "cluster_seq": 278
+  },
+  {
+    "sequence_id": 268,
+    "name": "[LOGOS-R#41] Simulate - opportunistic providing and tit-for-tat settlements",
+    "cluster": "exploratory",
+    "cluster_seq": 278
+  },
+  {
+    "sequence_id": 267,
+    "name": "[LOGOS-R#42] Simulate - organic CDNs through ephemeral and caching nodes",
+    "cluster": "exploratory",
+    "cluster_seq": 278
+  },
+  {
+    "sequence_id": 266,
+    "name": "[LOGOS-R#47] Capture performance requirements of consensus layer",
+    "cluster": "perf_ci",
+    "cluster_seq": 277
+  },
+  {
+    "sequence_id": 265,
+    "name": "[LOGOS-R#48] Performance and storage costs of PoR",
+    "cluster": "perf_ci",
+    "cluster_seq": 277
+  },
+  {
+    "sequence_id": 264,
+    "name": "[LOGOS-R#53] Identify proper secure structure for the ECC codes both at codeword level and data set level (provide a code that secures the entire dataset)",
+    "cluster": "data_availability",
+    "cluster_seq": 276
+  },
+  {
+    "sequence_id": 263,
+    "name": "[LOGOS-R#70] Document current erasure coding design",
+    "cluster": "data_availability",
+    "cluster_seq": 276
+  },
+  {
+    "sequence_id": 262,
+    "name": "[LOGOS-R#72] Model MTTDL (Mean Time To Data Loss) in our system",
+    "cluster": "data_availability",
+    "cluster_seq": 276
+  },
+  {
+    "sequence_id": 261,
+    "name": "[LOGOS-R#73] Model PoR as a statistical test on the distributed dataset",
+    "cluster": "data_availability",
+    "cluster_seq": 276
+  },
+  {
+    "sequence_id": 260,
+    "name": "[LOGOS-R#75] Milestone 17 - Research paper about Codex objectives, design, and analytical model projections",
+    "cluster": "exploratory",
+    "cluster_seq": 278
+  },
+  {
+    "sequence_id": 259,
+    "name": "[LOGOS-R#87] Model the data distribution across nodes",
+    "cluster": "exploratory",
+    "cluster_seq": 278
+  },
+  {
+    "sequence_id": 258,
+    "name": "[LOGOS-R#95] Whitepaper",
+    "cluster": "exploratory",
+    "cluster_seq": 278
+  },
+  {
+    "sequence_id": 257,
+    "name": "[LOGOS-R#96] Compressing the proofs using polynomial commitments",
+    "cluster": "proof_pipeline",
+    "cluster_seq": 273
+  },
+  {
+    "sequence_id": 256,
+    "name": "[LOGOS-R#97] Explore ZK primitives and understand which ones apply",
+    "cluster": "exploratory",
+    "cluster_seq": 278
+  },
+  {
+    "sequence_id": 255,
+    "name": "[LOGOS-R#98] Explore offchain aggregation",
+    "cluster": "proof_pipeline",
+    "cluster_seq": 273
+  },
+  {
+    "sequence_id": 254,
+    "name": "[LOGOS-R#103] Erasure codes (efficient and resilient)",
+    "cluster": "data_availability",
+    "cluster_seq": 276
+  },
+  {
+    "sequence_id": 253,
+    "name": "[LOGOS-R#104] Layer 2",
+    "cluster": "exploratory",
+    "cluster_seq": 278
+  },
+  {
+    "sequence_id": 252,
+    "name": "[LOGOS-R#105] SNARKs Modeling",
+    "cluster": "proof_pipeline",
+    "cluster_seq": 273
+  },
+  {
+    "sequence_id": 251,
+    "name": "[LOGOS-R#107] Add BlockExchange sequence diagram",
+    "cluster": "p2p_connectivity",
+    "cluster_seq": 275
+  },
+  {
+    "sequence_id": 250,
+    "name": "[LOGOS-R#108] Create EC graphic based on Bologna terms",
+    "cluster": "data_availability",
+    "cluster_seq": 276
+  },
+  {
+    "sequence_id": 249,
+    "name": "[LOGOS-R#109] Report on Sui",
+    "cluster": "exploratory",
+    "cluster_seq": 278
+  },
+  {
+    "sequence_id": 248,
+    "name": "[LOGOS-R#110] PoR simulation",
+    "cluster": "exploratory",
+    "cluster_seq": 278
+  },
+  {
+    "sequence_id": 247,
+    "name": "[LOGOS-R#112] Model PoR system",
+    "cluster": "exploratory",
+    "cluster_seq": 278
+  },
+  {
+    "sequence_id": 246,
+    "name": "[LOGOS-R#113] Extend the study into a multidimensional problem",
+    "cluster": "exploratory",
+    "cluster_seq": 278
+  },
+  {
+    "sequence_id": 245,
+    "name": "[LOGOS-R#114] Add failures to the simulator",
+    "cluster": "exploratory",
+    "cluster_seq": 278
+  },
+  {
+    "sequence_id": 244,
+    "name": "[LOGOS-R#115] Add marketplace design influence to the simulator",
+    "cluster": "api_rpc_market",
+    "cluster_seq": 274
+  },
+  {
+    "sequence_id": 243,
+    "name": "[LOGOS-R#116] Add PoR system to the simulator",
+    "cluster": "exploratory",
+    "cluster_seq": 278
+  },
+  {
+    "sequence_id": 242,
+    "name": "[LOGOS-R#117] ECC blog post",
+    "cluster": "exploratory",
+    "cluster_seq": 278
+  },
+  {
+    "sequence_id": 241,
+    "name": "[LOGOS-R#123] SNARKs-Based Proving and Aggregation",
+    "cluster": "proof_pipeline",
+    "cluster_seq": 273
+  },
+  {
+    "sequence_id": 240,
+    "name": "[LOGOS-R#124] Aggregation and storage comparison of PoR versus SNARKs schemes",
+    "cluster": "proof_pipeline",
+    "cluster_seq": 273
+  },
+  {
+    "sequence_id": 239,
+    "name": "[LOGOS-R#125] Research SNARK schemes",
+    "cluster": "proof_pipeline",
+    "cluster_seq": 273
+  },
+  {
+    "sequence_id": 238,
+    "name": "[LOGOS-R#126] Implement Verification SNARK",
+    "cluster": "proof_pipeline",
+    "cluster_seq": 273
+  },
+  {
+    "sequence_id": 237,
+    "name": "[LOGOS-R#127] Implement Aggregation SNARK",
+    "cluster": "proof_pipeline",
+    "cluster_seq": 273
+  },
+  {
+    "sequence_id": 236,
+    "name": "[LOGOS-R#128] Write Poseidon Implementation in Nim",
+    "cluster": "proof_pipeline",
+    "cluster_seq": 273
+  },
+  {
+    "sequence_id": 235,
+    "name": "[LOGOS-R#129] Research SNARK schemes",
+    "cluster": "proof_pipeline",
+    "cluster_seq": 273
+  },
+  {
+    "sequence_id": 234,
+    "name": "[LOGOS-R#130] Implement Remote Auditing SNARK",
+    "cluster": "proof_pipeline",
+    "cluster_seq": 273
+  },
+  {
+    "sequence_id": 233,
+    "name": "[LOGOS-R#131] Implement Aggregation SNARK",
+    "cluster": "proof_pipeline",
+    "cluster_seq": 273
+  },
+  {
+    "sequence_id": 232,
+    "name": "[LOGOS-R#132] Explore available tooling and examples",
+    "cluster": "exploratory",
+    "cluster_seq": 278
+  },
+  {
+    "sequence_id": 231,
+    "name": "[LOGOS-R#134] Write down SNARK requirements",
+    "cluster": "proof_pipeline",
+    "cluster_seq": 273
+  },
+  {
+    "sequence_id": 230,
+    "name": "[LOGOS-R#135] Additional Whitepaper progress",
+    "cluster": "exploratory",
+    "cluster_seq": 278
+  },
+  {
+    "sequence_id": 229,
+    "name": "[LOGOS-R#136] DAS Modeling",
+    "cluster": "data_availability",
+    "cluster_seq": 276
+  },
+  {
+    "sequence_id": 228,
+    "name": "[LOGOS-R#137] Dissemination of rows/cols to validators",
+    "cluster": "api_rpc_market",
+    "cluster_seq": 274
+  },
+  {
+    "sequence_id": 227,
+    "name": "[LOGOS-R#138] Dissemination of sample queries",
+    "cluster": "p2p_connectivity",
+    "cluster_seq": 275
+  },
+  {
+    "sequence_id": 226,
+    "name": "[LOGOS-R#139] Data Availability Sampling",
+    "cluster": "reservation_quota",
+    "cluster_seq": 272
+  },
+  {
+    "sequence_id": 225,
+    "name": "[LOGOS-R#140] Data Reconstruction",
+    "cluster": "data_availability",
+    "cluster_seq": 276
+  },
+  {
+    "sequence_id": 224,
+    "name": "[LOGOS-R#143] Tokenomics - System discovery",
+    "cluster": "p2p_connectivity",
+    "cluster_seq": 275
+  },
+  {
+    "sequence_id": 223,
+    "name": "[LOGOS-R#144] Tokenomics - System design",
+    "cluster": "exploratory",
+    "cluster_seq": 278
+  },
+  {
+    "sequence_id": 222,
+    "name": "[LOGOS-R#145] Tokenomics - System deployment",
+    "cluster": "exploratory",
+    "cluster_seq": 278
+  },
+  {
+    "sequence_id": 221,
+    "name": "[LOGOS-R#146] Incentive design model (first iteration)",
+    "cluster": "exploratory",
+    "cluster_seq": 278
+  },
+  {
+    "sequence_id": 220,
+    "name": "[LOGOS-R#147] cadCAD model",
+    "cluster": "exploratory",
+    "cluster_seq": 278
+  },
+  {
+    "sequence_id": 219,
+    "name": "[LOGOS-R#148] Definition of Codex requirements",
+    "cluster": "exploratory",
+    "cluster_seq": 278
+  },
+  {
+    "sequence_id": 218,
+    "name": "[LOGOS-R#149] Definition of Codex goals",
+    "cluster": "exploratory",
+    "cluster_seq": 278
+  },
+  {
+    "sequence_id": 217,
+    "name": "[LOGOS-R#150] Stakeholders interactions and value transfers",
+    "cluster": "exploratory",
+    "cluster_seq": 278
+  },
+  {
+    "sequence_id": 216,
+    "name": "[LOGOS-R#151] Causal relationships and systems thinking",
+    "cluster": "exploratory",
+    "cluster_seq": 278
+  },
+  {
+    "sequence_id": 215,
+    "name": "[LOGOS-R#152] Codex' stocks and flows diagram",
+    "cluster": "exploratory",
+    "cluster_seq": 278
+  },
+  {
+    "sequence_id": 214,
+    "name": "[LOGOS-R#153] Model bandwidth nodes",
+    "cluster": "exploratory",
+    "cluster_seq": 278
+  },
+  {
+    "sequence_id": 213,
+    "name": "[LOGOS-R#154] Codex governance token & valuation",
+    "cluster": "exploratory",
+    "cluster_seq": 278
+  },
+  {
+    "sequence_id": 212,
+    "name": "[LOGOS-R#155] Codex differential specification",
+    "cluster": "perf_ci",
+    "cluster_seq": 277
+  },
+  {
+    "sequence_id": 211,
+    "name": "[LOGOS-R#156] Fix Aggregators revenue model",
+    "cluster": "exploratory",
+    "cluster_seq": 278
+  },
+  {
+    "sequence_id": 210,
+    "name": "[LOGOS-R#158] Claim slot before downloading",
+    "cluster": "exploratory",
+    "cluster_seq": 278
+  },
+  {
+    "sequence_id": 209,
+    "name": "[LOGOS-R#159] Investigate Sui",
+    "cluster": "exploratory",
+    "cluster_seq": 278
+  },
+  {
+    "sequence_id": 208,
+    "name": "[LOGOS-R#170] Write a Poseidon implementation in Nim and Constantine",
+    "cluster": "proof_pipeline",
+    "cluster_seq": 273
+  },
+  {
+    "sequence_id": 207,
+    "name": "[LOGOS-R#172] Understand Codex DHT Improvements",
+    "cluster": "p2p_connectivity",
+    "cluster_seq": 275
+  },
+  {
+    "sequence_id": 206,
+    "name": "[LOGOS-R#176] Multi-threading",
+    "cluster": "exploratory",
+    "cluster_seq": 278
+  },
+  {
+    "sequence_id": 205,
+    "name": "[LOGOS-R#177] Codex System Analysis",
+    "cluster": "exploratory",
+    "cluster_seq": 278
+  },
+  {
+    "sequence_id": 204,
+    "name": "[LOGOS-R#178] is the slot model and assumption sound? we need someone to sit down and get numbers on this",
+    "cluster": "exploratory",
+    "cluster_seq": 278
+  },
+  {
+    "sequence_id": 203,
+    "name": "[LOGOS-R#179] maybe we do need to switch it and go the other direction w/ node-level assumptions",
+    "cluster": "exploratory",
+    "cluster_seq": 278
+  },
+  {
+    "sequence_id": 202,
+    "name": "[LOGOS-R#180] can we treat all the slots in a node as one? if one test failed then all slots are failing, does this align w/ node-level failure rather than slot-level failures?",
+    "cluster": "data_availability",
+    "cluster_seq": 276
+  },
+  {
+    "sequence_id": 201,
+    "name": "[LOGOS-R#181] is there a better way to do this than having these two extremes?",
+    "cluster": "exploratory",
+    "cluster_seq": 278
+  },
+  {
+    "sequence_id": 200,
+    "name": "[LOGOS-R#182] can we keep slot-level assumption and do aggregation and is that sound? not even in the erasure-coding dimensions. is it a sound assumption that we're storing things in slots and many slots can be in one node.",
+    "cluster": "proof_pipeline",
+    "cluster_seq": 273
+  },
+  {
+    "sequence_id": 199,
+    "name": "[LOGOS-R#183] how frequent should the proof requests be, how many times does a node need to send proofs a day and based on what assumptions?",
+    "cluster": "proof_pipeline",
+    "cluster_seq": 273
+  },
+  {
+    "sequence_id": 198,
+    "name": "[LOGOS-R#201] Rename `Vault` to `Trezor`",
+    "cluster": "exploratory",
+    "cluster_seq": 278
+  },
+  {
+    "sequence_id": 197,
+    "name": "[LOGOS-R#206] Analysis of the file-sharing components and privacy requirements",
+    "cluster": "exploratory",
+    "cluster_seq": 278
+  },
+  {
+    "sequence_id": 196,
+    "name": "[LOGOS-R#207] Provider/Publisher Anonymity Research",
+    "cluster": "exploratory",
+    "cluster_seq": 278
+  },
+  {
+    "sequence_id": 195,
+    "name": "[LOGOS#136] Benchmark ECC implementations",
+    "cluster": "perf_ci",
+    "cluster_seq": 277
+  },
+  {
+    "sequence_id": 194,
+    "name": "[LOGOS#137] Multitier BlockStore",
+    "cluster": "data_availability",
+    "cluster_seq": 276
+  },
+  {
+    "sequence_id": 193,
+    "name": "[LOGOS#142] 2023 Testnet setup",
+    "cluster": "perf_ci",
+    "cluster_seq": 277
+  },
+  {
+    "sequence_id": 192,
+    "name": "[LOGOS#149] Testing upload endpoint",
+    "cluster": "api_rpc_market",
+    "cluster_seq": 274
+  },
+  {
+    "sequence_id": 191,
+    "name": "[LOGOS#150] Testing download endpoint",
+    "cluster": "api_rpc_market",
+    "cluster_seq": 274
+  },
+  {
+    "sequence_id": 190,
+    "name": "[LOGOS#225] Add BlockSize parameter to the upload REST API",
+    "cluster": "api_rpc_market",
+    "cluster_seq": 274
+  },
+  {
+    "sequence_id": 189,
+    "name": "[LOGOS#269] Report which datastore backend is used at the program start",
+    "cluster": "exploratory",
+    "cluster_seq": 278
+  },
+  {
+    "sequence_id": 188,
+    "name": "[LOGOS#297] Update Marketplace REST API",
+    "cluster": "api_rpc_market",
+    "cluster_seq": 274
+  },
+  {
+    "sequence_id": 187,
+    "name": "[LOGOS#333] DHT Cleanup and Stability",
+    "cluster": "p2p_connectivity",
+    "cluster_seq": 275
+  },
+  {
+    "sequence_id": 186,
+    "name": "[LOGOS#378] Verify data availability upon restart of Sale state machine",
+    "cluster": "reservation_quota",
+    "cluster_seq": 272
+  },
+  {
+    "sequence_id": 185,
+    "name": "[LOGOS#428] Integrate invalid proof simulation into distributed testing",
+    "cluster": "proof_pipeline",
+    "cluster_seq": 273
+  },
+  {
+    "sequence_id": 184,
+    "name": "[LOGOS#432] Slot Reservations",
+    "cluster": "reservation_quota",
+    "cluster_seq": 272
+  },
+  {
+    "sequence_id": 183,
+    "name": "[LOGOS#434] API Improvements",
+    "cluster": "api_rpc_market",
+    "cluster_seq": 274
+  },
+  {
+    "sequence_id": 182,
+    "name": "[LOGOS#439] L2 Rollup",
+    "cluster": "exploratory",
+    "cluster_seq": 278
+  },
+  {
+    "sequence_id": 181,
+    "name": "[LOGOS#508] [BUG] Blocks get immediately deleted when TTL = 0",
+    "cluster": "exploratory",
+    "cluster_seq": 278
+  },
+  {
+    "sequence_id": 180,
+    "name": "[LOGOS#522] Handle single block erasure coding (K=1)",
+    "cluster": "data_availability",
+    "cluster_seq": 276
+  },
+  {
+    "sequence_id": 179,
+    "name": "[LOGOS#528] Requests expires with not enough filled slots and money are returned",
+    "cluster": "exploratory",
+    "cluster_seq": 278
+  },
+  {
+    "sequence_id": 178,
+    "name": "[LOGOS#529] Large scale Request filling",
+    "cluster": "exploratory",
+    "cluster_seq": 278
+  },
+  {
+    "sequence_id": 177,
+    "name": "[LOGOS#530] Different proof failure rates nodes",
+    "cluster": "proof_pipeline",
+    "cluster_seq": 273
+  },
+  {
+    "sequence_id": 176,
+    "name": "[LOGOS#531] Slot is freed",
+    "cluster": "reservation_quota",
+    "cluster_seq": 272
+  },
+  {
+    "sequence_id": 175,
+    "name": "[LOGOS#546] Allow returning parity blocks from erasure decoding",
+    "cluster": "data_availability",
+    "cluster_seq": 276
+  },
+  {
+    "sequence_id": 174,
+    "name": "[LOGOS#563] Check node's balance when adding new Availablity",
+    "cluster": "exploratory",
+    "cluster_seq": 278
+  },
+  {
+    "sequence_id": 173,
+    "name": "[LOGOS#564] Check wheter downloaded data are indeed of the size specified in RequestAsk",
+    "cluster": "perf_ci",
+    "cluster_seq": 277
+  },
+  {
+    "sequence_id": 172,
+    "name": "[LOGOS#571] Integration Test: Verify Validator Function",
+    "cluster": "api_rpc_market",
+    "cluster_seq": 274
+  },
+  {
+    "sequence_id": 171,
+    "name": "[LOGOS#575] Request Proving Scheme - Marketplace Integration",
+    "cluster": "api_rpc_market",
+    "cluster_seq": 274
+  },
+  {
+    "sequence_id": 170,
+    "name": "[LOGOS#578] Sales: Check Merkle Root",
+    "cluster": "data_availability",
+    "cluster_seq": 276
+  },
+  {
+    "sequence_id": 169,
+    "name": "[LOGOS#584] Wire in Poseidon to the merkleization (integrate that into libp2p?)",
+    "cluster": "proof_pipeline",
+    "cluster_seq": 273
+  },
+  {
+    "sequence_id": 168,
+    "name": "[LOGOS#585] Download slot data (64k blocks) using Merkle root and indices range (and reconstruct a sub-tree)",
+    "cluster": "data_availability",
+    "cluster_seq": 276
+  },
+  {
+    "sequence_id": 167,
+    "name": "[LOGOS#586] Wiring the Proving System",
+    "cluster": "proof_pipeline",
+    "cluster_seq": 273
+  },
+  {
+    "sequence_id": 166,
+    "name": "[LOGOS#587] Nim function for generating a proof of storage (Proving System)",
+    "cluster": "proof_pipeline",
+    "cluster_seq": 273
+  },
+  {
+    "sequence_id": 165,
+    "name": "[LOGOS#588] Work on the Circom pieces of the Proving System",
+    "cluster": "proof_pipeline",
+    "cluster_seq": 273
+  },
+  {
+    "sequence_id": 164,
+    "name": "[LOGOS#589] Subscribe to proof-required-event, get slot id and compute indices for blocks and pass block data along with inclusion proofs to the proving system, and return a proof",
+    "cluster": "proof_pipeline",
+    "cluster_seq": 273
+  },
+  {
+    "sequence_id": 163,
+    "name": "[LOGOS#595] Priority for renewing contracts",
+    "cluster": "exploratory",
+    "cluster_seq": 278
+  },
+  {
+    "sequence_id": 162,
+    "name": "[LOGOS#626] Maintenance for Marketplace cleanup",
+    "cluster": "api_rpc_market",
+    "cluster_seq": 274
+  },
+  {
+    "sequence_id": 161,
+    "name": "[LOGOS#635] Crash: Block exchange engine timeout causes crash",
+    "cluster": "exploratory",
+    "cluster_seq": 278
+  },
+  {
+    "sequence_id": 160,
+    "name": "[LOGOS#637] Node crash when Request's expiry overflow",
+    "cluster": "exploratory",
+    "cluster_seq": 278
+  },
+  {
+    "sequence_id": 159,
+    "name": "[LOGOS#719] Improvements to want list management and block transmission",
+    "cluster": "exploratory",
+    "cluster_seq": 278
+  },
+  {
+    "sequence_id": 158,
+    "name": "[LOGOS#720] Delay Codex startup when GethNode is syncing",
+    "cluster": "p2p_connectivity",
+    "cluster_seq": 275
+  },
+  {
+    "sequence_id": 157,
+    "name": "[LOGOS#723] Downloading Ceremony File",
+    "cluster": "data_availability",
+    "cluster_seq": 276
+  },
+  {
+    "sequence_id": 156,
+    "name": "[LOGOS#727] Drop support for `--eth-account`",
+    "cluster": "exploratory",
+    "cluster_seq": 278
+  },
+  {
+    "sequence_id": 155,
+    "name": "[LOGOS#745] [BUG] No expiry for block",
+    "cluster": "exploratory",
+    "cluster_seq": 278
+  },
+  {
+    "sequence_id": 154,
+    "name": "[LOGOS#746] Integration tests improvements",
+    "cluster": "perf_ci",
+    "cluster_seq": 277
+  },
+  {
+    "sequence_id": 153,
+    "name": "[LOGOS#750] Marketplace fillSlot reverts for unknown reason",
+    "cluster": "api_rpc_market",
+    "cluster_seq": 274
+  },
+  {
+    "sequence_id": 152,
+    "name": "[LOGOS#767] API suggestion: Estimate prices",
+    "cluster": "api_rpc_market",
+    "cluster_seq": 274
+  },
+  {
+    "sequence_id": 151,
+    "name": "[LOGOS#773] Benchmark suite for proof circuits",
+    "cluster": "proof_pipeline",
+    "cluster_seq": 273
+  },
+  {
+    "sequence_id": 150,
+    "name": "[LOGOS#774] Discuss & plan moving to async-io",
+    "cluster": "exploratory",
+    "cluster_seq": 278
+  },
+  {
+    "sequence_id": 149,
+    "name": "[LOGOS#889] Drop the \"Cannot setup slots for a dataset with ecK == numBlocks\" constraint.",
+    "cluster": "data_availability",
+    "cluster_seq": 276
+  },
+  {
+    "sequence_id": 148,
+    "name": "[LOGOS#906] Run Dist Tests against Status Chain's Linea deploy",
+    "cluster": "exploratory",
+    "cluster_seq": 278
+  },
+  {
+    "sequence_id": 147,
+    "name": "[LOGOS#943] fix: remove `withValue` semaphore and replace with refcount tracking",
+    "cluster": "exploratory",
+    "cluster_seq": 278
+  },
+  {
+    "sequence_id": 146,
+    "name": "[LOGOS#946] Support arm64 on Windows",
+    "cluster": "exploratory",
+    "cluster_seq": 278
+  },
+  {
+    "sequence_id": 145,
+    "name": "[LOGOS#959] Codex/BitTorrent integration",
+    "cluster": "exploratory",
+    "cluster_seq": 278
+  },
+  {
+    "sequence_id": 144,
+    "name": "[LOGOS#965] Manifest versioning",
+    "cluster": "exploratory",
+    "cluster_seq": 278
+  },
+  {
+    "sequence_id": 143,
+    "name": "[LOGOS#979] Add UDP port check to Codex health checks",
+    "cluster": "p2p_connectivity",
+    "cluster_seq": 275
+  },
+  {
+    "sequence_id": 142,
+    "name": "[LOGOS#1004] Run every unittest 1000x",
+    "cluster": "perf_ci",
+    "cluster_seq": 277
+  },
+  {
+    "sequence_id": 141,
+    "name": "[LOGOS#1005] [BUG] Check: Requesting storage for already-encoded CID",
+    "cluster": "perf_ci",
+    "cluster_seq": 277
+  },
+  {
+    "sequence_id": 140,
+    "name": "[LOGOS#1006] Add local pinning/unpinning",
+    "cluster": "exploratory",
+    "cluster_seq": 278
+  },
+  {
+    "sequence_id": 139,
+    "name": "[LOGOS#1009] Add notion of dataset and dataset download completion",
+    "cluster": "data_availability",
+    "cluster_seq": 276
+  },
+  {
+    "sequence_id": 138,
+    "name": "[LOGOS#1018] BlkExc - Improved peer selection",
+    "cluster": "p2p_connectivity",
+    "cluster_seq": 275
+  },
+  {
+    "sequence_id": 137,
+    "name": "[LOGOS#1023] Implement saner smoke test for connectivity",
+    "cluster": "p2p_connectivity",
+    "cluster_seq": 275
+  },
+  {
+    "sequence_id": 136,
+    "name": "[LOGOS#1026] Add a metric to track number of RPC nodes requests",
+    "cluster": "api_rpc_market",
+    "cluster_seq": 274
+  },
+  {
+    "sequence_id": 135,
+    "name": "[LOGOS#1042] Handle limited number of entries returned from eth_getLogs RPC call",
+    "cluster": "api_rpc_market",
+    "cluster_seq": 274
+  },
+  {
+    "sequence_id": 134,
+    "name": "[LOGOS#1044] A more generic version of `eventually` in `asynctest`",
+    "cluster": "exploratory",
+    "cluster_seq": 278
+  },
+  {
+    "sequence_id": 133,
+    "name": "[LOGOS#1056] Expose Marketplace's `config` on the API",
+    "cluster": "api_rpc_market",
+    "cluster_seq": 274
+  },
+  {
+    "sequence_id": 132,
+    "name": "[LOGOS#1058] Expose missed proofs counter",
+    "cluster": "proof_pipeline",
+    "cluster_seq": 273
+  },
+  {
+    "sequence_id": 131,
+    "name": "[LOGOS#1066] Peer want-list maintenance",
+    "cluster": "p2p_connectivity",
+    "cluster_seq": 275
+  },
+  {
+    "sequence_id": 130,
+    "name": "[LOGOS#1101] Parallelise integration tests to speed up CI (and local)",
+    "cluster": "perf_ci",
+    "cluster_seq": 277
+  },
+  {
+    "sequence_id": 129,
+    "name": "[LOGOS#1105] Deletes are SLOW",
+    "cluster": "perf_ci",
+    "cluster_seq": 277
+  },
+  {
+    "sequence_id": 128,
+    "name": "[LOGOS#1117] [BUG] Purchasing storage fails with \"Estimate gas failed: execution reverted Inner exception: execution reverted\"",
+    "cluster": "api_rpc_market",
+    "cluster_seq": 274
+  },
+  {
+    "sequence_id": 127,
+    "name": "[LOGOS#1118] Rolling logfiles",
+    "cluster": "perf_ci",
+    "cluster_seq": 277
+  },
+  {
+    "sequence_id": 126,
+    "name": "[LOGOS#1131] [BUG] Uploading large file interrupts network traffic",
+    "cluster": "p2p_connectivity",
+    "cluster_seq": 275
+  },
+  {
+    "sequence_id": 125,
+    "name": "[LOGOS#1142] [CRASH] Quota limit causes attempt to read value from error result.",
+    "cluster": "reservation_quota",
+    "cluster_seq": 272
+  },
+  {
+    "sequence_id": 124,
+    "name": "[LOGOS#1143] [BUG] Request with JSON-RPC: Connection timed out",
+    "cluster": "api_rpc_market",
+    "cluster_seq": 274
+  },
+  {
+    "sequence_id": 123,
+    "name": "[LOGOS#1145] Fix CORS headers",
+    "cluster": "api_rpc_market",
+    "cluster_seq": 274
+  },
+  {
+    "sequence_id": 122,
+    "name": "[LOGOS#1147] [BUG] Updating totalCollateral resets totalRemainingCollateral without considering previous reservations",
+    "cluster": "reservation_quota",
+    "cluster_seq": 272
+  },
+  {
+    "sequence_id": 121,
+    "name": "[LOGOS#1152] Freeze guard",
+    "cluster": "perf_ci",
+    "cluster_seq": 277
+  },
+  {
+    "sequence_id": 120,
+    "name": "[LOGOS#1154] Testnet with realistic ZK circuit",
+    "cluster": "perf_ci",
+    "cluster_seq": 277
+  },
+  {
+    "sequence_id": 119,
+    "name": "[LOGOS#1157] Partitioned quotas for repostore",
+    "cluster": "reservation_quota",
+    "cluster_seq": 272
+  },
+  {
+    "sequence_id": 118,
+    "name": "[LOGOS#1161] Repo Store Benchmarks",
+    "cluster": "perf_ci",
+    "cluster_seq": 277
+  },
+  {
+    "sequence_id": 117,
+    "name": "[LOGOS#1172] [BUG] Error during `downloading` state might lead to \"overflow\" of availability's size",
+    "cluster": "reservation_quota",
+    "cluster_seq": 272
+  },
+  {
+    "sequence_id": 116,
+    "name": "[LOGOS#1175] Try Codex on spinning disks",
+    "cluster": "exploratory",
+    "cluster_seq": 278
+  },
+  {
+    "sequence_id": 115,
+    "name": "[LOGOS#1180] [BUG, integration tests] slotSize and datasetSize computation not correct",
+    "cluster": "data_availability",
+    "cluster_seq": 276
+  },
+  {
+    "sequence_id": 114,
+    "name": "[LOGOS#1185] [Crash] Usage of partial datasets",
+    "cluster": "data_availability",
+    "cluster_seq": 276
+  },
+  {
+    "sequence_id": 113,
+    "name": "[LOGOS#1190] Create integration tests to test Marketplace assumptions",
+    "cluster": "api_rpc_market",
+    "cluster_seq": 274
+  },
+  {
+    "sequence_id": 112,
+    "name": "[LOGOS#1194] Return node's public Eth address in `info` endpoint",
+    "cluster": "api_rpc_market",
+    "cluster_seq": 274
+  },
+  {
+    "sequence_id": 111,
+    "name": "[LOGOS#1200] Sales state machine: retry failed network requests after slot is filled",
+    "cluster": "exploratory",
+    "cluster_seq": 278
+  },
+  {
+    "sequence_id": 110,
+    "name": "[LOGOS#165] BlockStore agenda",
+    "cluster": "exploratory",
+    "cluster_seq": 278
+  },
+  {
+    "sequence_id": 109,
+    "name": "[LOGOS#174] CI: small mesh network with simple stress tests",
+    "cluster": "perf_ci",
+    "cluster_seq": 277
+  },
+  {
+    "sequence_id": 108,
+    "name": "[LOGOS#175] Complex mesh network stress test",
+    "cluster": "exploratory",
+    "cluster_seq": 278
+  },
+  {
+    "sequence_id": 107,
+    "name": "[LOGOS#179] Make choice of FSStore or SQLiteStore parameterizable",
+    "cluster": "exploratory",
+    "cluster_seq": 278
+  },
+  {
+    "sequence_id": 106,
+    "name": "[LOGOS#190] Sanitize network input",
+    "cluster": "exploratory",
+    "cluster_seq": 278
+  },
+  {
+    "sequence_id": 105,
+    "name": "[LOGOS#202] Simplify SQLiteStore testing code",
+    "cluster": "perf_ci",
+    "cluster_seq": 277
+  },
+  {
+    "sequence_id": 104,
+    "name": "[LOGOS#206] Add partial file download support to REST API",
+    "cluster": "api_rpc_market",
+    "cluster_seq": 274
+  },
+  {
+    "sequence_id": 103,
+    "name": "[LOGOS#227] (Potentially) only announce Manifest Cid on the DHT",
+    "cluster": "p2p_connectivity",
+    "cluster_seq": 275
+  },
+  {
+    "sequence_id": 102,
+    "name": "[LOGOS#231] Reward node that notifies about missed proofs",
+    "cluster": "proof_pipeline",
+    "cluster_seq": 273
+  },
+  {
+    "sequence_id": 101,
+    "name": "[LOGOS#237] Document that Windows Defender may delete suspicious files from FSStore",
+    "cluster": "perf_ci",
+    "cluster_seq": 277
+  },
+  {
+    "sequence_id": 100,
+    "name": "[LOGOS#239] Track blockstore performance",
+    "cluster": "perf_ci",
+    "cluster_seq": 277
+  },
+  {
+    "sequence_id": 99,
+    "name": "[LOGOS#241] Codex message.proto doesn't match IPFS BITSWAP.md",
+    "cluster": "exploratory",
+    "cluster_seq": 278
+  },
+  {
+    "sequence_id": 98,
+    "name": "[LOGOS#242] Hierarchical Manifests",
+    "cluster": "exploratory",
+    "cluster_seq": 278
+  },
+  {
+    "sequence_id": 97,
+    "name": "[LOGOS#272] test \"Store and retrieve Data Stream\" doesn't work with some blocksizes",
+    "cluster": "data_availability",
+    "cluster_seq": 276
+  },
+  {
+    "sequence_id": 96,
+    "name": "[LOGOS#336] Allow human units for `storage-quota` cmd option",
+    "cluster": "reservation_quota",
+    "cluster_seq": 272
+  },
+  {
+    "sequence_id": 95,
+    "name": "[LOGOS#345] create test plan for Codex client",
+    "cluster": "exploratory",
+    "cluster_seq": 278
+  },
+  {
+    "sequence_id": 94,
+    "name": "[LOGOS#367] Cleanup API and extend its expressiveness",
+    "cluster": "api_rpc_market",
+    "cluster_seq": 274
+  },
+  {
+    "sequence_id": 93,
+    "name": "[LOGOS#368] Unsuccessful uploads may pollute local blockstore with orphaned blocks",
+    "cluster": "exploratory",
+    "cluster_seq": 278
+  },
+  {
+    "sequence_id": 92,
+    "name": "[LOGOS#370] [marketplace] Add REST endpoint to remove availability",
+    "cluster": "reservation_quota",
+    "cluster_seq": 272
+  },
+  {
+    "sequence_id": 91,
+    "name": "[LOGOS#394] Update `contracts/readme.md`",
+    "cluster": "exploratory",
+    "cluster_seq": 278
+  },
+  {
+    "sequence_id": 90,
+    "name": "[LOGOS#395] Sales module retrieves whole `Request` instead of doing decision making with `Ask`",
+    "cluster": "perf_ci",
+    "cluster_seq": 277
+  },
+  {
+    "sequence_id": 89,
+    "name": "[LOGOS#396] Optimize RPC calls",
+    "cluster": "api_rpc_market",
+    "cluster_seq": 274
+  },
+  {
+    "sequence_id": 88,
+    "name": "[LOGOS#425] https://github.com/codex-storage/infra-codex/issues/2",
+    "cluster": "exploratory",
+    "cluster_seq": 278
+  },
+  {
+    "sequence_id": 87,
+    "name": "[LOGOS#404] Have API allowing configure missing proofs",
+    "cluster": "proof_pipeline",
+    "cluster_seq": 273
+  },
+  {
+    "sequence_id": 86,
+    "name": "[LOGOS#562] Implement new proving scheme using 2D erasure coding",
+    "cluster": "data_availability",
+    "cluster_seq": 276
+  },
+  {
+    "sequence_id": 85,
+    "name": "[LOGOS#772] Storage Request's duration - does it make sense to have it `Uint256` on API?",
+    "cluster": "api_rpc_market",
+    "cluster_seq": 274
+  },
+  {
+    "sequence_id": 84,
+    "name": "[LOGOS#777] [integration] Add integration test for slot repair",
+    "cluster": "perf_ci",
+    "cluster_seq": 277
+  },
+  {
+    "sequence_id": 83,
+    "name": "[LOGOS#782] NAT / port forwarding / holepunching fixes",
+    "cluster": "p2p_connectivity",
+    "cluster_seq": 275
+  },
+  {
+    "sequence_id": 82,
+    "name": "[LOGOS#791] Cancel only blocks we wanted",
+    "cluster": "exploratory",
+    "cluster_seq": 278
+  },
+  {
+    "sequence_id": 81,
+    "name": "[LOGOS#804] Blockchain reorgs handling",
+    "cluster": "exploratory",
+    "cluster_seq": 278
+  },
+  {
+    "sequence_id": 80,
+    "name": "[LOGOS#808] Scheduling prover on another thread",
+    "cluster": "exploratory",
+    "cluster_seq": 278
+  },
+  {
+    "sequence_id": 79,
+    "name": "[LOGOS#815] Codex crashes with SIGSEV with Chronos v4 if `Block` or `Manifest` are made into non-ref objects",
+    "cluster": "exploratory",
+    "cluster_seq": 278
+  },
+  {
+    "sequence_id": 78,
+    "name": "[LOGOS#824] State machines concurrency tests",
+    "cluster": "exploratory",
+    "cluster_seq": 278
+  },
+  {
+    "sequence_id": 77,
+    "name": "[LOGOS#836] Generalize reverse index mapping in EC strategies",
+    "cluster": "exploratory",
+    "cluster_seq": 278
+  },
+  {
+    "sequence_id": 76,
+    "name": "[LOGOS#837] [BUG] Sales error - Transaction underpriced",
+    "cluster": "exploratory",
+    "cluster_seq": 278
+  },
+  {
+    "sequence_id": 75,
+    "name": "[LOGOS#850] [BUG] Using range types can crash a program with `SIGSEGV`",
+    "cluster": "exploratory",
+    "cluster_seq": 278
+  },
+  {
+    "sequence_id": 74,
+    "name": "[LOGOS#857] Issuing more than 10 concurrent downloads can cause them to fail",
+    "cluster": "exploratory",
+    "cluster_seq": 278
+  },
+  {
+    "sequence_id": 73,
+    "name": "[LOGOS#865] Richer dataset manifests",
+    "cluster": "data_availability",
+    "cluster_seq": 276
+  },
+  {
+    "sequence_id": 72,
+    "name": "[LOGOS#864] Calling `ensureExpiry` halfway through a maintenance cycle could result in dataset inconsistencies",
+    "cluster": "data_availability",
+    "cluster_seq": 276
+  },
+  {
+    "sequence_id": 71,
+    "name": "[LOGOS#883] OpenAPI versioning and exposing it on API",
+    "cluster": "api_rpc_market",
+    "cluster_seq": 274
+  },
+  {
+    "sequence_id": 70,
+    "name": "[LOGOS#877] [BUG] Codex hangs when creating a storage request for a big file using the REST api",
+    "cluster": "api_rpc_market",
+    "cluster_seq": 274
+  },
+  {
+    "sequence_id": 69,
+    "name": "[LOGOS#885] Data persistence for API",
+    "cluster": "api_rpc_market",
+    "cluster_seq": 274
+  },
+  {
+    "sequence_id": 68,
+    "name": "[LOGOS#896] 2D slot-level erasure coding",
+    "cluster": "data_availability",
+    "cluster_seq": 276
+  },
+  {
+    "sequence_id": 67,
+    "name": "[LOGOS#892] Download and reconstruct missing slots (client-side data repair)",
+    "cluster": "exploratory",
+    "cluster_seq": 278
+  },
+  {
+    "sequence_id": 66,
+    "name": "[LOGOS#887] [BUG] The purchase details API returns a different CID",
+    "cluster": "api_rpc_market",
+    "cluster_seq": 274
+  },
+  {
+    "sequence_id": 65,
+    "name": "[LOGOS#900] Understand and define sensible IP limits policies for Discv5",
+    "cluster": "perf_ci",
+    "cluster_seq": 277
+  },
+  {
+    "sequence_id": 64,
+    "name": "[LOGOS#903] Add support for Autonat",
+    "cluster": "p2p_connectivity",
+    "cluster_seq": 275
+  },
+  {
+    "sequence_id": 63,
+    "name": "[LOGOS#909] feat(slot-reservations): Add `expansionRate` parameter to support contract changes",
+    "cluster": "reservation_quota",
+    "cluster_seq": 272
+  },
+  {
+    "sequence_id": 62,
+    "name": "[LOGOS#920] REST API to fetch manifest",
+    "cluster": "api_rpc_market",
+    "cluster_seq": 274
+  },
+  {
+    "sequence_id": 61,
+    "name": "[LOGOS#904] NAT traversal capabilities",
+    "cluster": "p2p_connectivity",
+    "cluster_seq": 275
+  },
+  {
+    "sequence_id": 60,
+    "name": "[LOGOS#938] feat: support collateral top-ups",
+    "cluster": "exploratory",
+    "cluster_seq": 278
+  },
+  {
+    "sequence_id": 59,
+    "name": "[LOGOS#925] Expose Request's information for Reservation endpoint",
+    "cluster": "reservation_quota",
+    "cluster_seq": 272
+  },
+  {
+    "sequence_id": 58,
+    "name": "[LOGOS#1206] [BUG] Persistence and the config.toml file",
+    "cluster": "exploratory",
+    "cluster_seq": 278
+  },
+  {
+    "sequence_id": 57,
+    "name": "[LOGOS#1213] `mySlots` onchain mapping is not reflected with the agents in Sales state machine",
+    "cluster": "exploratory",
+    "cluster_seq": 278
+  },
+  {
+    "sequence_id": 56,
+    "name": "[LOGOS#1215] RPC timeout during proving state",
+    "cluster": "api_rpc_market",
+    "cluster_seq": 274
+  },
+  {
+    "sequence_id": 55,
+    "name": "[LOGOS#1219] [BUG] [Crash] Circuit downloader times out and crashes",
+    "cluster": "perf_ci",
+    "cluster_seq": 277
+  },
+  {
+    "sequence_id": 54,
+    "name": "[LOGOS#1222] Allow erasure-coding through API",
+    "cluster": "api_rpc_market",
+    "cluster_seq": 274
+  },
+  {
+    "sequence_id": 53,
+    "name": "[LOGOS#1223] Dataset health",
+    "cluster": "data_availability",
+    "cluster_seq": 276
+  },
+  {
+    "sequence_id": 52,
+    "name": "[LOGOS#1226] [BLOCKING] Upload tree building",
+    "cluster": "exploratory",
+    "cluster_seq": 278
+  },
+  {
+    "sequence_id": 51,
+    "name": "[LOGOS#1227] [BLOCKING] Proof generation",
+    "cluster": "proof_pipeline",
+    "cluster_seq": 273
+  },
+  {
+    "sequence_id": 50,
+    "name": "[LOGOS#1230] feat: retry with exponential backoff",
+    "cluster": "exploratory",
+    "cluster_seq": 278
+  },
+  {
+    "sequence_id": 49,
+    "name": "[LOGOS#1243] Encryption",
+    "cluster": "exploratory",
+    "cluster_seq": 278
+  },
+  {
+    "sequence_id": 48,
+    "name": "[LOGOS#1232] feat: network retry implementation",
+    "cluster": "exploratory",
+    "cluster_seq": 278
+  },
+  {
+    "sequence_id": 47,
+    "name": "[LOGOS#1244] Add cyclic shifts as a slot building indexing strategy",
+    "cluster": "exploratory",
+    "cluster_seq": 278
+  },
+  {
+    "sequence_id": 46,
+    "name": "[LOGOS#1257] [BUG] Discovery request queue is full",
+    "cluster": "p2p_connectivity",
+    "cluster_seq": 275
+  },
+  {
+    "sequence_id": 45,
+    "name": "[LOGOS#1263] [BUG] Disk full of orphaned blocks",
+    "cluster": "exploratory",
+    "cluster_seq": 278
+  },
+  {
+    "sequence_id": 44,
+    "name": "[LOGOS#1266] [BUG] Codex attempts to download circuit, even when they are already locally available",
+    "cluster": "perf_ci",
+    "cluster_seq": 277
+  },
+  {
+    "sequence_id": 43,
+    "name": "[LOGOS#1290] [BUG] failing integration: \"SP Slot Repair::repair from local and remote store\"",
+    "cluster": "exploratory",
+    "cluster_seq": 278
+  },
+  {
+    "sequence_id": 42,
+    "name": "[LOGOS#1286] [CRASH] Another attempt to complete a future more than once.",
+    "cluster": "exploratory",
+    "cluster_seq": 278
+  },
+  {
+    "sequence_id": 41,
+    "name": "[LOGOS#1296] Handling of several active smart contracts",
+    "cluster": "exploratory",
+    "cluster_seq": 278
+  },
+  {
+    "sequence_id": 40,
+    "name": "[LOGOS#1291] [BUG] Manifest-block expiry not updated",
+    "cluster": "exploratory",
+    "cluster_seq": 278
+  },
+  {
+    "sequence_id": 39,
+    "name": "[LOGOS#1299] [BUG] Error when starting validator",
+    "cluster": "api_rpc_market",
+    "cluster_seq": 274
+  },
+  {
+    "sequence_id": 38,
+    "name": "[LOGOS#1295] `--network` flag support",
+    "cluster": "exploratory",
+    "cluster_seq": 278
+  },
+  {
+    "sequence_id": 37,
+    "name": "[LOGOS#1308] Move CID dissemination in-protocol (optional)",
+    "cluster": "p2p_connectivity",
+    "cluster_seq": 275
+  },
+  {
+    "sequence_id": 36,
+    "name": "[LOGOS#1319] NAT Reachability indicators",
+    "cluster": "p2p_connectivity",
+    "cluster_seq": 275
+  },
+  {
+    "sequence_id": 35,
+    "name": "[LOGOS#1321] DHT Client mode",
+    "cluster": "p2p_connectivity",
+    "cluster_seq": 275
+  },
+  {
+    "sequence_id": 34,
+    "name": "[LOGOS#1320] Extend `AutoRelayService` to populate peers from Discv5",
+    "cluster": "p2p_connectivity",
+    "cluster_seq": 275
+  },
+  {
+    "sequence_id": 33,
+    "name": "[LOGOS#1328] Local NAT testing",
+    "cluster": "p2p_connectivity",
+    "cluster_seq": 275
+  },
+  {
+    "sequence_id": 32,
+    "name": "[LOGOS#1367] Productionise the DatasetStore implementation",
+    "cluster": "data_availability",
+    "cluster_seq": 276
+  },
+  {
+    "sequence_id": 31,
+    "name": "[LOGOS#1366] Block protocol rewrite",
+    "cluster": "exploratory",
+    "cluster_seq": 278
+  },
+  {
+    "sequence_id": 30,
+    "name": "[LOGOS#1327] Basic NAT traversal components integration",
+    "cluster": "p2p_connectivity",
+    "cluster_seq": 275
+  },
+  {
+    "sequence_id": 29,
+    "name": "[LOGOS#1368] Evaluate the nim-libp2p DHT in our context",
+    "cluster": "p2p_connectivity",
+    "cluster_seq": 275
+  },
+  {
+    "sequence_id": 28,
+    "name": "[LOGOS#1371] Refactor MerkleTree implementation",
+    "cluster": "data_availability",
+    "cluster_seq": 276
+  },
+  {
+    "sequence_id": 27,
+    "name": "[LOGOS#1375] Write MerkleTree spec",
+    "cluster": "data_availability",
+    "cluster_seq": 276
+  },
+  {
+    "sequence_id": 26,
+    "name": "[LOGOS#1377] E2E testing plan for testnet release",
+    "cluster": "perf_ci",
+    "cluster_seq": 277
+  },
+  {
+    "sequence_id": 25,
+    "name": "[LOGOS#1403] [BUG] Connect API does not work using the peerId only",
+    "cluster": "api_rpc_market",
+    "cluster_seq": 274
+  }
+]

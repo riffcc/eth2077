@@ -1,0 +1,95 @@
+NEVER-30: [LOGOS#1327] Basic NAT traversal components integration
+NEVER-31: [LOGOS#1366] Block protocol rewrite
+NEVER-32: [LOGOS#1367] Productionise the DatasetStore implementation
+NEVER-33: [LOGOS#1328] Local NAT testing
+NEVER-34: [LOGOS#1320] Extend `AutoRelayService` to populate peers from Discv5
+NEVER-35: [LOGOS#1321] DHT Client mode
+NEVER-36: [LOGOS#1319] NAT Reachability indicators
+NEVER-37: [LOGOS#1308] Move CID dissemination in-protocol (optional)
+NEVER-38: [LOGOS#1295] `--network` flag support
+NEVER-39: [LOGOS#1299] [BUG] Error when starting validator
+NEVER-40: [LOGOS#1291] [BUG] Manifest-block expiry not updated
+NEVER-41: [LOGOS#1296] Handling of several active smart contracts
+NEVER-42: [LOGOS#1286] [CRASH] Another attempt to complete a future more than once.
+NEVER-43: [LOGOS#1290] [BUG] failing integration: "SP Slot Repair::repair from local and remote store"
+NEVER-44: [LOGOS#1266] [BUG] Codex attempts to download circuit, even when they are already locally available
+NEVER-45: [LOGOS#1263] [BUG] Disk full of orphaned blocks
+NEVER-46: [LOGOS#1257] [BUG] Discovery request queue is full
+NEVER-47: [LOGOS#1244] Add cyclic shifts as a slot building indexing strategy
+NEVER-48: [LOGOS#1232] feat: network retry implementation
+NEVER-49: [LOGOS#1243] Encryption
+NEVER-50: [LOGOS#1230] feat: retry with exponential backoff
+NEVER-51: [LOGOS#1227] [BLOCKING] Proof generation
+NEVER-52: [LOGOS#1226] [BLOCKING] Upload tree building
+NEVER-53: [LOGOS#1223] Dataset health
+NEVER-54: [LOGOS#1222] Allow erasure-coding through API
+NEVER-55: [LOGOS#1219] [BUG] [Crash] Circuit downloader times out and crashes
+NEVER-56: [LOGOS#1215] RPC timeout during proving state
+NEVER-57: [LOGOS#1213] `mySlots` onchain mapping is not reflected with the agents in Sales state machine
+NEVER-58: [LOGOS#1206] [BUG] Persistence and the config.toml file
+NEVER-0: ?
+NEVER-0: ?
+NEVER-0: ?
+NEVER-0: ?
+NEVER-0: ?
+NEVER-59: [LOGOS#925] Expose Request's information for Reservation endpoint
+NEVER-60: [LOGOS#938] feat: support collateral top-ups
+NEVER-61: [LOGOS#904] NAT traversal capabilities
+NEVER-0: ?
+NEVER-63: [LOGOS#909] feat(slot-reservations): Add `expansionRate` parameter to support contract changes
+NEVER-62: [LOGOS#920] REST API to fetch manifest
+NEVER-64: [LOGOS#903] Add support for Autonat
+NEVER-65: [LOGOS#900] Understand and define sensible IP limits policies for Discv5
+NEVER-66: [LOGOS#887] [BUG] The purchase details API returns a different CID
+NEVER-67: [LOGOS#892] Download and reconstruct missing slots (client-side data repair)
+NEVER-68: [LOGOS#896] 2D slot-level erasure coding
+NEVER-0: ?
+NEVER-69: [LOGOS#885] Data persistence for API
+NEVER-70: [LOGOS#877] [BUG] Codex hangs when creating a storage request for a big file using the REST api
+NEVER-71: [LOGOS#883] OpenAPI versioning and exposing it on API
+NEVER-72: [LOGOS#864] Calling `ensureExpiry` halfway through a maintenance cycle could result in dataset inconsistencies
+NEVER-73: [LOGOS#865] Richer dataset manifests
+NEVER-74: [LOGOS#857] Issuing more than 10 concurrent downloads can cause them to fail
+NEVER-75: [LOGOS#850] [BUG] Using range types can crash a program with `SIGSEGV`
+NEVER-76: [LOGOS#837] [BUG] Sales error - Transaction underpriced
+NEVER-77: [LOGOS#836] Generalize reverse index mapping in EC strategies
+NEVER-79: [LOGOS#815] Codex crashes with SIGSEV with Chronos v4 if `Block` or `Manifest` are made into non-ref objects
+NEVER-78: [LOGOS#824] State machines concurrency tests
+NEVER-80: [LOGOS#808] Scheduling prover on another thread
+NEVER-81: [LOGOS#804] Blockchain reorgs handling
+NEVER-82: [LOGOS#791] Cancel only blocks we wanted
+NEVER-83: [LOGOS#782] NAT / port forwarding / holepunching fixes
+NEVER-0: ?
+NEVER-0: ?
+NEVER-84: [LOGOS#777] [integration] Add integration test for slot repair
+NEVER-85: [LOGOS#772] Storage Request's duration - does it make sense to have it `Uint256` on API?
+NEVER-86: [LOGOS#562] Implement new proving scheme using 2D erasure coding
+NEVER-0: ?
+NEVER-87: [LOGOS#404] Have API allowing configure missing proofs
+NEVER-88: [LOGOS#425] https://github.com/codex-storage/infra-codex/issues/2
+NEVER-89: [LOGOS#396] Optimize RPC calls
+NEVER-90: [LOGOS#395] Sales module retrieves whole `Request` instead of doing decision making with `Ask`
+NEVER-91: [LOGOS#394] Update `contracts/readme.md`
+NEVER-92: [LOGOS#370] [marketplace] Add REST endpoint to remove availability
+NEVER-93: [LOGOS#368] Unsuccessful uploads may pollute local blockstore with orphaned blocks
+NEVER-94: [LOGOS#367] Cleanup API and extend its expressiveness
+NEVER-95: [LOGOS#345] create test plan for Codex client
+NEVER-0: ?
+NEVER-96: [LOGOS#336] Allow human units for `storage-quota` cmd option
+NEVER-0: ?
+NEVER-97: [LOGOS#272] test "Store and retrieve Data Stream" doesn't work with some blocksizes
+NEVER-0: ?
+NEVER-98: [LOGOS#242] Hierarchical Manifests
+NEVER-99: [LOGOS#241] Codex message.proto doesn't match IPFS BITSWAP.md
+NEVER-100: [LOGOS#239] Track blockstore performance
+NEVER-101: [LOGOS#237] Document that Windows Defender may delete suspicious files from FSStore
+NEVER-102: [LOGOS#231] Reward node that notifies about missed proofs
+NEVER-103: [LOGOS#227] (Potentially) only announce Manifest Cid on the DHT
+NEVER-0: ?
+NEVER-104: [LOGOS#206] Add partial file download support to REST API
+NEVER-105: [LOGOS#202] Simplify SQLiteStore testing code
+NEVER-106: [LOGOS#190] Sanitize network input
+NEVER-107: [LOGOS#179] Make choice of FSStore or SQLiteStore parameterizable
+NEVER-108: [LOGOS#175] Complex mesh network stress test
+NEVER-109: [LOGOS#174] CI: small mesh network with simple stress tests
+NEVER-110: [LOGOS#165] BlockStore agenda

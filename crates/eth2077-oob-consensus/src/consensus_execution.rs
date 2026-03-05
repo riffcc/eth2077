@@ -2,7 +2,11 @@ use eth2077_types::canonical::{Block, Header};
 
 pub trait ConsensusExecutionBridge: Send + Sync {
     fn propose_block(&self, parent: &Header, height: u64) -> Result<Block, String>;
-    fn validate_proposed_block(&self, block: &Block, pre_state_hint: &[u8]) -> Result<[u8; 32], String>;
+    fn validate_proposed_block(
+        &self,
+        block: &Block,
+        pre_state_hint: &[u8],
+    ) -> Result<[u8; 32], String>;
     fn finalize_block(&self, block_hash: [u8; 32], height: u64) -> Result<(), String>;
 }
 
@@ -24,7 +28,11 @@ impl ConsensusExecutionBridge for MockConsensusExecutionBridge {
             .ok_or_else(|| "mock propose_block: no block configured".to_string())
     }
 
-    fn validate_proposed_block(&self, block: &Block, _pre_state_hint: &[u8]) -> Result<[u8; 32], String> {
+    fn validate_proposed_block(
+        &self,
+        block: &Block,
+        _pre_state_hint: &[u8],
+    ) -> Result<[u8; 32], String> {
         let mut hash = [0u8; 32];
         hash.copy_from_slice(block.hash().as_slice());
         Ok(hash)

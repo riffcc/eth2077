@@ -1452,14 +1452,22 @@ fn engine_7732_payload_header_source<'a>(req: &'a Value) -> Option<&'a Value> {
     req.get("payloadHeader")
         .or_else(|| req.get("signedExecutionPayloadHeader"))
         .or_else(|| req.get("executionPayloadHeader"))
-        .or_else(|| req.get("params").and_then(Value::as_array).and_then(|a| a.first()))
+        .or_else(|| {
+            req.get("params")
+                .and_then(Value::as_array)
+                .and_then(|a| a.first())
+        })
 }
 
 fn engine_7732_payload_envelope_source<'a>(req: &'a Value) -> Option<&'a Value> {
     req.get("payloadEnvelope")
         .or_else(|| req.get("signedExecutionPayloadEnvelope"))
         .or_else(|| req.get("executionPayloadEnvelope"))
-        .or_else(|| req.get("params").and_then(Value::as_array).and_then(|a| a.first()))
+        .or_else(|| {
+            req.get("params")
+                .and_then(Value::as_array)
+                .and_then(|a| a.first())
+        })
 }
 
 fn engine_7732_payload_header_root_from_value(value: &Value) -> Option<String> {
@@ -1487,10 +1495,11 @@ fn engine_7732_parse_header_record(
         .and_then(parse_u64_value)
         .or_else(|| req.get("slot").and_then(parse_u64_value))
         .unwrap_or(fallback_slot);
-    let payload_header_root = engine_7732_payload_header_root_from_value(source).unwrap_or_else(|| {
-        let encoded = serde_json::to_string(message).unwrap_or_else(|_| "{}".to_string());
-        bytes_to_hex(revm::primitives::keccak256(encoded.as_bytes()).as_slice())
-    });
+    let payload_header_root =
+        engine_7732_payload_header_root_from_value(source).unwrap_or_else(|| {
+            let encoded = serde_json::to_string(message).unwrap_or_else(|_| "{}".to_string());
+            bytes_to_hex(revm::primitives::keccak256(encoded.as_bytes()).as_slice())
+        });
 
     Ok(Engine7732HeaderRecord {
         slot,
@@ -1541,10 +1550,11 @@ fn engine_7732_parse_envelope_record(
         .or_else(|| req.get("slot").and_then(parse_u64_value))
         .unwrap_or(fallback_slot);
 
-    let payload_header_root = engine_7732_payload_header_root_from_value(source).unwrap_or_else(|| {
-        let encoded = serde_json::to_string(message).unwrap_or_else(|_| "{}".to_string());
-        bytes_to_hex(revm::primitives::keccak256(encoded.as_bytes()).as_slice())
-    });
+    let payload_header_root =
+        engine_7732_payload_header_root_from_value(source).unwrap_or_else(|| {
+            let encoded = serde_json::to_string(message).unwrap_or_else(|_| "{}".to_string());
+            bytes_to_hex(revm::primitives::keccak256(encoded.as_bytes()).as_slice())
+        });
 
     Ok(Engine7732EnvelopeRecord {
         slot,
@@ -1651,16 +1661,18 @@ fn engine_7732_update_penalty_state(
     current_unix_s: u64,
 ) -> Option<Engine7732PenaltyRecord> {
     if engine_7732_is_timeliness_violation(status) {
-        let mut record = state.engine_7732_penalties_by_slot.get(&slot).cloned().unwrap_or(
-            Engine7732PenaltyRecord {
+        let mut record = state
+            .engine_7732_penalties_by_slot
+            .get(&slot)
+            .cloned()
+            .unwrap_or(Engine7732PenaltyRecord {
                 slot,
                 state: "ACTIVE".to_string(),
                 reason: reason.to_string(),
                 last_status: status.to_string(),
                 activated_at_unix_s: current_unix_s,
                 recovered_at_unix_s: None,
-            },
-        );
+            });
         if record.state != "ACTIVE" {
             record.activated_at_unix_s = current_unix_s;
             record.recovered_at_unix_s = None;
@@ -1733,7 +1745,12 @@ fn engine_7732_slot_status_response(state: &NodeState, slot: u64, current_unix_s
     let orphan_roots: Vec<String> = state
         .engine_7732_envelopes_by_root
         .iter()
-        .filter(|(_, env)| env.slot == slot && !state.engine_7732_headers_by_root.contains_key(&env.payload_header_root))
+        .filter(|(_, env)| {
+            env.slot == slot
+                && !state
+                    .engine_7732_headers_by_root
+                    .contains_key(&env.payload_header_root)
+        })
         .map(|(root, _)| root.clone())
         .collect();
 
@@ -1807,7 +1824,10 @@ fn engine_7732_register_payload_header_response(state: &mut NodeState, req: &Val
                       "incomingHeader": engine_7732_header_to_json(&header)
                     });
                 }
-                let slot_roots = state.engine_7732_headers_by_slot.entry(existing.slot).or_default();
+                let slot_roots = state
+                    .engine_7732_headers_by_slot
+                    .entry(existing.slot)
+                    .or_default();
                 if !slot_roots.contains(&root) {
                     slot_roots.push(root.clone());
                 }
@@ -1905,22 +1925,17 @@ fn engine_7732_register_payload_envelope_response(state: &mut NodeState, req: &V
 }
 
 fn engine_7732_get_payload_timeliness_response(state: &NodeState, req: &Value) -> Value {
-    let slot_from_req = req
-        .get("slot")
-        .and_then(parse_u64_value)
-        .or_else(|| {
-            req.get("params")
-                .and_then(Value::as_array)
-                .and_then(|params| params.first())
-                .and_then(parse_u64_value)
-        });
-    let root_from_req = normalize_hash32_value(
-        req.get("payloadHeaderRoot").or_else(|| {
-            req.get("params")
-                .and_then(Value::as_array)
-                .and_then(|params| params.first())
-        }),
-    );
+    let slot_from_req = req.get("slot").and_then(parse_u64_value).or_else(|| {
+        req.get("params")
+            .and_then(Value::as_array)
+            .and_then(|params| params.first())
+            .and_then(parse_u64_value)
+    });
+    let root_from_req = normalize_hash32_value(req.get("payloadHeaderRoot").or_else(|| {
+        req.get("params")
+            .and_then(Value::as_array)
+            .and_then(|params| params.first())
+    }));
     let slot = slot_from_req
         .or_else(|| {
             root_from_req
@@ -1928,9 +1943,12 @@ fn engine_7732_get_payload_timeliness_response(state: &NodeState, req: &Value) -
                 .and_then(|root| state.engine_7732_headers_by_root.get(root).map(|h| h.slot))
         })
         .or_else(|| {
-            root_from_req
-                .as_ref()
-                .and_then(|root| state.engine_7732_envelopes_by_root.get(root).map(|e| e.slot))
+            root_from_req.as_ref().and_then(|root| {
+                state
+                    .engine_7732_envelopes_by_root
+                    .get(root)
+                    .map(|e| e.slot)
+            })
         })
         .unwrap_or(state.current_height.saturating_add(1));
     let now_unix = engine_7732_current_unix_s_from_req(req).unwrap_or_else(now_unix_s);
@@ -2010,22 +2028,17 @@ fn engine_7732_penalty_slot_snapshot(state: &NodeState, slot: u64, current_unix_
 }
 
 fn engine_7732_get_payload_penalty_response(state: &NodeState, req: &Value) -> Value {
-    let slot_from_req = req
-        .get("slot")
-        .and_then(parse_u64_value)
-        .or_else(|| {
-            req.get("params")
-                .and_then(Value::as_array)
-                .and_then(|params| params.first())
-                .and_then(parse_u64_value)
-        });
-    let root_from_req = normalize_hash32_value(
-        req.get("payloadHeaderRoot").or_else(|| {
-            req.get("params")
-                .and_then(Value::as_array)
-                .and_then(|params| params.first())
-        }),
-    );
+    let slot_from_req = req.get("slot").and_then(parse_u64_value).or_else(|| {
+        req.get("params")
+            .and_then(Value::as_array)
+            .and_then(|params| params.first())
+            .and_then(parse_u64_value)
+    });
+    let root_from_req = normalize_hash32_value(req.get("payloadHeaderRoot").or_else(|| {
+        req.get("params")
+            .and_then(Value::as_array)
+            .and_then(|params| params.first())
+    }));
     let slot = slot_from_req
         .or_else(|| {
             root_from_req
@@ -2033,9 +2046,12 @@ fn engine_7732_get_payload_penalty_response(state: &NodeState, req: &Value) -> V
                 .and_then(|root| state.engine_7732_headers_by_root.get(root).map(|h| h.slot))
         })
         .or_else(|| {
-            root_from_req
-                .as_ref()
-                .and_then(|root| state.engine_7732_envelopes_by_root.get(root).map(|e| e.slot))
+            root_from_req.as_ref().and_then(|root| {
+                state
+                    .engine_7732_envelopes_by_root
+                    .get(root)
+                    .map(|e| e.slot)
+            })
         })
         .unwrap_or(state.current_height.saturating_add(1));
     let current_unix_s = engine_7732_current_unix_s_from_req(req).unwrap_or_else(now_unix_s);
@@ -2103,15 +2119,18 @@ fn engine_7732_get_payload_penalties_by_range_response(state: &NodeState, req: &
 }
 
 fn engine_7732_get_payload_header_response(state: &NodeState, req: &Value) -> Value {
-    let root = normalize_hash32_value(
-        req.get("payloadHeaderRoot").or_else(|| {
-            req.get("params")
-                .and_then(Value::as_array)
-                .and_then(|params| params.first())
-        }),
-    );
-    root.and_then(|r| state.engine_7732_headers_by_root.get(&r).map(engine_7732_header_to_json))
-        .unwrap_or(Value::Null)
+    let root = normalize_hash32_value(req.get("payloadHeaderRoot").or_else(|| {
+        req.get("params")
+            .and_then(Value::as_array)
+            .and_then(|params| params.first())
+    }));
+    root.and_then(|r| {
+        state
+            .engine_7732_headers_by_root
+            .get(&r)
+            .map(engine_7732_header_to_json)
+    })
+    .unwrap_or(Value::Null)
 }
 
 fn engine_7732_headers_by_slot_snapshot(state: &NodeState, slot: u64) -> Value {
@@ -2199,15 +2218,18 @@ fn engine_7732_get_payload_headers_by_range_response(state: &NodeState, req: &Va
 }
 
 fn engine_7732_get_payload_envelope_response(state: &NodeState, req: &Value) -> Value {
-    let root = normalize_hash32_value(
-        req.get("payloadHeaderRoot").or_else(|| {
-            req.get("params")
-                .and_then(Value::as_array)
-                .and_then(|params| params.first())
-        }),
-    );
-    root.and_then(|r| state.engine_7732_envelopes_by_root.get(&r).map(engine_7732_envelope_to_json))
-        .unwrap_or(Value::Null)
+    let root = normalize_hash32_value(req.get("payloadHeaderRoot").or_else(|| {
+        req.get("params")
+            .and_then(Value::as_array)
+            .and_then(|params| params.first())
+    }));
+    root.and_then(|r| {
+        state
+            .engine_7732_envelopes_by_root
+            .get(&r)
+            .map(engine_7732_envelope_to_json)
+    })
+    .unwrap_or(Value::Null)
 }
 
 fn engine_7732_envelopes_by_slot_snapshot(
@@ -2234,7 +2256,9 @@ fn engine_7732_envelopes_by_slot_snapshot(
         let mut by_root: Vec<(&String, &Engine7732EnvelopeRecord)> = state
             .engine_7732_envelopes_by_root
             .iter()
-            .filter(|(root, env)| env.slot == slot && !state.engine_7732_headers_by_root.contains_key(*root))
+            .filter(|(root, env)| {
+                env.slot == slot && !state.engine_7732_headers_by_root.contains_key(*root)
+            })
             .collect();
         by_root.sort_by(|a, b| a.0.cmp(b.0));
         by_root
@@ -2376,7 +2400,8 @@ fn engine_get_inclusion_list_response(state: &mut NodeState, req: &Value) -> Val
     if state.engine_required_il_slot == Some(requested_slot) {
         state.engine_focil_view_frozen = true;
         state.engine_focil_frozen_slot = Some(requested_slot);
-        state.engine_focil_frozen_il_root = Some(engine_inclusion_list_root(&state.engine_required_il_txs));
+        state.engine_focil_frozen_il_root =
+            Some(engine_inclusion_list_root(&state.engine_required_il_txs));
         if state.engine_focil_view_id.is_none() {
             state.engine_focil_view_id = Some(requested_slot);
         }
@@ -2591,7 +2616,12 @@ fn engine_new_payload_response(state: &mut NodeState, req: &Value) -> Value {
     .unwrap_or(Value::Null);
 
     if !missing.is_empty() {
-        let preview = missing.iter().take(3).cloned().collect::<Vec<_>>().join(", ");
+        let preview = missing
+            .iter()
+            .take(3)
+            .cloned()
+            .collect::<Vec<_>>()
+            .join(", ");
         return serde_json::json!({
           "status": "INCLUSION_LIST_UNSATISFIED",
           "latestValidHash": latest_valid_hash,
@@ -2773,7 +2803,12 @@ fn engine_new_payload_response(state: &mut NodeState, req: &Value) -> Value {
           "penalty": penalty
         })
     } else {
-        let preview = checks.iter().take(3).cloned().collect::<Vec<_>>().join("; ");
+        let preview = checks
+            .iter()
+            .take(3)
+            .cloned()
+            .collect::<Vec<_>>()
+            .join("; ");
         serde_json::json!({
           "status": "INCLUSION_LIST_UNSATISFIED",
           "latestValidHash": latest_valid_hash,
@@ -3314,26 +3349,23 @@ fn handle_jsonrpc(state: &mut NodeState, req: &Value) -> Value {
             &id,
             engine_7732_register_payload_envelope_response(state, req),
         ),
-        "engine_getPayloadTimelinessV1" => jsonrpc_response(
-            &id,
-            engine_7732_get_payload_timeliness_response(state, req),
-        ),
+        "engine_getPayloadTimelinessV1" => {
+            jsonrpc_response(&id, engine_7732_get_payload_timeliness_response(state, req))
+        }
         "engine_getPayloadTimelinessByRangeV1" => jsonrpc_response(
             &id,
             engine_7732_get_payload_timeliness_by_range_response(state, req),
         ),
-        "engine_getPayloadPenaltyV1" => jsonrpc_response(
-            &id,
-            engine_7732_get_payload_penalty_response(state, req),
-        ),
+        "engine_getPayloadPenaltyV1" => {
+            jsonrpc_response(&id, engine_7732_get_payload_penalty_response(state, req))
+        }
         "engine_getPayloadPenaltiesByRangeV1" => jsonrpc_response(
             &id,
             engine_7732_get_payload_penalties_by_range_response(state, req),
         ),
-        "engine_getExecutionPayloadHeaderV1" => jsonrpc_response(
-            &id,
-            engine_7732_get_payload_header_response(state, req),
-        ),
+        "engine_getExecutionPayloadHeaderV1" => {
+            jsonrpc_response(&id, engine_7732_get_payload_header_response(state, req))
+        }
         "engine_getExecutionPayloadHeadersBySlotV1" => jsonrpc_response(
             &id,
             engine_7732_get_payload_headers_by_slot_response(state, req),
@@ -3342,10 +3374,9 @@ fn handle_jsonrpc(state: &mut NodeState, req: &Value) -> Value {
             &id,
             engine_7732_get_payload_headers_by_range_response(state, req),
         ),
-        "engine_getExecutionPayloadEnvelopeV1" => jsonrpc_response(
-            &id,
-            engine_7732_get_payload_envelope_response(state, req),
-        ),
+        "engine_getExecutionPayloadEnvelopeV1" => {
+            jsonrpc_response(&id, engine_7732_get_payload_envelope_response(state, req))
+        }
         "engine_getExecutionPayloadEnvelopesBySlotV1" => jsonrpc_response(
             &id,
             engine_7732_get_payload_envelopes_by_slot_response(state, req),
@@ -4281,8 +4312,7 @@ fn main() {
                 engine_7732_get_payload_header_response(&guard, &req_json)
             };
             json_response("200 OK", &result)
-        } else if request_line.starts_with("POST /engine/v1/getExecutionPayloadHeadersBySlotV1 ")
-        {
+        } else if request_line.starts_with("POST /engine/v1/getExecutionPayloadHeadersBySlotV1 ") {
             let body = request_body_from_http(&req_bytes, header_end, content_length);
             let req_json = serde_json::from_str::<Value>(&body).unwrap_or(Value::Null);
             let result = {
@@ -4290,9 +4320,7 @@ fn main() {
                 engine_7732_get_payload_headers_by_slot_response(&guard, &req_json)
             };
             json_response("200 OK", &result)
-        } else if request_line
-            .starts_with("POST /engine/v1/getExecutionPayloadHeadersByRangeV1 ")
-        {
+        } else if request_line.starts_with("POST /engine/v1/getExecutionPayloadHeadersByRangeV1 ") {
             let body = request_body_from_http(&req_bytes, header_end, content_length);
             let req_json = serde_json::from_str::<Value>(&body).unwrap_or(Value::Null);
             let result = {
@@ -4317,8 +4345,7 @@ fn main() {
                 engine_7732_get_payload_envelopes_by_slot_response(&guard, &req_json)
             };
             json_response("200 OK", &result)
-        } else if request_line
-            .starts_with("POST /engine/v1/getExecutionPayloadEnvelopesByRangeV1 ")
+        } else if request_line.starts_with("POST /engine/v1/getExecutionPayloadEnvelopesByRangeV1 ")
         {
             let body = request_body_from_http(&req_bytes, header_end, content_length);
             let req_json = serde_json::from_str::<Value>(&body).unwrap_or(Value::Null);
@@ -4705,12 +4732,10 @@ mod tests {
             np_resp["result"]["status"],
             Value::String("INCLUSION_LIST_UNSATISFIED".to_string())
         );
-        assert!(
-            np_resp["result"]["validationError"]
-                .as_str()
-                .unwrap_or_default()
-                .contains("missing")
-        );
+        assert!(np_resp["result"]["validationError"]
+            .as_str()
+            .unwrap_or_default()
+            .contains("missing"));
     }
 
     #[test]
@@ -4811,12 +4836,10 @@ mod tests {
         );
 
         assert_eq!(np_resp["result"]["status"], "INCLUSION_LIST_UNSATISFIED");
-        assert!(
-            np_resp["result"]["validationError"]
-                .as_str()
-                .unwrap_or_default()
-                .contains("nonce mismatch")
-        );
+        assert!(np_resp["result"]["validationError"]
+            .as_str()
+            .unwrap_or_default()
+            .contains("nonce mismatch"));
     }
 
     #[test]
@@ -4871,12 +4894,10 @@ mod tests {
         );
 
         assert_eq!(np_resp["result"]["status"], "INCLUSION_LIST_UNSATISFIED");
-        assert!(
-            np_resp["result"]["validationError"]
-                .as_str()
-                .unwrap_or_default()
-                .contains("insufficient balance")
-        );
+        assert!(np_resp["result"]["validationError"]
+            .as_str()
+            .unwrap_or_default()
+            .contains("insufficient balance"));
     }
 
     #[test]
@@ -4923,7 +4944,10 @@ mod tests {
               }
             ]),
         );
-        assert_eq!(fc_mutation_resp["result"]["payloadStatus"]["status"], "INVALID");
+        assert_eq!(
+            fc_mutation_resp["result"]["payloadStatus"]["status"],
+            "INVALID"
+        );
         assert!(
             fc_mutation_resp["result"]["payloadStatus"]["validationError"]
                 .as_str()
@@ -4975,8 +4999,14 @@ mod tests {
               }
             ]),
         );
-        assert_eq!(fc_next_slot_resp["result"]["payloadStatus"]["status"], "VALID");
-        assert_eq!(fc_next_slot_resp["result"]["focil"]["viewFrozen"], Value::Bool(false));
+        assert_eq!(
+            fc_next_slot_resp["result"]["payloadStatus"]["status"],
+            "VALID"
+        );
+        assert_eq!(
+            fc_next_slot_resp["result"]["focil"]["viewFrozen"],
+            Value::Bool(false)
+        );
         assert_eq!(fc_next_slot_resp["result"]["focil"]["viewId"], "0x2b");
     }
 
@@ -5022,12 +5052,10 @@ mod tests {
         );
 
         assert_eq!(np_resp["result"]["status"], "INCLUSION_LIST_UNSATISFIED");
-        assert!(
-            np_resp["result"]["validationError"]
-                .as_str()
-                .unwrap_or_default()
-                .contains("view frozen")
-        );
+        assert!(np_resp["result"]["validationError"]
+            .as_str()
+            .unwrap_or_default()
+            .contains("view frozen"));
     }
 
     #[test]
@@ -5209,13 +5237,14 @@ mod tests {
             }),
         );
         assert_eq!(fc_resp["result"]["payloadStatus"]["status"], "INVALID");
-        assert!(
-            fc_resp["result"]["payloadStatus"]["validationError"]
-                .as_str()
-                .unwrap_or_default()
-                .contains("timeliness violation")
+        assert!(fc_resp["result"]["payloadStatus"]["validationError"]
+            .as_str()
+            .unwrap_or_default()
+            .contains("timeliness violation"));
+        assert_eq!(
+            fc_resp["result"]["timeliness"]["aggregateStatus"],
+            "WITHHELD"
         );
-        assert_eq!(fc_resp["result"]["timeliness"]["aggregateStatus"], "WITHHELD");
         assert_eq!(fc_resp["result"]["penalty"]["state"], "ACTIVE");
         assert_eq!(fc_resp["result"]["penalty"]["lastStatus"], "WITHHELD");
     }
@@ -5256,13 +5285,14 @@ mod tests {
         );
 
         assert_eq!(np_resp["result"]["status"], "INVALID");
-        assert!(
-            np_resp["result"]["validationError"]
-                .as_str()
-                .unwrap_or_default()
-                .contains("timeliness violation")
+        assert!(np_resp["result"]["validationError"]
+            .as_str()
+            .unwrap_or_default()
+            .contains("timeliness violation"));
+        assert_eq!(
+            np_resp["result"]["timeliness"]["aggregateStatus"],
+            "WITHHELD"
         );
-        assert_eq!(np_resp["result"]["timeliness"]["aggregateStatus"], "WITHHELD");
         assert_eq!(np_resp["result"]["penalty"]["state"], "ACTIVE");
         assert_eq!(np_resp["result"]["penalty"]["lastStatus"], "WITHHELD");
     }
@@ -5333,7 +5363,10 @@ mod tests {
             }),
         );
         assert_eq!(recovered_fc["result"]["payloadStatus"]["status"], "VALID");
-        assert_eq!(recovered_fc["result"]["timeliness"]["aggregateStatus"], "REVEALED");
+        assert_eq!(
+            recovered_fc["result"]["timeliness"]["aggregateStatus"],
+            "REVEALED"
+        );
         assert_eq!(recovered_fc["result"]["penalty"]["state"], "RECOVERED");
         assert_eq!(recovered_fc["result"]["penalty"]["lastStatus"], "REVEALED");
         assert!(recovered_fc["result"]["penalty"]["recoveredAtUnixS"].is_u64());
@@ -5397,12 +5430,10 @@ mod tests {
             }]),
         );
         assert_eq!(conflict["result"]["status"], "INVALID");
-        assert!(
-            conflict["result"]["validationError"]
-                .as_str()
-                .unwrap_or_default()
-                .contains("conflicting header replay")
-        );
+        assert!(conflict["result"]["validationError"]
+            .as_str()
+            .unwrap_or_default()
+            .contains("conflicting header replay"));
     }
 
     #[test]
@@ -5430,12 +5461,10 @@ mod tests {
             }]),
         );
         assert_eq!(mismatch["result"]["status"], "INVALID");
-        assert!(
-            mismatch["result"]["validationError"]
-                .as_str()
-                .unwrap_or_default()
-                .contains("slot mismatch")
-        );
+        assert!(mismatch["result"]["validationError"]
+            .as_str()
+            .unwrap_or_default()
+            .contains("slot mismatch"));
     }
 
     #[test]
@@ -5479,12 +5508,10 @@ mod tests {
             }]),
         );
         assert_eq!(conflict["result"]["status"], "INVALID");
-        assert!(
-            conflict["result"]["validationError"]
-                .as_str()
-                .unwrap_or_default()
-                .contains("conflicting envelope replay")
-        );
+        assert!(conflict["result"]["validationError"]
+            .as_str()
+            .unwrap_or_default()
+            .contains("conflicting envelope replay"));
     }
 
     #[test]
@@ -5558,7 +5585,10 @@ mod tests {
             .as_array()
             .expect("orphan envelope list");
         assert_eq!(orphan_list.len(), 1);
-        assert_eq!(orphan_list[0]["payloadHeaderRoot"], Value::String(orphan_root));
+        assert_eq!(
+            orphan_list[0]["payloadHeaderRoot"],
+            Value::String(orphan_root)
+        );
     }
 
     #[test]
@@ -5606,7 +5636,9 @@ mod tests {
         assert_eq!(range["result"]["status"], "OK");
         assert_eq!(range["result"]["slotCount"], "0x2");
         assert_eq!(range["result"]["windowClamped"], Value::Bool(false));
-        let slots = range["result"]["slots"].as_array().expect("range slot list");
+        let slots = range["result"]["slots"]
+            .as_array()
+            .expect("range slot list");
         assert_eq!(slots.len(), 2);
 
         let clamped = rpc(
@@ -5631,12 +5663,10 @@ mod tests {
             serde_json::json!(["0x40", "0x3f"]),
         );
         assert_eq!(invalid["result"]["status"], "INVALID");
-        assert!(
-            invalid["result"]["validationError"]
-                .as_str()
-                .unwrap_or_default()
-                .contains("invalid range")
-        );
+        assert!(invalid["result"]["validationError"]
+            .as_str()
+            .unwrap_or_default()
+            .contains("invalid range"));
     }
 
     #[test]
@@ -5688,7 +5718,9 @@ mod tests {
 
         assert_eq!(range["result"]["status"], "OK");
         assert_eq!(range["result"]["slotCount"], "0x3");
-        let slots = range["result"]["slots"].as_array().expect("timeliness slots");
+        let slots = range["result"]["slots"]
+            .as_array()
+            .expect("timeliness slots");
         assert_eq!(slots.len(), 3);
         assert_eq!(slots[0]["aggregateStatus"], "REVEALED");
         assert_eq!(slots[1]["aggregateStatus"], "HEADER_ONLY");
@@ -5720,12 +5752,10 @@ mod tests {
             serde_json::json!(["0x44", "0x43"]),
         );
         assert_eq!(invalid["result"]["status"], "INVALID");
-        assert!(
-            invalid["result"]["validationError"]
-                .as_str()
-                .unwrap_or_default()
-                .contains("invalid range")
-        );
+        assert!(invalid["result"]["validationError"]
+            .as_str()
+            .unwrap_or_default()
+            .contains("invalid range"));
     }
 
     #[test]
@@ -5832,12 +5862,10 @@ mod tests {
             serde_json::json!(["0x53", "0x52"]),
         );
         assert_eq!(invalid["result"]["status"], "INVALID");
-        assert!(
-            invalid["result"]["validationError"]
-                .as_str()
-                .unwrap_or_default()
-                .contains("invalid range")
-        );
+        assert!(invalid["result"]["validationError"]
+            .as_str()
+            .unwrap_or_default()
+            .contains("invalid range"));
     }
 
     #[test]
@@ -5909,7 +5937,10 @@ mod tests {
             serde_json::json!([format!("0x{}", "c1".repeat(32))]),
         );
         assert_eq!(recovered["result"]["penaltyState"], "RECOVERED");
-        assert_eq!(recovered["result"]["timeliness"]["aggregateStatus"], "REVEALED");
+        assert_eq!(
+            recovered["result"]["timeliness"]["aggregateStatus"],
+            "REVEALED"
+        );
     }
 
     #[test]
@@ -5968,11 +5999,9 @@ mod tests {
             serde_json::json!(["0x64", "0x63"]),
         );
         assert_eq!(invalid["result"]["status"], "INVALID");
-        assert!(
-            invalid["result"]["validationError"]
-                .as_str()
-                .unwrap_or_default()
-                .contains("invalid range")
-        );
+        assert!(invalid["result"]["validationError"]
+            .as_str()
+            .unwrap_or_default()
+            .contains("invalid range"));
     }
 }

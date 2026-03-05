@@ -56,11 +56,18 @@ fn defaults_match_requested_policy() {
     assert_eq!(cfg.sync_interval_hours, 24);
     assert!(cfg.auto_extract);
     assert_eq!(cfg.min_review_count, 2);
-    assert_eq!(cfg.complexity_threshold_for_proof, UpgradeComplexity::Complex);
+    assert_eq!(
+        cfg.complexity_threshold_for_proof,
+        UpgradeComplexity::Complex
+    );
     assert_eq!(cfg.max_open_items, 50);
     assert_eq!(
         cfg.required_gates,
-        vec![GateType::ProofGate, GateType::BenchGate, GateType::ReviewGate]
+        vec![
+            GateType::ProofGate,
+            GateType::BenchGate,
+            GateType::ReviewGate
+        ]
     );
 }
 #[test]
@@ -93,7 +100,11 @@ fn stats_compute_expected_counts_rates_and_commitment() {
             "A",
             ExtractionStatus::Assigned,
             UpgradeComplexity::Complex,
-            vec![GateType::ProofGate, GateType::BenchGate, GateType::ReviewGate],
+            vec![
+                GateType::ProofGate,
+                GateType::BenchGate,
+                GateType::ReviewGate,
+            ],
             vec![GateType::ProofGate, GateType::ReviewGate],
         ),
         mk_item(

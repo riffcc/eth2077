@@ -128,12 +128,18 @@ async fn differential_validate_agreement() {
         let mock_result = mock.validate_block(&block).await;
         let reference_result = reference.validate_block(&block).await;
 
-        assert!(mock_result.is_ok(), "mock validate should return Ok for non-empty block");
+        assert!(
+            mock_result.is_ok(),
+            "mock validate should return Ok for non-empty block"
+        );
         assert!(
             reference_result.is_ok(),
             "reference validate should return Ok for non-empty block"
         );
-        assert_eq!(reference_result.expect("reference validate should be Ok"), true);
+        assert_eq!(
+            reference_result.expect("reference validate should be Ok"),
+            true
+        );
     }
 }
 
@@ -144,7 +150,12 @@ async fn differential_head_tracking() {
     let reference = ReferenceExecutionEngine::new();
     let blocks = deterministic_blocks(0x1234, 20, 512);
 
-    assert_eq!(mock.get_head_block_number().await.expect("mock head available"), 0);
+    assert_eq!(
+        mock.get_head_block_number()
+            .await
+            .expect("mock head available"),
+        0
+    );
     assert_eq!(
         reference
             .get_head_block_number()
@@ -164,7 +175,9 @@ async fn differential_head_tracking() {
 
         let expected = (idx + 1) as u64;
         assert_eq!(
-            mock.get_head_block_number().await.expect("mock head available"),
+            mock.get_head_block_number()
+                .await
+                .expect("mock head available"),
             expected
         );
         assert_eq!(

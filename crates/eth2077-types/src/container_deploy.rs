@@ -223,7 +223,10 @@ pub fn validate_container_deploy_config(
         );
     }
 
-    if !config.max_surge_pct.is_finite() || config.max_surge_pct < 0.0 || config.max_surge_pct > 100.0 {
+    if !config.max_surge_pct.is_finite()
+        || config.max_surge_pct < 0.0
+        || config.max_surge_pct > 100.0
+    {
         push_validation_error(
             &mut errors,
             "max_surge_pct",
@@ -237,11 +240,7 @@ pub fn validate_container_deploy_config(
 
     for (key, value) in &config.metadata {
         if key.trim().is_empty() {
-            push_validation_error(
-                &mut errors,
-                "metadata",
-                "contains an empty metadata key",
-            );
+            push_validation_error(&mut errors, "metadata", "contains an empty metadata key");
         }
         if value.trim().is_empty() {
             push_validation_error(
@@ -312,10 +311,8 @@ pub fn compute_container_deploy_stats(nodes: &[ContainerNode]) -> ContainerDeplo
     let avg_memory_usage_pct = (memory_sum / total_containers as f64).clamp(0.0, 100.0);
     let unique_ids = id_counts.values().all(|count| *count == 1);
 
-    let rollout_complete = total_containers >= 48
-        && healthy == total_containers
-        && all_images_non_empty
-        && unique_ids;
+    let rollout_complete =
+        total_containers >= 48 && healthy == total_containers && all_images_non_empty && unique_ids;
 
     ContainerDeployStats {
         total_containers,
@@ -428,7 +425,8 @@ fn validate_orchestrator_constraints(
         );
     }
 
-    if config.orchestrator == Orchestrator::CloudRun && config.strategy == DeployStrategy::Recreate {
+    if config.orchestrator == Orchestrator::CloudRun && config.strategy == DeployStrategy::Recreate
+    {
         push_validation_error(
             errors,
             "strategy",
@@ -474,7 +472,8 @@ fn validate_policy_metadata_requirements(
 }
 
 fn node_is_healthy(node: &ContainerNode) -> bool {
-    let baseline = node.cpu_limit_milli > 0 && node.memory_limit_mb > 0 && !node.image.trim().is_empty();
+    let baseline =
+        node.cpu_limit_milli > 0 && node.memory_limit_mb > 0 && !node.image.trim().is_empty();
     if !baseline {
         return false;
     }
@@ -571,19 +570,28 @@ fn metadata_has_text(metadata: &HashMap<String, String>, key: &str) -> bool {
 }
 
 fn metadata_text<'a>(metadata: &'a HashMap<String, String>, key: &str) -> Option<&'a str> {
-    metadata.get(key).map(|value| value.trim()).filter(|value| !value.is_empty())
+    metadata
+        .get(key)
+        .map(|value| value.trim())
+        .filter(|value| !value.is_empty())
 }
 
 fn metadata_u64(metadata: &HashMap<String, String>, key: &str) -> Option<u64> {
-    metadata.get(key).and_then(|value| value.trim().parse::<u64>().ok())
+    metadata
+        .get(key)
+        .and_then(|value| value.trim().parse::<u64>().ok())
 }
 
 fn metadata_i64(metadata: &HashMap<String, String>, key: &str) -> Option<i64> {
-    metadata.get(key).and_then(|value| value.trim().parse::<i64>().ok())
+    metadata
+        .get(key)
+        .and_then(|value| value.trim().parse::<i64>().ok())
 }
 
 fn metadata_f64(metadata: &HashMap<String, String>, key: &str) -> Option<f64> {
-    metadata.get(key).and_then(|value| value.trim().parse::<f64>().ok())
+    metadata
+        .get(key)
+        .and_then(|value| value.trim().parse::<f64>().ok())
 }
 
 fn metadata_bool(metadata: &HashMap<String, String>, key: &str) -> Option<bool> {

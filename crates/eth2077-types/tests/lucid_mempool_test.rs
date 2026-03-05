@@ -53,11 +53,10 @@ fn payload_too_large_rejected() {
     let tx = tx(EncryptionScheme::ThresholdBLS, vec![0xFF; 9], 50_000);
     let errors = validate_encrypted_transaction(&tx, &config).unwrap_err();
 
-    assert!(
-        errors
-            .iter()
-            .any(|error| matches!(error, LucidValidationError::PayloadTooLarge { size: 9, max: 8 }))
-    );
+    assert!(errors.iter().any(|error| matches!(
+        error,
+        LucidValidationError::PayloadTooLarge { size: 9, max: 8 }
+    )));
 }
 
 #[test]

@@ -31,7 +31,7 @@ fn test_simple_eth_transfer() {
         from: sender,
         to: Some(receiver),
         value: U256::from(1_000_000_000_000_000_000u128), // 1 ETH
-        gas_limit: 21_000,                                 // standard ETH transfer gas
+        gas_limit: 21_000,                                // standard ETH transfer gas
         max_fee_per_gas: 1_000_000_000,                   // 1 gwei
         max_priority_fee_per_gas: 1_000_000_000,
         input: Default::default(),
@@ -70,7 +70,10 @@ fn test_simple_eth_transfer() {
         sender_info.balance < nine_eth,
         "sender should have paid for gas too"
     );
-    assert!(sender_info.balance > U256::ZERO, "sender should still have funds");
+    assert!(
+        sender_info.balance > U256::ZERO,
+        "sender should still have funds"
+    );
 
     // Sender nonce should have incremented
     assert_eq!(sender_info.nonce, 1);

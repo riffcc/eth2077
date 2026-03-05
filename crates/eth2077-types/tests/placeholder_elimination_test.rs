@@ -11,7 +11,10 @@ fn default_config_is_valid_and_has_expected_shape() {
     let config = default_placeholder_elimination_config();
 
     assert_eq!(config.max_placeholder_age_days, 30);
-    assert_eq!(config.min_proof_completeness, ProofCompleteness::Substantial);
+    assert_eq!(
+        config.min_proof_completeness,
+        ProofCompleteness::Substantial
+    );
     assert!(!config.auto_certify);
     assert_eq!(config.coverage_threshold_pct, 95.0);
     assert!(config.fuzz_iterations > 0);
@@ -106,7 +109,10 @@ fn stats_aggregate_status_loc_proof_and_gate_coverage() {
     let stats = compute_placeholder_elimination_stats(&entries);
 
     assert_eq!(stats.total_placeholders, 3);
-    assert_eq!(stats.by_status.get(&PlaceholderStatus::Identified), Some(&1));
+    assert_eq!(
+        stats.by_status.get(&PlaceholderStatus::Identified),
+        Some(&1)
+    );
     assert_eq!(stats.by_status.get(&PlaceholderStatus::Replaced), Some(&1));
     assert_eq!(stats.by_status.get(&PlaceholderStatus::Certified), Some(&1));
     assert!((stats.elimination_rate_pct - 66.666_666).abs() < 0.001);

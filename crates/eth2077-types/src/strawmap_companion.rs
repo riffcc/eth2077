@@ -220,11 +220,7 @@ impl StrawmapCompanionConfig {
             );
         }
         if self.min_review_count == 0 {
-            push_validation_error(
-                &mut errors,
-                "min_review_count",
-                "must be greater than zero",
-            );
+            push_validation_error(&mut errors, "min_review_count", "must be greater than zero");
         }
         if self.min_review_count > MAX_MIN_REVIEW_COUNT {
             push_validation_error(
@@ -241,11 +237,7 @@ impl StrawmapCompanionConfig {
             );
         }
         if self.max_open_items == 0 {
-            push_validation_error(
-                &mut errors,
-                "max_open_items",
-                "must be greater than zero",
-            );
+            push_validation_error(&mut errors, "max_open_items", "must be greater than zero");
         }
         if self.max_open_items > MAX_OPEN_ITEMS {
             push_validation_error(

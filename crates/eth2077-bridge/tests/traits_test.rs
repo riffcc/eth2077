@@ -26,7 +26,9 @@ impl BridgeService for MockBridgeService {
             return Ok(PayloadStatus::Syncing);
         }
         if payload.transactions.is_empty() {
-            return Ok(PayloadStatus::Invalid("payload has no transactions".to_string()));
+            return Ok(PayloadStatus::Invalid(
+                "payload has no transactions".to_string(),
+            ));
         }
 
         let mut state = self.state.lock().expect("mock state lock poisoned");

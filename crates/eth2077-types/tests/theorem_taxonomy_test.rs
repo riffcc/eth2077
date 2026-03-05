@@ -26,7 +26,10 @@ fn sample_theorems() -> Vec<TheoremEntry> {
             name: "Eventual finality".to_string(),
             statement: "Under partial synchrony, finality is eventual.".to_string(),
             proof_status: ProofStatus::Admitted,
-            acceptance: vec![AcceptanceCriteria::PeerReviewed, AcceptanceCriteria::FuzzVerified],
+            acceptance: vec![
+                AcceptanceCriteria::PeerReviewed,
+                AcceptanceCriteria::FuzzVerified,
+            ],
             dependencies: vec!["ETH2077-THM-SAFETY-001".to_string()],
             metadata: HashMap::new(),
         },
@@ -77,7 +80,9 @@ fn invalid_config_returns_multiple_validation_errors() {
     assert!(errors.iter().any(|e| e.field == "review_period_days"));
     assert!(errors.iter().any(|e| e.field == "max_admitted_tier1"));
     assert!(errors.iter().any(|e| e.field == "max_conjectured_tier2"));
-    assert!(errors.iter().any(|e| e.field == "metadata" || e.field == "metadata.owner"));
+    assert!(errors
+        .iter()
+        .any(|e| e.field == "metadata" || e.field == "metadata.owner"));
 }
 
 #[test]

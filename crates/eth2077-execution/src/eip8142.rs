@@ -179,7 +179,9 @@ pub fn assign_to_lanes(
     }
 }
 
-pub fn detect_cross_lane_conflicts(assignments: &[LaneAssignment]) -> Vec<(usize, usize, [u8; 32])> {
+pub fn detect_cross_lane_conflicts(
+    assignments: &[LaneAssignment],
+) -> Vec<(usize, usize, [u8; 32])> {
     let mut conflicts = Vec::new();
     let mut normalized: Vec<HashSet<[u8; 32]>> = Vec::with_capacity(assignments.len());
 
@@ -207,7 +209,10 @@ pub fn detect_cross_lane_conflicts(assignments: &[LaneAssignment]) -> Vec<(usize
     conflicts
 }
 
-pub fn compute_lane_stats(assignments: &[LaneAssignment], config: &LaneConfig) -> LaneExecutionStats {
+pub fn compute_lane_stats(
+    assignments: &[LaneAssignment],
+    config: &LaneConfig,
+) -> LaneExecutionStats {
     let mut lane_depths: HashMap<LaneId, usize> = HashMap::new();
     let mut gas_by_lane_id: HashMap<LaneId, u64> = HashMap::new();
 
@@ -299,7 +304,11 @@ fn normalize_keys(assignment: &LaneAssignment) -> Result<HashSet<[u8; 32]>, Lane
         return Err(LaneAssignmentError::InvalidStateKeys);
     }
 
-    let mut keys = assignment.state_keys_accessed.iter().copied().collect::<HashSet<_>>();
+    let mut keys = assignment
+        .state_keys_accessed
+        .iter()
+        .copied()
+        .collect::<HashSet<_>>();
     keys.extend(assignment.conflict_set.iter().copied());
     Ok(keys)
 }

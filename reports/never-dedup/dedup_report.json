@@ -1,0 +1,59 @@
+{
+  "total_issues": 278,
+  "logos_ported_total": 247,
+  "cluster_anchor_sequences": {
+    "reservation_quota": 272,
+    "proof_pipeline": 273,
+    "api_rpc_market": 274,
+    "p2p_connectivity": 275,
+    "data_availability": 276,
+    "perf_ci": 277,
+    "exploratory": 278
+  },
+  "anchor_parent_updates": 0,
+  "cluster_updates": 245,
+  "duplicate_groups": [
+    {
+      "normalized_title": "research snark schemes",
+      "canonical": {
+        "sequence_id": 235,
+        "id": "e7955fdc-4028-4ba7-bbd3-222791ef73f6",
+        "name": "[LOGOS-R#129] Research SNARK schemes"
+      },
+      "duplicates": [
+        {
+          "sequence_id": 239,
+          "id": "0b108692-b397-4e41-9e54-ce43c5fdb462",
+          "name": "[LOGOS-R#125] Research SNARK schemes"
+        }
+      ]
+    },
+    {
+      "normalized_title": "implement aggregation snark",
+      "canonical": {
+        "sequence_id": 233,
+        "id": "83fa7435-b09f-4892-9404-1337d27e759f",
+        "name": "[LOGOS-R#131] Implement Aggregation SNARK"
+      },
+      "duplicates": [
+        {
+          "sequence_id": 237,
+          "id": "6ec02108-7626-4aae-a414-7912b9b353fc",
+          "name": "[LOGOS-R#127] Implement Aggregation SNARK"
+        }
+      ]
+    }
+  ],
+  "duplicate_update_ops": 4,
+  "cluster_counts": {
+    "[Cluster] Exploratory Research and Economics": 97,
+    "[Cluster] Proof and SNARK Pipeline": 27,
+    "[Cluster] Performance, Benchmarks, CI Stability": 25,
+    "[Cluster] Data Availability, Merkle, Erasure Coding": 28,
+    "[Cluster] P2P, DHT, NAT Connectivity": 23,
+    "[Cluster] API, RPC, Marketplace Reliability": 33,
+    "duplicate_under_NEVER-235": 1,
+    "duplicate_under_NEVER-233": 1,
+    "[Cluster] Reservation, Quota, Availability Lifecycle": 12
+  }
+}

@@ -43,7 +43,8 @@ pub enum WitnessVerifyResult {
 
 impl WitnessCid {
     pub fn from_payload(payload: &WitnessPayload) -> Self {
-        let bytes = serde_json::to_vec(payload).expect("witness payload serialization must succeed");
+        let bytes =
+            serde_json::to_vec(payload).expect("witness payload serialization must succeed");
         let mut hash = [0_u8; 32];
         for (index, byte) in bytes.into_iter().enumerate() {
             hash[index % 32] ^= byte;
@@ -73,7 +74,8 @@ impl WitnessCommitment {
             return WitnessVerifyResult::InvalidCid;
         }
 
-        if self.proposer_signature.is_empty() || self.proposer_signature.iter().all(|byte| *byte == 0)
+        if self.proposer_signature.is_empty()
+            || self.proposer_signature.iter().all(|byte| *byte == 0)
         {
             return WitnessVerifyResult::SignatureInvalid;
         }

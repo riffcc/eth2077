@@ -1,0 +1,85 @@
+NEVER-111: [LOGOS#1200] Sales state machine: retry failed network requests after slot is filled
+NEVER-112: [LOGOS#1194] Return node's public Eth address in `info` endpoint
+NEVER-113: [LOGOS#1190] Create integration tests to test Marketplace assumptions
+NEVER-114: [LOGOS#1185] [Crash] Usage of partial datasets
+NEVER-115: [LOGOS#1180] [BUG, integration tests] slotSize and datasetSize computation not correct
+NEVER-116: [LOGOS#1175] Try Codex on spinning disks
+NEVER-117: [LOGOS#1172] [BUG] Error during `downloading` state might lead to "overflow" of availability's size
+NEVER-118: [LOGOS#1161] Repo Store Benchmarks
+NEVER-119: [LOGOS#1157] Partitioned quotas for repostore
+NEVER-120: [LOGOS#1154] Testnet with realistic ZK circuit
+NEVER-121: [LOGOS#1152] Freeze guard
+NEVER-122: [LOGOS#1147] [BUG] Updating totalCollateral resets totalRemainingCollateral without considering previous reservations
+NEVER-123: [LOGOS#1145] Fix CORS headers
+NEVER-124: [LOGOS#1143] [BUG] Request with JSON-RPC: Connection timed out
+NEVER-125: [LOGOS#1142] [CRASH] Quota limit causes attempt to read value from error result.
+NEVER-126: [LOGOS#1131] [BUG] Uploading large file interrupts network traffic
+NEVER-127: [LOGOS#1118] Rolling logfiles
+NEVER-128: [LOGOS#1117] [BUG] Purchasing storage fails with "Estimate gas failed: execution reverted Inner exception: execution reverted"
+NEVER-129: [LOGOS#1105] Deletes are SLOW
+NEVER-130: [LOGOS#1101] Parallelise integration tests to speed up CI (and local)
+NEVER-131: [LOGOS#1066] Peer want-list maintenance
+NEVER-132: [LOGOS#1058] Expose missed proofs counter
+NEVER-133: [LOGOS#1056] Expose Marketplace's `config` on the API
+NEVER-134: [LOGOS#1044] A more generic version of `eventually` in `asynctest`
+NEVER-135: [LOGOS#1042] Handle limited number of entries returned from eth_getLogs RPC call
+NEVER-136: [LOGOS#1026] Add a metric to track number of RPC nodes requests
+NEVER-137: [LOGOS#1023] Implement saner smoke test for connectivity
+NEVER-138: [LOGOS#1018] BlkExc - Improved peer selection
+NEVER-139: [LOGOS#1009] Add notion of dataset and dataset download completion
+NEVER-140: [LOGOS#1006] Add local pinning/unpinning
+NEVER-141: [LOGOS#1005] [BUG] Check: Requesting storage for already-encoded CID
+NEVER-142: [LOGOS#1004] Run every unittest 1000x
+NEVER-143: [LOGOS#979] Add UDP port check to Codex health checks
+NEVER-144: [LOGOS#965] Manifest versioning
+NEVER-145: [LOGOS#959] Codex/BitTorrent integration
+NEVER-146: [LOGOS#946] Support arm64 on Windows
+NEVER-147: [LOGOS#943] fix: remove `withValue` semaphore and replace with refcount tracking
+NEVER-148: [LOGOS#906] Run Dist Tests against Status Chain's Linea deploy
+NEVER-149: [LOGOS#889] Drop the "Cannot setup slots for a dataset with ecK == numBlocks" constraint.
+NEVER-150: [LOGOS#774] Discuss & plan moving to async-io
+NEVER-151: [LOGOS#773] Benchmark suite for proof circuits
+NEVER-152: [LOGOS#767] API suggestion: Estimate prices
+NEVER-153: [LOGOS#750] Marketplace fillSlot reverts for unknown reason
+NEVER-154: [LOGOS#746] Integration tests improvements
+NEVER-155: [LOGOS#745] [BUG] No expiry for block
+NEVER-156: [LOGOS#727] Drop support for `--eth-account`
+NEVER-157: [LOGOS#723] Downloading Ceremony File
+NEVER-158: [LOGOS#720] Delay Codex startup when GethNode is syncing
+NEVER-159: [LOGOS#719] Improvements to want list management and block transmission
+NEVER-160: [LOGOS#637] Node crash when Request's expiry overflow
+NEVER-161: [LOGOS#635] Crash: Block exchange engine timeout causes crash
+NEVER-162: [LOGOS#626] Maintenance for Marketplace cleanup
+NEVER-163: [LOGOS#595] Priority for renewing contracts
+NEVER-164: [LOGOS#589] Subscribe to proof-required-event, get slot id and compute indices for blocks and pass block data along with inclusion proofs to the proving system, and return a proof
+NEVER-165: [LOGOS#588] Work on the Circom pieces of the Proving System
+NEVER-166: [LOGOS#587] Nim function for generating a proof of storage (Proving System)
+NEVER-167: [LOGOS#586] Wiring the Proving System
+NEVER-168: [LOGOS#585] Download slot data (64k blocks) using Merkle root and indices range (and reconstruct a sub-tree)
+NEVER-169: [LOGOS#584] Wire in Poseidon to the merkleization (integrate that into libp2p?)
+NEVER-170: [LOGOS#578] Sales: Check Merkle Root
+NEVER-171: [LOGOS#575] Request Proving Scheme - Marketplace Integration
+NEVER-172: [LOGOS#571] Integration Test: Verify Validator Function
+NEVER-173: [LOGOS#564] Check wheter downloaded data are indeed of the size specified in RequestAsk
+NEVER-174: [LOGOS#563] Check node's balance when adding new Availablity
+NEVER-175: [LOGOS#546] Allow returning parity blocks from erasure decoding
+NEVER-176: [LOGOS#531] Slot is freed
+NEVER-177: [LOGOS#530] Different proof failure rates nodes
+NEVER-178: [LOGOS#529] Large scale Request filling
+NEVER-179: [LOGOS#528] Requests expires with not enough filled slots and money are returned
+NEVER-180: [LOGOS#522] Handle single block erasure coding (K=1)
+NEVER-181: [LOGOS#508] [BUG] Blocks get immediately deleted when TTL = 0
+NEVER-182: [LOGOS#439] L2 Rollup
+NEVER-183: [LOGOS#434] API Improvements
+NEVER-184: [LOGOS#432] Slot Reservations
+NEVER-185: [LOGOS#428] Integrate invalid proof simulation into distributed testing
+NEVER-186: [LOGOS#378] Verify data availability upon restart of Sale state machine
+NEVER-187: [LOGOS#333] DHT Cleanup and Stability
+NEVER-188: [LOGOS#297] Update Marketplace REST API
+NEVER-189: [LOGOS#269] Report which datastore backend is used at the program start
+NEVER-190: [LOGOS#225] Add BlockSize parameter to the upload REST API
+NEVER-191: [LOGOS#150] Testing download endpoint
+NEVER-192: [LOGOS#149] Testing upload endpoint
+NEVER-193: [LOGOS#142] 2023 Testnet setup
+NEVER-194: [LOGOS#137] Multitier BlockStore
+NEVER-195: [LOGOS#136] Benchmark ECC implementations

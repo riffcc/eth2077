@@ -1,0 +1,45 @@
+{
+  "benchmark_kind": "live-rpc",
+  "rpc_urls": [
+    "http://127.0.0.1:9545"
+  ],
+  "sender": "0x375249129507aec9309abc1f5c055494200c7c32",
+  "to": "0x1111111111111111111111111111111111111111",
+  "chain_id": 2077002,
+  "generated_at_unix_s": 1772448169,
+  "sender_hint_mode": true,
+  "sender_count": 8,
+  "worker_count": 8,
+  "tx_count_target": 2000,
+  "tx_submitted": 2000,
+  "tx_confirmed": 2000,
+  "submit_duration_s": 0.861346275,
+  "submit_tps": 2321.9465365424608,
+  "confirm_window_s": 1.385786264,
+  "confirmed_tps": 1443.224003553841,
+  "p50_confirmation_ms": 754.257131,
+  "p95_confirmation_ms": 1050.098077,
+  "p99_confirmation_ms": 1130.8829119999998,
+  "avg_confirmation_ms": 734.9283202209987,
+  "start_block": 11,
+  "end_block": 13,
+  "blocks_spanned": 2,
+  "chain_txs_in_spanned_blocks": 2000,
+  "sender_submitted_counts": {
+    "0x375249129507aec9309abc1f5c055494200c7c35": 1,
+    "0x375249129507aec9309abc1f5c055494200c7c39": 1,
+    "0x375249129507aec9309abc1f5c055494200c7c32": 1,
+    "0x375249129507aec9309abc1f5c055494200c7c38": 1,
+    "0x375249129507aec9309abc1f5c055494200c7c33": 1993,
+    "0x375249129507aec9309abc1f5c055494200c7c34": 1,
+    "0x375249129507aec9309abc1f5c055494200c7c36": 1,
+    "0x375249129507aec9309abc1f5c055494200c7c37": 1
+  },
+  "endpoint_submitted_counts": {
+    "http://127.0.0.1:9545": 2000
+  },
+  "send_errors_sample": [],
+  "notes": [
+    "sender-hint mode is active: node currently requires eth_getTransactionCount(sender) before each eth_sendRawTransaction"
+  ]
+}

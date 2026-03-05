@@ -23,8 +23,10 @@ pub enum BridgeError {
 
 #[allow(async_fn_in_trait)]
 pub trait BridgeService: Send + Sync {
-    async fn submit_payload(&self, payload: ExecutionPayloadV3)
-        -> Result<PayloadStatus, BridgeError>;
+    async fn submit_payload(
+        &self,
+        payload: ExecutionPayloadV3,
+    ) -> Result<PayloadStatus, BridgeError>;
 
     async fn update_forkchoice(
         &self,

@@ -113,10 +113,16 @@ pub struct GenesisBuilderStats {
 /// Returns a baseline configuration suitable for ETH2077 testnet scaffolding.
 pub fn default_genesis_builder_config() -> GenesisBuilderConfig {
     let mut metadata = HashMap::new();
-    metadata.insert("phase".to_string(), format!("{:?}", GenesisPhase::Configure));
+    metadata.insert(
+        "phase".to_string(),
+        format!("{:?}", GenesisPhase::Configure),
+    );
     metadata.insert("release_channel".to_string(), "testnet".to_string());
     metadata.insert("artifact_version".to_string(), "v1".to_string());
-    metadata.insert("aggregate.domain".to_string(), "eth2077-genesis".to_string());
+    metadata.insert(
+        "aggregate.domain".to_string(),
+        "eth2077-genesis".to_string(),
+    );
 
     GenesisBuilderConfig {
         chain_id: 2077,
@@ -143,10 +149,16 @@ pub fn validate_genesis_builder_config(
         errors.push(validation_error("chain_id", "must be greater than zero"));
     }
     if config.genesis_time == 0 {
-        errors.push(validation_error("genesis_time", "must be greater than zero"));
+        errors.push(validation_error(
+            "genesis_time",
+            "must be greater than zero",
+        ));
     }
     if config.validator_count == 0 {
-        errors.push(validation_error("validator_count", "must be greater than zero"));
+        errors.push(validation_error(
+            "validator_count",
+            "must be greater than zero",
+        ));
     }
 
     if config.deterministic_seed.trim().is_empty() {
@@ -162,7 +174,10 @@ pub fn validate_genesis_builder_config(
     }
 
     if config.min_deposit_gwei == 0 {
-        errors.push(validation_error("min_deposit_gwei", "must be greater than zero"));
+        errors.push(validation_error(
+            "min_deposit_gwei",
+            "must be greater than zero",
+        ));
     } else if config.min_deposit_gwei < 1_000_000_000 {
         errors.push(validation_error(
             "min_deposit_gwei",
@@ -369,7 +384,10 @@ fn validate_artifact_metadata(
             "must be present when artifact_format is HexEncoded",
             errors,
         ),
-        ArtifactFormat::Ssz | ArtifactFormat::Json | ArtifactFormat::Rlp | ArtifactFormat::Binary => {}
+        ArtifactFormat::Ssz
+        | ArtifactFormat::Json
+        | ArtifactFormat::Rlp
+        | ArtifactFormat::Binary => {}
     }
 }
 

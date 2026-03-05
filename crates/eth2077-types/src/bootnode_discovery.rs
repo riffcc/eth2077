@@ -249,8 +249,8 @@ pub fn is_healthy_network(snapshot: &TopologySnapshot, min_connectivity: f64) ->
     if ratio + f64::EPSILON < min_connectivity {
         return false;
     }
-    let required_avg_peers = ((snapshot.total_nodes.saturating_sub(1)) as f64 * min_connectivity)
-        .ceil();
+    let required_avg_peers =
+        ((snapshot.total_nodes.saturating_sub(1)) as f64 * min_connectivity).ceil();
     if sanitize_f64(snapshot.avg_peer_count) + f64::EPSILON < required_avg_peers {
         return false;
     }
@@ -436,7 +436,8 @@ fn validate_nat_settings(
     config: &BootnodeDiscoveryConfig,
     errors: &mut Vec<BootnodeDiscoveryValidationError>,
 ) {
-    if !config.enable_nat_traversal && matches!(config.discovery_protocol, DiscoveryProtocol::Discv5)
+    if !config.enable_nat_traversal
+        && matches!(config.discovery_protocol, DiscoveryProtocol::Discv5)
     {
         push_validation_error(
             errors,
@@ -520,7 +521,11 @@ fn compute_commitment(
     append_usize(&mut hasher, "stats.reachable_peers", reachable_peers);
     append_f64(&mut hasher, "stats.avg_latency_ms", avg_latency_ms);
     append_f64(&mut hasher, "stats.avg_peer_count", avg_peer_count);
-    append_bool(&mut hasher, "stats.network_partitioned", network_partitioned);
+    append_bool(
+        &mut hasher,
+        "stats.network_partitioned",
+        network_partitioned,
+    );
     append_bootnodes(&mut hasher, bootnodes);
     append_peers(&mut hasher, peers);
     append_snapshot(&mut hasher, snapshot);
@@ -588,7 +593,11 @@ fn append_snapshot(hasher: &mut Sha256, snapshot: Option<&TopologySnapshot>) {
             append_f64(hasher, "snapshot.avg_peer_count", topology.avg_peer_count);
             append_usize(hasher, "snapshot.min_peer_count", topology.min_peer_count);
             append_usize(hasher, "snapshot.max_peer_count", topology.max_peer_count);
-            append_usize(hasher, "snapshot.network_diameter", topology.network_diameter);
+            append_usize(
+                hasher,
+                "snapshot.network_diameter",
+                topology.network_diameter,
+            );
             append_bool(hasher, "snapshot.partitioned", topology.partitioned);
         }
     }

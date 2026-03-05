@@ -1,0 +1,43 @@
+{
+  "kind": "eth2077-benchmark-artifact-manifest-v1",
+  "created_at_utc": "2026-03-02T10:40:19Z",
+  "git_commit": "82bebad63c681102e839be670f1a32687b77ea94",
+  "git_dirty": true,
+  "host": {
+    "hostname": "lon.lagun.co",
+    "kernel": "Linux 6.12.63+deb13-amd64 #1 SMP PREEMPT_DYNAMIC Debian 6.12.63-1 (2025-12-30) x86_64 GNU/Linux"
+  },
+  "toolchain": {
+    "rustc": "rustc 1.93.1 (01f6ddf75 2026-02-11)",
+    "cargo": "cargo 1.93.1 (083ac5135 2025-12-15)"
+  },
+  "files": [
+    {
+      "role": "report_json",
+      "path": "reports/live-tps-2026-03-02-103917.json",
+      "sha256": "901dfc3e2032f3e0b55de010b5c389a44e552aa56e97f8db5baf65aa707bb99e"
+    },
+    {
+      "role": "report_markdown",
+      "path": "reports/live-tps-2026-03-02-103917.md",
+      "sha256": "6abb4b0bfc996750b2d58e7826d7b28bf15916c65a250d486cff8773f0a80944"
+    },
+    {
+      "role": "checksums",
+      "path": "reports/live-tps-2026-03-02-103917.sha256"
+    }
+  ],
+  "benchmark_env": {
+    "rpc_urls": "",
+    "tx_count": "",
+    "tick_ms": "",
+    "sender_count": "",
+    "gas_limit": ""
+  },
+  "signing": {
+    "key_path": "",
+    "signature_path": null,
+    "public_key_path": null,
+    "verified": false
+  }
+}

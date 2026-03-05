@@ -27,10 +27,7 @@ fn validation_rejects_too_many_placeholders() {
 
     let errors = validate_citadel_port(&config)
         .expect_err("placeholder count above max should fail validation");
-    assert!(errors.contains(&CitadelPortValidationError::TooManyPlaceholders {
-        count: 4,
-        max: 0
-    }));
+    assert!(errors.contains(&CitadelPortValidationError::TooManyPlaceholders { count: 4, max: 0 }));
 }
 
 #[test]

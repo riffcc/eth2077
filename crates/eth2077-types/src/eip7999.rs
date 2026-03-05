@@ -44,14 +44,21 @@ pub struct MultidimFeeResult {
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
 pub enum MultidimFeeError {
-    InsufficientFee { required: u128, provided: u128 },
+    InsufficientFee {
+        required: u128,
+        provided: u128,
+    },
     ExceedsMaxUsage {
         dimension: ResourceDimension,
         usage: u64,
         max: u64,
     },
-    ZeroBaseFee { dimension: ResourceDimension },
-    DuplicateDimension { dimension: ResourceDimension },
+    ZeroBaseFee {
+        dimension: ResourceDimension,
+    },
+    DuplicateDimension {
+        dimension: ResourceDimension,
+    },
     NoResourceUsage,
 }
 
@@ -59,7 +66,9 @@ fn find_params(
     params: &[DimensionParams],
     dimension: ResourceDimension,
 ) -> Option<&DimensionParams> {
-    params.iter().find(|candidate| candidate.dimension == dimension)
+    params
+        .iter()
+        .find(|candidate| candidate.dimension == dimension)
 }
 
 pub fn compute_base_cost(
@@ -151,8 +160,9 @@ pub fn compute_fee_allocation(
             let remainder = priority_fee_paid.saturating_sub(distributed);
             allocations[0].allocated_fee = allocations[0].allocated_fee.saturating_add(remainder);
         } else {
-            allocations[0].allocated_fee =
-                allocations[0].allocated_fee.saturating_add(priority_fee_paid);
+            allocations[0].allocated_fee = allocations[0]
+                .allocated_fee
+                .saturating_add(priority_fee_paid);
         }
     }
 
@@ -218,8 +228,8 @@ pub fn validate_multidim_transaction(
                     max: dimension_params.max_usage,
                 });
             }
-            required =
-                required.saturating_add(dimension_params.base_fee.saturating_mul(u128::from(*usage)));
+            required = required
+                .saturating_add(dimension_params.base_fee.saturating_mul(u128::from(*usage)));
         }
     }
 

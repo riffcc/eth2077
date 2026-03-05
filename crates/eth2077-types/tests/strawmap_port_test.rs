@@ -1,4 +1,7 @@
-use eth2077_types::strawmap_port::{compute_stats, is_phase_a_complete, BenchmarkResult, PortingPhase, PortingTask, StrawmapDomain, StrawmapItem, StrawmapPortConfig, VerificationGate};
+use eth2077_types::strawmap_port::{
+    compute_stats, is_phase_a_complete, BenchmarkResult, PortingPhase, PortingTask, StrawmapDomain,
+    StrawmapItem, StrawmapPortConfig, VerificationGate,
+};
 
 fn sample_items() -> Vec<StrawmapItem> {
     vec![
@@ -71,7 +74,13 @@ fn sample_tasks() -> Vec<PortingTask> {
 #[test]
 fn defaults_match_phase_a_contract() {
     let config = StrawmapPortConfig::default();
-    assert_eq!(config.required_verification_gates, vec![VerificationGate::FormalProof, VerificationGate::PropertyTest]);
+    assert_eq!(
+        config.required_verification_gates,
+        vec![
+            VerificationGate::FormalProof,
+            VerificationGate::PropertyTest
+        ]
+    );
     assert_eq!(config.min_benchmark_throughput, 10_000.0);
     assert_eq!(config.max_benchmark_latency_ms, 100.0);
     assert_eq!(config.max_parallel_ports, 5);
@@ -94,7 +103,9 @@ fn validation_reports_bad_inputs() {
     config.phase_a_deadline_unix = Some(0);
 
     let errors = config.validate();
-    assert!(errors.iter().any(|e| e.field == "required_verification_gates"));
+    assert!(errors
+        .iter()
+        .any(|e| e.field == "required_verification_gates"));
     assert!(errors.iter().any(|e| e.field == "min_benchmark_throughput"));
     assert!(errors.iter().any(|e| e.field == "max_benchmark_latency_ms"));
     assert!(errors.iter().any(|e| e.field == "max_parallel_ports"));
@@ -114,18 +125,14 @@ fn stats_include_counts_progress_and_commitment() {
     assert_eq!(stats.integrated_count, 0);
     assert!((stats.avg_effort_days - 15.0).abs() < f64::EPSILON);
     assert!((stats.completion_pct - (2.0 / 3.0 * 100.0)).abs() < 1e-9);
-    assert!(
-        stats
-            .items_by_domain
-            .iter()
-            .any(|(d, c)| *d == StrawmapDomain::Networking && *c == 0)
-    );
-    assert!(
-        stats
-            .items_by_phase
-            .iter()
-            .any(|(p, c)| *p == PortingPhase::Verified && *c == 1)
-    );
+    assert!(stats
+        .items_by_domain
+        .iter()
+        .any(|(d, c)| *d == StrawmapDomain::Networking && *c == 0));
+    assert!(stats
+        .items_by_phase
+        .iter()
+        .any(|(p, c)| *p == PortingPhase::Verified && *c == 1));
     assert_eq!(stats.commitment, stats_repeat.commitment);
 
     let mut changed_tasks = tasks.clone();
@@ -139,6 +146,12 @@ fn phase_a_completion_requires_verified_floor() {
     let items = sample_items();
     assert!(!is_phase_a_complete(&items));
 
-    let upgraded: Vec<StrawmapItem> = items.into_iter().map(|mut item| { item.phase = PortingPhase::Verified; item }).collect();
+    let upgraded: Vec<StrawmapItem> = items
+        .into_iter()
+        .map(|mut item| {
+            item.phase = PortingPhase::Verified;
+            item
+        })
+        .collect();
     assert!(is_phase_a_complete(&upgraded));
 }

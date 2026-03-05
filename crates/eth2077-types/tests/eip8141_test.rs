@@ -78,11 +78,9 @@ fn wrong_phase_order_detected() {
     ]);
     let errors = validate_frame_transaction(&tx).unwrap_err();
 
-    assert!(
-        errors
-            .iter()
-            .any(|error| matches!(error, FrameTxError::InvalidPhaseOrder { .. }))
-    );
+    assert!(errors
+        .iter()
+        .any(|error| matches!(error, FrameTxError::InvalidPhaseOrder { .. })));
 }
 
 #[test]
@@ -93,11 +91,9 @@ fn excessive_gas_rejected() {
     ]);
     let errors = validate_frame_transaction(&tx).unwrap_err();
 
-    assert!(
-        errors
-            .iter()
-            .any(|error| matches!(error, FrameTxError::ExcessiveTotalGas { .. }))
-    );
+    assert!(errors
+        .iter()
+        .any(|error| matches!(error, FrameTxError::ExcessiveTotalGas { .. })));
 }
 
 #[test]

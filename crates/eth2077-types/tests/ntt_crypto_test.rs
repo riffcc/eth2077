@@ -39,10 +39,12 @@ fn invalid_config_collects_multiple_errors() {
     assert!(errors.contains(&NttValidationError::ModulusTooSmall { bits: 8, min: 10 }));
     assert!(errors.contains(&NttValidationError::GasBudgetZero));
     assert!(errors.contains(&NttValidationError::BatchSizeZero));
-    assert!(errors.contains(&NttValidationError::IncompatibleSchemeAndDegree {
-        scheme: "Falcon512".to_string(),
-        degree: 300,
-    }));
+    assert!(
+        errors.contains(&NttValidationError::IncompatibleSchemeAndDegree {
+            scheme: "Falcon512".to_string(),
+            degree: 300,
+        })
+    );
 }
 
 #[test]
@@ -111,12 +113,10 @@ fn computed_stats_include_strategy_and_scheme_breakdowns() {
     assert!(stats.ntt_operations_per_verify > 0);
     assert_eq!(stats.strategy_comparison.len(), 5);
     assert_eq!(stats.scheme_comparison.len(), 8);
-    assert!(
-        stats
-            .scheme_comparison
-            .iter()
-            .any(|(scheme, _)| scheme == "Falcon512")
-    );
+    assert!(stats
+        .scheme_comparison
+        .iter()
+        .any(|(scheme, _)| scheme == "Falcon512"));
 }
 
 #[test]

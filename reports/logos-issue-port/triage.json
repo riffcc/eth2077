@@ -1,0 +1,2874 @@
+[
+  {
+    "number": 1403,
+    "title": "[BUG] Connect API does not work using the peerId only",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/1403",
+    "labels": [
+      "bug"
+    ],
+    "created_at": "2026-02-09T05:55:47Z",
+    "updated_at": "2026-02-09T06:32:27Z",
+    "classification": "relevant",
+    "rationale": "Protocol/client/runtime reliability or operability concern relevant to Neverust/Archivist."
+  },
+  {
+    "number": 1396,
+    "title": "Final renaming from Codex > Logos Storager",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/1396",
+    "labels": [],
+    "created_at": "2026-02-02T00:08:10Z",
+    "updated_at": "2026-02-02T00:08:12Z",
+    "classification": "not_applicable",
+    "rationale": "Nim/tooling/org-level or UX/meta scope; not a Neverust runtime protocol/client blocker."
+  },
+  {
+    "number": 1381,
+    "title": "Documentation for testnet",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/1381",
+    "labels": [],
+    "created_at": "2026-01-20T15:28:24Z",
+    "updated_at": "2026-01-20T15:28:38Z",
+    "classification": "not_applicable",
+    "rationale": "Nim/tooling/org-level or UX/meta scope; not a Neverust runtime protocol/client blocker."
+  },
+  {
+    "number": 1379,
+    "title": "UX research with QT",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/1379",
+    "labels": [],
+    "created_at": "2026-01-20T05:52:14Z",
+    "updated_at": "2026-01-20T09:26:58Z",
+    "classification": "not_applicable",
+    "rationale": "Nim/tooling/org-level or UX/meta scope; not a Neverust runtime protocol/client blocker."
+  },
+  {
+    "number": 1378,
+    "title": "Summarize learnings and highlight the most relevant parts for the file sharing client",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/1378",
+    "labels": [],
+    "created_at": "2026-01-19T10:28:27Z",
+    "updated_at": "2026-01-20T04:52:33Z",
+    "classification": "not_applicable",
+    "rationale": "Nim/tooling/org-level or UX/meta scope; not a Neverust runtime protocol/client blocker."
+  },
+  {
+    "number": 1377,
+    "title": "E2E testing plan for testnet release",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/1377",
+    "labels": [],
+    "created_at": "2026-01-19T09:57:35Z",
+    "updated_at": "2026-02-19T16:35:39Z",
+    "classification": "relevant",
+    "rationale": "Protocol/client/runtime reliability or operability concern relevant to Neverust/Archivist."
+  },
+  {
+    "number": 1375,
+    "title": "Write MerkleTree spec",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/1375",
+    "labels": [],
+    "created_at": "2026-01-16T00:08:20Z",
+    "updated_at": "2026-01-29T13:06:15Z",
+    "classification": "relevant",
+    "rationale": "Protocol/client/runtime reliability or operability concern relevant to Neverust/Archivist."
+  },
+  {
+    "number": 1371,
+    "title": "Refactor MerkleTree implementation",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/1371",
+    "labels": [],
+    "created_at": "2026-01-14T06:29:16Z",
+    "updated_at": "2026-01-16T00:09:27Z",
+    "classification": "relevant",
+    "rationale": "Protocol/client/runtime reliability or operability concern relevant to Neverust/Archivist."
+  },
+  {
+    "number": 1370,
+    "title": "Use nimble instead of nimbus-build-system",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/1370",
+    "labels": [],
+    "created_at": "2026-01-13T14:56:32Z",
+    "updated_at": "2026-02-02T00:07:06Z",
+    "classification": "not_applicable",
+    "rationale": "Nim/tooling/org-level or UX/meta scope; not a Neverust runtime protocol/client blocker."
+  },
+  {
+    "number": 1368,
+    "title": "Evaluate the nim-libp2p DHT in our context",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/1368",
+    "labels": [],
+    "created_at": "2026-01-13T10:23:32Z",
+    "updated_at": "2026-01-28T22:01:39Z",
+    "classification": "relevant",
+    "rationale": "Protocol/client/runtime reliability or operability concern relevant to Neverust/Archivist."
+  },
+  {
+    "number": 1367,
+    "title": "Productionise the DatasetStore implementation",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/1367",
+    "labels": [],
+    "created_at": "2026-01-13T07:05:02Z",
+    "updated_at": "2026-02-02T00:07:39Z",
+    "classification": "relevant",
+    "rationale": "Protocol/client/runtime reliability or operability concern relevant to Neverust/Archivist."
+  },
+  {
+    "number": 1366,
+    "title": "Block protocol rewrite",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/1366",
+    "labels": [],
+    "created_at": "2026-01-13T06:59:45Z",
+    "updated_at": "2026-01-13T06:59:55Z",
+    "classification": "relevant",
+    "rationale": "Protocol/client/runtime reliability or operability concern relevant to Neverust/Archivist."
+  },
+  {
+    "number": 1382,
+    "title": "Check repo and direct dep licenses",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/1382",
+    "labels": [],
+    "created_at": "2026-01-12T20:55:21Z",
+    "updated_at": "2026-01-21T13:44:22Z",
+    "classification": "not_applicable",
+    "rationale": "Nim/tooling/org-level or UX/meta scope; not a Neverust runtime protocol/client blocker."
+  },
+  {
+    "number": 1358,
+    "title": "Refactor EC multithreading",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/1358",
+    "labels": [],
+    "created_at": "2025-12-15T09:56:48Z",
+    "updated_at": "2026-01-13T07:23:18Z",
+    "classification": "not_applicable",
+    "rationale": "No direct protocol/runtime impact identified for Neverust at this stage."
+  },
+  {
+    "number": 1357,
+    "title": "Example usage in Logos Core GUI",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/1357",
+    "labels": [],
+    "created_at": "2025-12-15T08:24:34Z",
+    "updated_at": "2025-12-15T08:24:34Z",
+    "classification": "not_applicable",
+    "rationale": "Nim/tooling/org-level or UX/meta scope; not a Neverust runtime protocol/client blocker."
+  },
+  {
+    "number": 1333,
+    "title": "Giving Nimble another try ",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/1333",
+    "labels": [],
+    "created_at": "2025-10-23T09:55:02Z",
+    "updated_at": "2025-10-23T09:57:03Z",
+    "classification": "not_applicable",
+    "rationale": "Nim/tooling/org-level or UX/meta scope; not a Neverust runtime protocol/client blocker."
+  },
+  {
+    "number": 1332,
+    "title": "Sentry integration",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/1332",
+    "labels": [],
+    "created_at": "2025-10-23T09:30:13Z",
+    "updated_at": "2025-10-23T19:01:24Z",
+    "classification": "not_applicable",
+    "rationale": "No direct protocol/runtime impact identified for Neverust at this stage."
+  },
+  {
+    "number": 1330,
+    "title": "Codex library size",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/1330",
+    "labels": [],
+    "created_at": "2025-10-16T06:47:13Z",
+    "updated_at": "2025-10-16T06:47:13Z",
+    "classification": "not_applicable",
+    "rationale": "No direct protocol/runtime impact identified for Neverust at this stage."
+  },
+  {
+    "number": 1328,
+    "title": "Local NAT testing",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/1328",
+    "labels": [],
+    "created_at": "2025-10-09T11:53:53Z",
+    "updated_at": "2026-01-13T07:21:48Z",
+    "classification": "relevant",
+    "rationale": "Protocol/client/runtime reliability or operability concern relevant to Neverust/Archivist."
+  },
+  {
+    "number": 1327,
+    "title": "Basic NAT traversal components integration",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/1327",
+    "labels": [],
+    "created_at": "2025-10-08T10:10:44Z",
+    "updated_at": "2026-02-19T16:35:38Z",
+    "classification": "relevant",
+    "rationale": "Protocol/client/runtime reliability or operability concern relevant to Neverust/Archivist."
+  },
+  {
+    "number": 1321,
+    "title": "DHT Client mode",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/1321",
+    "labels": [],
+    "created_at": "2025-09-08T12:49:32Z",
+    "updated_at": "2026-02-19T16:35:38Z",
+    "classification": "relevant",
+    "rationale": "Protocol/client/runtime reliability or operability concern relevant to Neverust/Archivist."
+  },
+  {
+    "number": 1320,
+    "title": "Extend `AutoRelayService` to populate peers from Discv5",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/1320",
+    "labels": [],
+    "created_at": "2025-09-08T06:31:15Z",
+    "updated_at": "2026-02-19T16:35:37Z",
+    "classification": "relevant",
+    "rationale": "Protocol/client/runtime reliability or operability concern relevant to Neverust/Archivist."
+  },
+  {
+    "number": 1319,
+    "title": "NAT Reachability indicators",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/1319",
+    "labels": [],
+    "created_at": "2025-09-08T06:22:32Z",
+    "updated_at": "2026-02-19T16:35:37Z",
+    "classification": "relevant",
+    "rationale": "Protocol/client/runtime reliability or operability concern relevant to Neverust/Archivist."
+  },
+  {
+    "number": 1313,
+    "title": "DST Team sync",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/1313",
+    "labels": [],
+    "created_at": "2025-09-02T07:52:26Z",
+    "updated_at": "2025-09-02T07:52:30Z",
+    "classification": "not_applicable",
+    "rationale": "Nim/tooling/org-level or UX/meta scope; not a Neverust runtime protocol/client blocker."
+  },
+  {
+    "number": 1308,
+    "title": "Move CID dissemination in-protocol (optional)",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/1308",
+    "labels": [],
+    "created_at": "2025-08-27T02:50:17Z",
+    "updated_at": "2025-08-27T22:49:20Z",
+    "classification": "relevant",
+    "rationale": "Protocol/client/runtime reliability or operability concern relevant to Neverust/Archivist."
+  },
+  {
+    "number": 1304,
+    "title": "Integration with status-go",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/1304",
+    "labels": [],
+    "created_at": "2025-08-27T01:48:12Z",
+    "updated_at": "2026-02-23T09:18:49Z",
+    "classification": "not_applicable",
+    "rationale": "Nim/tooling/org-level or UX/meta scope; not a Neverust runtime protocol/client blocker."
+  },
+  {
+    "number": 1299,
+    "title": "[BUG] Error when starting validator",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/1299",
+    "labels": [
+      "bug"
+    ],
+    "created_at": "2025-07-08T12:06:00Z",
+    "updated_at": "2025-07-08T17:29:24Z",
+    "classification": "relevant",
+    "rationale": "Protocol/client/runtime reliability or operability concern relevant to Neverust/Archivist."
+  },
+  {
+    "number": 1296,
+    "title": "Handling of several active smart contracts",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/1296",
+    "labels": [
+      "Marketplace"
+    ],
+    "created_at": "2025-07-02T09:15:29Z",
+    "updated_at": "2026-02-19T16:35:36Z",
+    "classification": "relevant",
+    "rationale": "Protocol/client/runtime reliability or operability concern relevant to Neverust/Archivist."
+  },
+  {
+    "number": 1295,
+    "title": "`--network` flag support",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/1295",
+    "labels": [],
+    "created_at": "2025-07-01T14:13:21Z",
+    "updated_at": "2026-02-19T16:35:36Z",
+    "classification": "relevant",
+    "rationale": "Protocol/client/runtime reliability or operability concern relevant to Neverust/Archivist."
+  },
+  {
+    "number": 1291,
+    "title": "[BUG] Manifest-block expiry not updated",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/1291",
+    "labels": [
+      "bug",
+      "Client",
+      "high priority"
+    ],
+    "created_at": "2025-06-25T08:51:38Z",
+    "updated_at": "2025-07-07T09:25:25Z",
+    "classification": "relevant",
+    "rationale": "Protocol/client/runtime reliability or operability concern relevant to Neverust/Archivist."
+  },
+  {
+    "number": 1290,
+    "title": "[BUG] failing integration: \"SP Slot Repair::repair from local and remote store\"",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/1290",
+    "labels": [
+      "Client",
+      "Marketplace"
+    ],
+    "created_at": "2025-06-25T08:48:54Z",
+    "updated_at": "2025-06-25T08:48:54Z",
+    "classification": "relevant",
+    "rationale": "Protocol/client/runtime reliability or operability concern relevant to Neverust/Archivist."
+  },
+  {
+    "number": 1286,
+    "title": "[CRASH] Another attempt to complete a future more than once.",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/1286",
+    "labels": [
+      "bug",
+      "Marketplace"
+    ],
+    "created_at": "2025-06-23T06:04:29Z",
+    "updated_at": "2025-06-23T06:15:53Z",
+    "classification": "relevant",
+    "rationale": "Protocol/client/runtime reliability or operability concern relevant to Neverust/Archivist."
+  },
+  {
+    "number": 1266,
+    "title": "[BUG] Codex attempts to download circuit, even when they are already locally available",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/1266",
+    "labels": [
+      "bug"
+    ],
+    "created_at": "2025-06-10T23:39:47Z",
+    "updated_at": "2026-02-19T16:35:35Z",
+    "classification": "relevant",
+    "rationale": "Protocol/client/runtime reliability or operability concern relevant to Neverust/Archivist."
+  },
+  {
+    "number": 1263,
+    "title": "[BUG] Disk full of orphaned blocks",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/1263",
+    "labels": [
+      "bug",
+      "Client"
+    ],
+    "created_at": "2025-06-10T08:26:08Z",
+    "updated_at": "2025-07-01T08:55:28Z",
+    "classification": "relevant",
+    "rationale": "Protocol/client/runtime reliability or operability concern relevant to Neverust/Archivist."
+  },
+  {
+    "number": 1257,
+    "title": "[BUG] Discovery request queue is full",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/1257",
+    "labels": [
+      "bug",
+      "Client"
+    ],
+    "created_at": "2025-06-05T07:29:06Z",
+    "updated_at": "2025-06-05T12:56:35Z",
+    "classification": "relevant",
+    "rationale": "Protocol/client/runtime reliability or operability concern relevant to Neverust/Archivist."
+  },
+  {
+    "number": 1251,
+    "title": "[BUG] Reserved quota locks up storage nodes",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/1251",
+    "labels": [
+      "bug",
+      "Marketplace"
+    ],
+    "created_at": "2025-06-03T11:09:17Z",
+    "updated_at": "2025-07-08T09:11:47Z",
+    "classification": "already_mapped",
+    "rationale": "Already tracked in NEVER-2 (availability/reservation/quota refactor)."
+  },
+  {
+    "number": 1244,
+    "title": "Add cyclic shifts as a slot building indexing strategy",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/1244",
+    "labels": [
+      "Client"
+    ],
+    "created_at": "2025-05-29T18:24:40Z",
+    "updated_at": "2025-05-29T18:24:42Z",
+    "classification": "relevant",
+    "rationale": "Protocol/client/runtime reliability or operability concern relevant to Neverust/Archivist."
+  },
+  {
+    "number": 1243,
+    "title": "Encryption",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/1243",
+    "labels": [
+      "Client"
+    ],
+    "created_at": "2025-05-29T15:43:24Z",
+    "updated_at": "2025-07-03T13:39:31Z",
+    "classification": "relevant",
+    "rationale": "Protocol/client/runtime reliability or operability concern relevant to Neverust/Archivist."
+  },
+  {
+    "number": 1232,
+    "title": "feat: network retry implementation",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/1232",
+    "labels": [],
+    "created_at": "2025-05-20T08:42:24Z",
+    "updated_at": "2025-05-20T08:43:52Z",
+    "classification": "relevant",
+    "rationale": "Protocol/client/runtime reliability or operability concern relevant to Neverust/Archivist."
+  },
+  {
+    "number": 1230,
+    "title": "feat: retry with exponential backoff",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/1230",
+    "labels": [],
+    "created_at": "2025-05-20T08:40:13Z",
+    "updated_at": "2025-05-23T14:04:17Z",
+    "classification": "relevant",
+    "rationale": "Protocol/client/runtime reliability or operability concern relevant to Neverust/Archivist."
+  },
+  {
+    "number": 1227,
+    "title": "[BLOCKING] Proof generation",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/1227",
+    "labels": [
+      "bug",
+      "Client"
+    ],
+    "created_at": "2025-05-16T10:28:59Z",
+    "updated_at": "2025-05-16T10:30:10Z",
+    "classification": "relevant",
+    "rationale": "Protocol/client/runtime reliability or operability concern relevant to Neverust/Archivist."
+  },
+  {
+    "number": 1226,
+    "title": "[BLOCKING] Upload tree building",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/1226",
+    "labels": [
+      "bug",
+      "Client"
+    ],
+    "created_at": "2025-05-16T10:20:02Z",
+    "updated_at": "2025-05-16T10:30:34Z",
+    "classification": "relevant",
+    "rationale": "Protocol/client/runtime reliability or operability concern relevant to Neverust/Archivist."
+  },
+  {
+    "number": 1223,
+    "title": "Dataset health",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/1223",
+    "labels": [
+      "Research",
+      "Client",
+      "API"
+    ],
+    "created_at": "2025-05-14T12:04:47Z",
+    "updated_at": "2025-05-29T07:34:18Z",
+    "classification": "relevant",
+    "rationale": "Protocol/client/runtime reliability or operability concern relevant to Neverust/Archivist."
+  },
+  {
+    "number": 1222,
+    "title": "Allow erasure-coding through API",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/1222",
+    "labels": [
+      "Client",
+      "API"
+    ],
+    "created_at": "2025-05-14T11:52:50Z",
+    "updated_at": "2025-05-14T11:55:46Z",
+    "classification": "relevant",
+    "rationale": "Protocol/client/runtime reliability or operability concern relevant to Neverust/Archivist."
+  },
+  {
+    "number": 1221,
+    "title": "Support for Codex on Mobile (light client)",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/1221",
+    "labels": [],
+    "created_at": "2025-05-06T14:00:47Z",
+    "updated_at": "2025-05-06T14:00:47Z",
+    "classification": "not_applicable",
+    "rationale": "No direct protocol/runtime impact identified for Neverust at this stage."
+  },
+  {
+    "number": 1219,
+    "title": "[BUG] [Crash] Circuit downloader times out and crashes",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/1219",
+    "labels": [
+      "bug"
+    ],
+    "created_at": "2025-05-06T11:17:12Z",
+    "updated_at": "2025-06-26T17:03:25Z",
+    "classification": "relevant",
+    "rationale": "Protocol/client/runtime reliability or operability concern relevant to Neverust/Archivist."
+  },
+  {
+    "number": 1215,
+    "title": "RPC timeout during proving state",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/1215",
+    "labels": [
+      "bug",
+      "Marketplace"
+    ],
+    "created_at": "2025-05-06T06:44:31Z",
+    "updated_at": "2025-06-18T12:46:51Z",
+    "classification": "relevant",
+    "rationale": "Protocol/client/runtime reliability or operability concern relevant to Neverust/Archivist."
+  },
+  {
+    "number": 1213,
+    "title": "`mySlots` onchain mapping is not reflected with the agents in Sales state machine",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/1213",
+    "labels": [
+      "bug",
+      "Marketplace"
+    ],
+    "created_at": "2025-04-24T12:04:32Z",
+    "updated_at": "2025-04-25T06:55:51Z",
+    "classification": "relevant",
+    "rationale": "Protocol/client/runtime reliability or operability concern relevant to Neverust/Archivist."
+  },
+  {
+    "number": 1206,
+    "title": "[BUG] Persistence and the config.toml file",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/1206",
+    "labels": [
+      "bug",
+      "Client"
+    ],
+    "created_at": "2025-04-21T12:53:27Z",
+    "updated_at": "2025-06-27T05:26:40Z",
+    "classification": "relevant",
+    "rationale": "Protocol/client/runtime reliability or operability concern relevant to Neverust/Archivist."
+  },
+  {
+    "number": 1200,
+    "title": "Sales state machine: retry failed network requests after slot is filled",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/1200",
+    "labels": [
+      "Marketplace"
+    ],
+    "created_at": "2025-04-17T11:25:03Z",
+    "updated_at": "2025-04-17T11:25:19Z",
+    "classification": "relevant",
+    "rationale": "Protocol/client/runtime reliability or operability concern relevant to Neverust/Archivist."
+  },
+  {
+    "number": 1194,
+    "title": "Return node's public Eth address in `info` endpoint",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/1194",
+    "labels": [
+      "Marketplace"
+    ],
+    "created_at": "2025-04-15T09:22:28Z",
+    "updated_at": "2025-04-15T09:59:48Z",
+    "classification": "relevant",
+    "rationale": "Protocol/client/runtime reliability or operability concern relevant to Neverust/Archivist."
+  },
+  {
+    "number": 1190,
+    "title": "Create integration tests to test Marketplace assumptions",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/1190",
+    "labels": [],
+    "created_at": "2025-04-09T06:18:45Z",
+    "updated_at": "2025-04-09T06:18:45Z",
+    "classification": "relevant",
+    "rationale": "Protocol/client/runtime reliability or operability concern relevant to Neverust/Archivist."
+  },
+  {
+    "number": 1185,
+    "title": "[Crash] Usage of partial datasets",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/1185",
+    "labels": [
+      "bug",
+      "Client"
+    ],
+    "created_at": "2025-04-02T14:25:54Z",
+    "updated_at": "2025-04-03T14:47:29Z",
+    "classification": "relevant",
+    "rationale": "Protocol/client/runtime reliability or operability concern relevant to Neverust/Archivist."
+  },
+  {
+    "number": 1180,
+    "title": "[BUG, integration tests] slotSize and datasetSize computation not correct",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/1180",
+    "labels": [
+      "bug",
+      "Marketplace"
+    ],
+    "created_at": "2025-03-31T02:37:28Z",
+    "updated_at": "2025-03-31T02:37:28Z",
+    "classification": "relevant",
+    "rationale": "Protocol/client/runtime reliability or operability concern relevant to Neverust/Archivist."
+  },
+  {
+    "number": 1175,
+    "title": "Try Codex on spinning disks",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/1175",
+    "labels": [
+      "Client"
+    ],
+    "created_at": "2025-03-27T18:40:59Z",
+    "updated_at": "2025-03-27T23:11:13Z",
+    "classification": "relevant",
+    "rationale": "Protocol/client/runtime reliability or operability concern relevant to Neverust/Archivist."
+  },
+  {
+    "number": 1172,
+    "title": "[BUG] Error during `downloading` state might lead to \"overflow\" of availability's size",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/1172",
+    "labels": [
+      "bug",
+      "Marketplace"
+    ],
+    "created_at": "2025-03-26T10:52:38Z",
+    "updated_at": "2025-06-05T07:15:57Z",
+    "classification": "relevant",
+    "rationale": "Protocol/client/runtime reliability or operability concern relevant to Neverust/Archivist."
+  },
+  {
+    "number": 1161,
+    "title": "Repo Store Benchmarks",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/1161",
+    "labels": [],
+    "created_at": "2025-03-13T12:07:17Z",
+    "updated_at": "2025-03-13T12:47:06Z",
+    "classification": "relevant",
+    "rationale": "Protocol/client/runtime reliability or operability concern relevant to Neverust/Archivist."
+  },
+  {
+    "number": 1157,
+    "title": "Partitioned quotas for repostore",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/1157",
+    "labels": [
+      "enhancement",
+      "Client"
+    ],
+    "created_at": "2025-03-11T19:32:44Z",
+    "updated_at": "2025-04-03T15:22:01Z",
+    "classification": "relevant",
+    "rationale": "Protocol/client/runtime reliability or operability concern relevant to Neverust/Archivist."
+  },
+  {
+    "number": 1154,
+    "title": "Testnet with realistic ZK circuit",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/1154",
+    "labels": [
+      "Client",
+      "Marketplace",
+      "Infrastructure"
+    ],
+    "created_at": "2025-03-11T11:25:48Z",
+    "updated_at": "2025-03-11T12:38:56Z",
+    "classification": "relevant",
+    "rationale": "Protocol/client/runtime reliability or operability concern relevant to Neverust/Archivist."
+  },
+  {
+    "number": 1152,
+    "title": "Freeze guard",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/1152",
+    "labels": [
+      "enhancement",
+      "Client"
+    ],
+    "created_at": "2025-03-10T12:42:44Z",
+    "updated_at": "2025-03-10T12:42:44Z",
+    "classification": "relevant",
+    "rationale": "Protocol/client/runtime reliability or operability concern relevant to Neverust/Archivist."
+  },
+  {
+    "number": 1147,
+    "title": "[BUG] Updating totalCollateral resets totalRemainingCollateral without considering previous reservations",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/1147",
+    "labels": [
+      "bug",
+      "Marketplace"
+    ],
+    "created_at": "2025-03-07T08:18:09Z",
+    "updated_at": "2025-03-07T08:41:17Z",
+    "classification": "relevant",
+    "rationale": "Protocol/client/runtime reliability or operability concern relevant to Neverust/Archivist."
+  },
+  {
+    "number": 1145,
+    "title": "Fix CORS headers",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/1145",
+    "labels": [
+      "bug",
+      "Client"
+    ],
+    "created_at": "2025-03-06T20:04:31Z",
+    "updated_at": "2025-03-06T20:04:37Z",
+    "classification": "relevant",
+    "rationale": "Protocol/client/runtime reliability or operability concern relevant to Neverust/Archivist."
+  },
+  {
+    "number": 1143,
+    "title": "[BUG] Request with JSON-RPC: Connection timed out",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/1143",
+    "labels": [
+      "bug",
+      "Marketplace"
+    ],
+    "created_at": "2025-03-05T09:51:51Z",
+    "updated_at": "2025-06-26T16:52:51Z",
+    "classification": "relevant",
+    "rationale": "Protocol/client/runtime reliability or operability concern relevant to Neverust/Archivist."
+  },
+  {
+    "number": 1142,
+    "title": "[CRASH] Quota limit causes attempt to read value from error result.",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/1142",
+    "labels": [
+      "bug",
+      "Client",
+      "Marketplace"
+    ],
+    "created_at": "2025-03-04T08:25:11Z",
+    "updated_at": "2025-04-10T09:56:08Z",
+    "classification": "relevant",
+    "rationale": "Protocol/client/runtime reliability or operability concern relevant to Neverust/Archivist."
+  },
+  {
+    "number": 1131,
+    "title": "[BUG] Uploading large file interrupts network traffic",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/1131",
+    "labels": [
+      "bug",
+      "Client"
+    ],
+    "created_at": "2025-02-27T09:04:59Z",
+    "updated_at": "2025-03-06T19:37:24Z",
+    "classification": "relevant",
+    "rationale": "Protocol/client/runtime reliability or operability concern relevant to Neverust/Archivist."
+  },
+  {
+    "number": 1118,
+    "title": "Rolling logfiles",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/1118",
+    "labels": [
+      "Client"
+    ],
+    "created_at": "2025-02-18T13:14:48Z",
+    "updated_at": "2025-03-09T16:27:18Z",
+    "classification": "relevant",
+    "rationale": "Protocol/client/runtime reliability or operability concern relevant to Neverust/Archivist."
+  },
+  {
+    "number": 1117,
+    "title": "[BUG] Purchasing storage fails with \"Estimate gas failed: execution reverted Inner exception: execution reverted\"",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/1117",
+    "labels": [
+      "bug",
+      "Marketplace"
+    ],
+    "created_at": "2025-02-18T09:01:05Z",
+    "updated_at": "2025-04-09T06:35:12Z",
+    "classification": "relevant",
+    "rationale": "Protocol/client/runtime reliability or operability concern relevant to Neverust/Archivist."
+  },
+  {
+    "number": 1105,
+    "title": "Deletes are SLOW",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/1105",
+    "labels": [
+      "bug",
+      "Client"
+    ],
+    "created_at": "2025-02-07T18:35:51Z",
+    "updated_at": "2025-02-07T18:36:22Z",
+    "classification": "relevant",
+    "rationale": "Protocol/client/runtime reliability or operability concern relevant to Neverust/Archivist."
+  },
+  {
+    "number": 1101,
+    "title": "Parallelise integration tests to speed up CI (and local)",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/1101",
+    "labels": [
+      "Marketplace"
+    ],
+    "created_at": "2025-02-06T09:59:50Z",
+    "updated_at": "2025-02-06T09:59:50Z",
+    "classification": "relevant",
+    "rationale": "Protocol/client/runtime reliability or operability concern relevant to Neverust/Archivist."
+  },
+  {
+    "number": 1066,
+    "title": "Peer want-list maintenance",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/1066",
+    "labels": [
+      "Client"
+    ],
+    "created_at": "2025-01-13T15:22:26Z",
+    "updated_at": "2025-02-03T08:43:32Z",
+    "classification": "relevant",
+    "rationale": "Protocol/client/runtime reliability or operability concern relevant to Neverust/Archivist."
+  },
+  {
+    "number": 1058,
+    "title": "Expose missed proofs counter",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/1058",
+    "labels": [
+      "Marketplace",
+      "API"
+    ],
+    "created_at": "2025-01-06T13:15:01Z",
+    "updated_at": "2025-01-23T15:10:31Z",
+    "classification": "relevant",
+    "rationale": "Protocol/client/runtime reliability or operability concern relevant to Neverust/Archivist."
+  },
+  {
+    "number": 1056,
+    "title": "Expose Marketplace's `config` on the API",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/1056",
+    "labels": [
+      "Marketplace",
+      "API"
+    ],
+    "created_at": "2025-01-01T17:24:34Z",
+    "updated_at": "2025-01-07T07:53:59Z",
+    "classification": "relevant",
+    "rationale": "Protocol/client/runtime reliability or operability concern relevant to Neverust/Archivist."
+  },
+  {
+    "number": 1054,
+    "title": "Outstanding cleanup items",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/1054",
+    "labels": [],
+    "created_at": "2024-12-30T13:56:11Z",
+    "updated_at": "2025-01-10T16:27:27Z",
+    "classification": "not_applicable",
+    "rationale": "No direct protocol/runtime impact identified for Neverust at this stage."
+  },
+  {
+    "number": 1044,
+    "title": "A more generic version of `eventually` in `asynctest`",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/1044",
+    "labels": [
+      "Marketplace"
+    ],
+    "created_at": "2024-12-16T17:09:38Z",
+    "updated_at": "2024-12-16T17:10:14Z",
+    "classification": "relevant",
+    "rationale": "Protocol/client/runtime reliability or operability concern relevant to Neverust/Archivist."
+  },
+  {
+    "number": 1042,
+    "title": "Handle limited number of entries returned from eth_getLogs RPC call",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/1042",
+    "labels": [
+      "Marketplace"
+    ],
+    "created_at": "2024-12-16T16:33:06Z",
+    "updated_at": "2024-12-16T16:33:06Z",
+    "classification": "relevant",
+    "rationale": "Protocol/client/runtime reliability or operability concern relevant to Neverust/Archivist."
+  },
+  {
+    "number": 1026,
+    "title": "Add a metric to track number of RPC nodes requests",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/1026",
+    "labels": [
+      "enhancement",
+      "Client"
+    ],
+    "created_at": "2024-12-10T13:41:38Z",
+    "updated_at": "2024-12-12T20:19:09Z",
+    "classification": "relevant",
+    "rationale": "Protocol/client/runtime reliability or operability concern relevant to Neverust/Archivist."
+  },
+  {
+    "number": 1023,
+    "title": "Implement saner smoke test for connectivity",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/1023",
+    "labels": [
+      "enhancement",
+      "Client",
+      "API"
+    ],
+    "created_at": "2024-12-05T15:10:32Z",
+    "updated_at": "2024-12-05T15:11:22Z",
+    "classification": "relevant",
+    "rationale": "Protocol/client/runtime reliability or operability concern relevant to Neverust/Archivist."
+  },
+  {
+    "number": 1020,
+    "title": "feat: support private key in `CODEX_ETH_PRIVATE_KEY`",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/1020",
+    "labels": [],
+    "created_at": "2024-12-05T00:44:25Z",
+    "updated_at": "2025-06-16T16:54:08Z",
+    "classification": "not_applicable",
+    "rationale": "No direct protocol/runtime impact identified for Neverust at this stage."
+  },
+  {
+    "number": 1018,
+    "title": "BlkExc - Improved peer selection",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/1018",
+    "labels": [],
+    "created_at": "2024-12-04T14:07:37Z",
+    "updated_at": "2024-12-05T15:21:17Z",
+    "classification": "relevant",
+    "rationale": "Protocol/client/runtime reliability or operability concern relevant to Neverust/Archivist."
+  },
+  {
+    "number": 1009,
+    "title": "Add notion of dataset and dataset download completion",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/1009",
+    "labels": [
+      "Client",
+      "API"
+    ],
+    "created_at": "2024-11-27T17:07:57Z",
+    "updated_at": "2024-11-27T17:07:59Z",
+    "classification": "relevant",
+    "rationale": "Protocol/client/runtime reliability or operability concern relevant to Neverust/Archivist."
+  },
+  {
+    "number": 1006,
+    "title": "Add local pinning/unpinning",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/1006",
+    "labels": [
+      "Client",
+      "API"
+    ],
+    "created_at": "2024-11-27T12:45:02Z",
+    "updated_at": "2024-11-27T13:00:52Z",
+    "classification": "relevant",
+    "rationale": "Protocol/client/runtime reliability or operability concern relevant to Neverust/Archivist."
+  },
+  {
+    "number": 1005,
+    "title": "[BUG] Check: Requesting storage for already-encoded CID",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/1005",
+    "labels": [
+      "bug",
+      "Client",
+      "mid priority"
+    ],
+    "created_at": "2024-11-27T10:05:33Z",
+    "updated_at": "2025-06-26T17:00:12Z",
+    "classification": "relevant",
+    "rationale": "Protocol/client/runtime reliability or operability concern relevant to Neverust/Archivist."
+  },
+  {
+    "number": 1004,
+    "title": "Run every unittest 1000x",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/1004",
+    "labels": [
+      "Client",
+      "Testing"
+    ],
+    "created_at": "2024-11-27T07:15:52Z",
+    "updated_at": "2024-11-27T07:17:12Z",
+    "classification": "relevant",
+    "rationale": "Protocol/client/runtime reliability or operability concern relevant to Neverust/Archivist."
+  },
+  {
+    "number": 991,
+    "title": "Add logging to show transaction ids",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/991",
+    "labels": [],
+    "created_at": "2024-11-11T11:05:33Z",
+    "updated_at": "2024-11-11T11:05:33Z",
+    "classification": "not_applicable",
+    "rationale": "No direct protocol/runtime impact identified for Neverust at this stage."
+  },
+  {
+    "number": 979,
+    "title": "Add UDP port check to Codex health checks",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/979",
+    "labels": [
+      "Client"
+    ],
+    "created_at": "2024-10-30T17:22:03Z",
+    "updated_at": "2024-10-30T17:22:08Z",
+    "classification": "relevant",
+    "rationale": "Protocol/client/runtime reliability or operability concern relevant to Neverust/Archivist."
+  },
+  {
+    "number": 965,
+    "title": "Manifest versioning",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/965",
+    "labels": [
+      "Client"
+    ],
+    "created_at": "2024-10-22T14:59:20Z",
+    "updated_at": "2024-12-02T21:55:02Z",
+    "classification": "relevant",
+    "rationale": "Protocol/client/runtime reliability or operability concern relevant to Neverust/Archivist."
+  },
+  {
+    "number": 959,
+    "title": "Codex/BitTorrent integration",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/959",
+    "labels": [
+      "Marketplace"
+    ],
+    "created_at": "2024-10-16T16:45:21Z",
+    "updated_at": "2024-10-22T03:09:12Z",
+    "classification": "relevant",
+    "rationale": "Protocol/client/runtime reliability or operability concern relevant to Neverust/Archivist."
+  },
+  {
+    "number": 956,
+    "title": "Use XDG Base Directory",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/956",
+    "labels": [],
+    "created_at": "2024-10-16T13:47:28Z",
+    "updated_at": "2024-10-16T13:47:28Z",
+    "classification": "not_applicable",
+    "rationale": "No direct protocol/runtime impact identified for Neverust at this stage."
+  },
+  {
+    "number": 952,
+    "title": "Add ability to specify announced address(es)",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/952",
+    "labels": [],
+    "created_at": "2024-10-11T11:39:38Z",
+    "updated_at": "2024-10-11T11:39:38Z",
+    "classification": "not_applicable",
+    "rationale": "No direct protocol/runtime impact identified for Neverust at this stage."
+  },
+  {
+    "number": 946,
+    "title": "Support arm64 on Windows",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/946",
+    "labels": [
+      "Client"
+    ],
+    "created_at": "2024-10-08T10:25:34Z",
+    "updated_at": "2024-10-08T10:25:40Z",
+    "classification": "relevant",
+    "rationale": "Protocol/client/runtime reliability or operability concern relevant to Neverust/Archivist."
+  },
+  {
+    "number": 943,
+    "title": "fix: remove `withValue` semaphore and replace with refcount tracking",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/943",
+    "labels": [
+      "Client"
+    ],
+    "created_at": "2024-10-08T05:37:07Z",
+    "updated_at": "2024-10-08T05:37:07Z",
+    "classification": "relevant",
+    "rationale": "Protocol/client/runtime reliability or operability concern relevant to Neverust/Archivist."
+  },
+  {
+    "number": 938,
+    "title": "feat: support collateral top-ups",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/938",
+    "labels": [
+      "Marketplace"
+    ],
+    "created_at": "2024-10-04T05:06:50Z",
+    "updated_at": "2024-10-04T05:06:50Z",
+    "classification": "relevant",
+    "rationale": "Protocol/client/runtime reliability or operability concern relevant to Neverust/Archivist."
+  },
+  {
+    "number": 925,
+    "title": "Expose Request's information for Reservation endpoint",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/925",
+    "labels": [
+      "Marketplace",
+      "API"
+    ],
+    "created_at": "2024-09-26T19:06:07Z",
+    "updated_at": "2024-09-27T10:12:44Z",
+    "classification": "relevant",
+    "rationale": "Protocol/client/runtime reliability or operability concern relevant to Neverust/Archivist."
+  },
+  {
+    "number": 920,
+    "title": "REST API to fetch manifest",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/920",
+    "labels": [],
+    "created_at": "2024-09-26T08:06:20Z",
+    "updated_at": "2024-09-26T08:06:20Z",
+    "classification": "relevant",
+    "rationale": "Protocol/client/runtime reliability or operability concern relevant to Neverust/Archivist."
+  },
+  {
+    "number": 909,
+    "title": "feat(slot-reservations): Add `expansionRate` parameter to support contract changes",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/909",
+    "labels": [
+      "Marketplace"
+    ],
+    "created_at": "2024-09-23T01:12:19Z",
+    "updated_at": "2024-09-24T00:27:22Z",
+    "classification": "relevant",
+    "rationale": "Protocol/client/runtime reliability or operability concern relevant to Neverust/Archivist."
+  },
+  {
+    "number": 906,
+    "title": "Run Dist Tests against Status Chain's Linea deploy",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/906",
+    "labels": [
+      "Client",
+      "E: Deploy on Linea"
+    ],
+    "created_at": "2024-09-18T21:54:34Z",
+    "updated_at": "2024-09-18T21:55:35Z",
+    "classification": "relevant",
+    "rationale": "Protocol/client/runtime reliability or operability concern relevant to Neverust/Archivist."
+  },
+  {
+    "number": 904,
+    "title": "NAT traversal capabilities",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/904",
+    "labels": [
+      "epic",
+      "Client"
+    ],
+    "created_at": "2024-09-18T18:44:33Z",
+    "updated_at": "2026-02-19T16:35:34Z",
+    "classification": "relevant",
+    "rationale": "Protocol/client/runtime reliability or operability concern relevant to Neverust/Archivist."
+  },
+  {
+    "number": 903,
+    "title": "Add support for Autonat",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/903",
+    "labels": [
+      "Client"
+    ],
+    "created_at": "2024-09-18T18:44:26Z",
+    "updated_at": "2024-09-18T18:54:26Z",
+    "classification": "relevant",
+    "rationale": "Protocol/client/runtime reliability or operability concern relevant to Neverust/Archivist."
+  },
+  {
+    "number": 900,
+    "title": "Understand and define sensible IP limits policies for Discv5",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/900",
+    "labels": [
+      "bug",
+      "Client"
+    ],
+    "created_at": "2024-09-18T12:01:04Z",
+    "updated_at": "2024-09-25T18:03:04Z",
+    "classification": "relevant",
+    "rationale": "Protocol/client/runtime reliability or operability concern relevant to Neverust/Archivist."
+  },
+  {
+    "number": 896,
+    "title": "2D slot-level erasure coding",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/896",
+    "labels": [
+      "Client"
+    ],
+    "created_at": "2024-09-17T23:04:37Z",
+    "updated_at": "2026-01-12T14:12:01Z",
+    "classification": "relevant",
+    "rationale": "Protocol/client/runtime reliability or operability concern relevant to Neverust/Archivist."
+  },
+  {
+    "number": 892,
+    "title": "Download and reconstruct missing slots (client-side data repair)",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/892",
+    "labels": [
+      "Client"
+    ],
+    "created_at": "2024-09-03T16:24:59Z",
+    "updated_at": "2025-05-29T15:46:26Z",
+    "classification": "relevant",
+    "rationale": "Protocol/client/runtime reliability or operability concern relevant to Neverust/Archivist."
+  },
+  {
+    "number": 889,
+    "title": "Drop the \"Cannot setup slots for a dataset with ecK == numBlocks\" constraint.",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/889",
+    "labels": [],
+    "created_at": "2024-08-26T23:00:49Z",
+    "updated_at": "2024-08-26T23:01:04Z",
+    "classification": "relevant",
+    "rationale": "Protocol/client/runtime reliability or operability concern relevant to Neverust/Archivist."
+  },
+  {
+    "number": 887,
+    "title": "[BUG] The purchase details API returns a different CID",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/887",
+    "labels": [
+      "enhancement"
+    ],
+    "created_at": "2024-08-26T15:04:00Z",
+    "updated_at": "2024-08-28T16:39:04Z",
+    "classification": "relevant",
+    "rationale": "Protocol/client/runtime reliability or operability concern relevant to Neverust/Archivist."
+  },
+  {
+    "number": 885,
+    "title": "Data persistence for API",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/885",
+    "labels": [
+      "Marketplace",
+      "API"
+    ],
+    "created_at": "2024-08-26T08:07:56Z",
+    "updated_at": "2024-08-31T09:09:17Z",
+    "classification": "relevant",
+    "rationale": "Protocol/client/runtime reliability or operability concern relevant to Neverust/Archivist."
+  },
+  {
+    "number": 883,
+    "title": "OpenAPI versioning and exposing it on API",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/883",
+    "labels": [
+      "API"
+    ],
+    "created_at": "2024-08-25T07:58:34Z",
+    "updated_at": "2024-08-26T12:43:24Z",
+    "classification": "relevant",
+    "rationale": "Protocol/client/runtime reliability or operability concern relevant to Neverust/Archivist."
+  },
+  {
+    "number": 877,
+    "title": "[BUG] Codex hangs when creating a storage request for a big file using the REST api",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/877",
+    "labels": [
+      "bug"
+    ],
+    "created_at": "2024-08-14T09:52:01Z",
+    "updated_at": "2025-03-06T19:41:39Z",
+    "classification": "relevant",
+    "rationale": "Protocol/client/runtime reliability or operability concern relevant to Neverust/Archivist."
+  },
+  {
+    "number": 865,
+    "title": "Richer dataset manifests",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/865",
+    "labels": [
+      "Client"
+    ],
+    "created_at": "2024-07-31T17:11:26Z",
+    "updated_at": "2024-12-05T08:04:17Z",
+    "classification": "relevant",
+    "rationale": "Protocol/client/runtime reliability or operability concern relevant to Neverust/Archivist."
+  },
+  {
+    "number": 864,
+    "title": "Calling `ensureExpiry` halfway through a maintenance cycle could result in dataset inconsistencies",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/864",
+    "labels": [],
+    "created_at": "2024-07-30T14:21:17Z",
+    "updated_at": "2024-07-30T14:22:49Z",
+    "classification": "relevant",
+    "rationale": "Protocol/client/runtime reliability or operability concern relevant to Neverust/Archivist."
+  },
+  {
+    "number": 857,
+    "title": "Issuing more than 10 concurrent downloads can cause them to fail",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/857",
+    "labels": [
+      "bug",
+      "Client"
+    ],
+    "created_at": "2024-07-09T12:15:36Z",
+    "updated_at": "2024-09-17T23:00:08Z",
+    "classification": "relevant",
+    "rationale": "Protocol/client/runtime reliability or operability concern relevant to Neverust/Archivist."
+  },
+  {
+    "number": 850,
+    "title": "[BUG] Using range types can crash a program with `SIGSEGV`",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/850",
+    "labels": [
+      "bug",
+      "Client"
+    ],
+    "created_at": "2024-06-27T09:59:21Z",
+    "updated_at": "2025-06-26T17:03:18Z",
+    "classification": "relevant",
+    "rationale": "Protocol/client/runtime reliability or operability concern relevant to Neverust/Archivist."
+  },
+  {
+    "number": 846,
+    "title": "[chore] Move the test for #821 into an existing suite, or create an aptly-named suite for it",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/846",
+    "labels": [],
+    "created_at": "2024-06-26T22:54:51Z",
+    "updated_at": "2024-06-26T22:55:59Z",
+    "classification": "not_applicable",
+    "rationale": "No direct protocol/runtime impact identified for Neverust at this stage."
+  },
+  {
+    "number": 837,
+    "title": "[BUG] Sales error - Transaction underpriced",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/837",
+    "labels": [
+      "bug"
+    ],
+    "created_at": "2024-06-20T09:29:40Z",
+    "updated_at": "2024-06-20T13:56:16Z",
+    "classification": "relevant",
+    "rationale": "Protocol/client/runtime reliability or operability concern relevant to Neverust/Archivist."
+  },
+  {
+    "number": 836,
+    "title": "Generalize reverse index mapping in EC strategies",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/836",
+    "labels": [
+      "Client"
+    ],
+    "created_at": "2024-06-19T23:12:58Z",
+    "updated_at": "2025-05-29T18:21:44Z",
+    "classification": "relevant",
+    "rationale": "Protocol/client/runtime reliability or operability concern relevant to Neverust/Archivist."
+  },
+  {
+    "number": 835,
+    "title": "Add support for finishing iteration prematurely in `AsyncIter` and `Iter`",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/835",
+    "labels": [],
+    "created_at": "2024-06-18T13:05:38Z",
+    "updated_at": "2024-06-18T13:05:38Z",
+    "classification": "not_applicable",
+    "rationale": "No direct protocol/runtime impact identified for Neverust at this stage."
+  },
+  {
+    "number": 824,
+    "title": "State machines concurrency tests",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/824",
+    "labels": [
+      "Marketplace",
+      "Testing"
+    ],
+    "created_at": "2024-06-03T13:45:00Z",
+    "updated_at": "2024-06-03T13:45:00Z",
+    "classification": "relevant",
+    "rationale": "Protocol/client/runtime reliability or operability concern relevant to Neverust/Archivist."
+  },
+  {
+    "number": 815,
+    "title": "Codex crashes with SIGSEV with Chronos v4 if `Block` or `Manifest` are made into non-ref objects",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/815",
+    "labels": [
+      "bug",
+      "Client"
+    ],
+    "created_at": "2024-05-24T20:53:00Z",
+    "updated_at": "2024-09-18T11:57:33Z",
+    "classification": "relevant",
+    "rationale": "Protocol/client/runtime reliability or operability concern relevant to Neverust/Archivist."
+  },
+  {
+    "number": 808,
+    "title": "Scheduling prover on another thread",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/808",
+    "labels": [
+      "Client"
+    ],
+    "created_at": "2024-05-14T18:32:15Z",
+    "updated_at": "2025-02-20T15:53:01Z",
+    "classification": "relevant",
+    "rationale": "Protocol/client/runtime reliability or operability concern relevant to Neverust/Archivist."
+  },
+  {
+    "number": 807,
+    "title": "CLI for Circom-Compat",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/807",
+    "labels": [],
+    "created_at": "2024-05-14T15:48:07Z",
+    "updated_at": "2024-05-29T17:02:55Z",
+    "classification": "not_applicable",
+    "rationale": "No direct protocol/runtime impact identified for Neverust at this stage."
+  },
+  {
+    "number": 804,
+    "title": "Blockchain reorgs handling",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/804",
+    "labels": [
+      "Marketplace"
+    ],
+    "created_at": "2024-05-09T09:38:06Z",
+    "updated_at": "2024-08-06T04:38:06Z",
+    "classification": "relevant",
+    "rationale": "Protocol/client/runtime reliability or operability concern relevant to Neverust/Archivist."
+  },
+  {
+    "number": 791,
+    "title": "Cancel only blocks we wanted",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/791",
+    "labels": [
+      "bug",
+      "Client"
+    ],
+    "created_at": "2024-04-25T08:13:24Z",
+    "updated_at": "2024-09-18T14:06:57Z",
+    "classification": "relevant",
+    "rationale": "Protocol/client/runtime reliability or operability concern relevant to Neverust/Archivist."
+  },
+  {
+    "number": 789,
+    "title": "Explicit limitations",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/789",
+    "labels": [],
+    "created_at": "2024-04-23T12:32:49Z",
+    "updated_at": "2024-05-25T00:08:06Z",
+    "classification": "not_applicable",
+    "rationale": "No direct protocol/runtime impact identified for Neverust at this stage."
+  },
+  {
+    "number": 782,
+    "title": "NAT / port forwarding / holepunching fixes",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/782",
+    "labels": [
+      "E:2.12 Prep EthCC workshop"
+    ],
+    "created_at": "2024-04-19T11:42:18Z",
+    "updated_at": "2024-05-27T11:42:54Z",
+    "classification": "relevant",
+    "rationale": "Protocol/client/runtime reliability or operability concern relevant to Neverust/Archivist."
+  },
+  {
+    "number": 777,
+    "title": "[integration] Add integration test for slot repair",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/777",
+    "labels": [
+      "Marketplace"
+    ],
+    "created_at": "2024-04-15T12:52:59Z",
+    "updated_at": "2025-04-18T13:32:44Z",
+    "classification": "relevant",
+    "rationale": "Protocol/client/runtime reliability or operability concern relevant to Neverust/Archivist."
+  },
+  {
+    "number": 775,
+    "title": "AsyncIterator looping",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/775",
+    "labels": [],
+    "created_at": "2024-04-12T13:53:14Z",
+    "updated_at": "2024-07-19T11:45:33Z",
+    "classification": "not_applicable",
+    "rationale": "No direct protocol/runtime impact identified for Neverust at this stage."
+  },
+  {
+    "number": 774,
+    "title": "Discuss & plan moving to async-io",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/774",
+    "labels": [
+      "E:1.1 Improve Client Stability",
+      "Client"
+    ],
+    "created_at": "2024-04-12T13:24:51Z",
+    "updated_at": "2024-04-12T14:04:53Z",
+    "classification": "relevant",
+    "rationale": "Protocol/client/runtime reliability or operability concern relevant to Neverust/Archivist."
+  },
+  {
+    "number": 773,
+    "title": "Benchmark suite for proof circuits",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/773",
+    "labels": [],
+    "created_at": "2024-04-12T13:16:23Z",
+    "updated_at": "2024-09-18T11:40:07Z",
+    "classification": "relevant",
+    "rationale": "Protocol/client/runtime reliability or operability concern relevant to Neverust/Archivist."
+  },
+  {
+    "number": 772,
+    "title": "Storage Request's duration - does it make sense to have it `Uint256` on API?",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/772",
+    "labels": [
+      "Marketplace"
+    ],
+    "created_at": "2024-04-11T06:54:07Z",
+    "updated_at": "2024-04-11T06:57:03Z",
+    "classification": "relevant",
+    "rationale": "Protocol/client/runtime reliability or operability concern relevant to Neverust/Archivist."
+  },
+  {
+    "number": 771,
+    "title": "[rest] Add line ending on responses",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/771",
+    "labels": [
+      "improvement"
+    ],
+    "created_at": "2024-04-07T14:45:23Z",
+    "updated_at": "2024-06-27T19:53:33Z",
+    "classification": "not_applicable",
+    "rationale": "No direct protocol/runtime impact identified for Neverust at this stage."
+  },
+  {
+    "number": 767,
+    "title": "API suggestion: Estimate prices",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/767",
+    "labels": [
+      "enhancement"
+    ],
+    "created_at": "2024-04-02T07:44:54Z",
+    "updated_at": "2024-04-02T09:46:00Z",
+    "classification": "relevant",
+    "rationale": "Protocol/client/runtime reliability or operability concern relevant to Neverust/Archivist."
+  },
+  {
+    "number": 750,
+    "title": "Marketplace fillSlot reverts for unknown reason",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/750",
+    "labels": [
+      "bug",
+      "Marketplace"
+    ],
+    "created_at": "2024-03-25T13:40:08Z",
+    "updated_at": "2025-07-01T06:14:05Z",
+    "classification": "relevant",
+    "rationale": "Protocol/client/runtime reliability or operability concern relevant to Neverust/Archivist."
+  },
+  {
+    "number": 746,
+    "title": "Integration tests improvements",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/746",
+    "labels": [
+      "enhancement",
+      "Marketplace"
+    ],
+    "created_at": "2024-03-21T09:14:23Z",
+    "updated_at": "2025-01-17T11:11:32Z",
+    "classification": "relevant",
+    "rationale": "Protocol/client/runtime reliability or operability concern relevant to Neverust/Archivist."
+  },
+  {
+    "number": 745,
+    "title": "[BUG] No expiry for block",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/745",
+    "labels": [
+      "bug",
+      "Client"
+    ],
+    "created_at": "2024-03-20T12:25:43Z",
+    "updated_at": "2024-03-20T13:07:57Z",
+    "classification": "relevant",
+    "rationale": "Protocol/client/runtime reliability or operability concern relevant to Neverust/Archivist."
+  },
+  {
+    "number": 727,
+    "title": "Drop support for `--eth-account`",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/727",
+    "labels": [
+      "Client",
+      "Marketplace"
+    ],
+    "created_at": "2024-03-08T12:18:51Z",
+    "updated_at": "2025-04-07T13:25:59Z",
+    "classification": "relevant",
+    "rationale": "Protocol/client/runtime reliability or operability concern relevant to Neverust/Archivist."
+  },
+  {
+    "number": 723,
+    "title": "Downloading Ceremony File",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/723",
+    "labels": [
+      "E:1.3: Wiring the Proving System"
+    ],
+    "created_at": "2024-02-28T18:35:58Z",
+    "updated_at": "2024-03-12T11:49:04Z",
+    "classification": "relevant",
+    "rationale": "Protocol/client/runtime reliability or operability concern relevant to Neverust/Archivist."
+  },
+  {
+    "number": 720,
+    "title": "Delay Codex startup when GethNode is syncing",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/720",
+    "labels": [
+      "Client"
+    ],
+    "created_at": "2024-02-23T08:58:53Z",
+    "updated_at": "2024-03-20T13:07:48Z",
+    "classification": "relevant",
+    "rationale": "Protocol/client/runtime reliability or operability concern relevant to Neverust/Archivist."
+  },
+  {
+    "number": 719,
+    "title": "Improvements to want list management and block transmission",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/719",
+    "labels": [
+      "Client"
+    ],
+    "created_at": "2024-02-21T21:54:27Z",
+    "updated_at": "2025-02-03T08:36:37Z",
+    "classification": "relevant",
+    "rationale": "Protocol/client/runtime reliability or operability concern relevant to Neverust/Archivist."
+  },
+  {
+    "number": 637,
+    "title": "Node crash when Request's expiry overflow",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/637",
+    "labels": [
+      "bug",
+      "Client",
+      "Marketplace"
+    ],
+    "created_at": "2023-11-27T10:10:45Z",
+    "updated_at": "2024-05-09T09:41:35Z",
+    "classification": "relevant",
+    "rationale": "Protocol/client/runtime reliability or operability concern relevant to Neverust/Archivist."
+  },
+  {
+    "number": 635,
+    "title": "Crash: Block exchange engine timeout causes crash",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/635",
+    "labels": [
+      "bug",
+      "Client"
+    ],
+    "created_at": "2023-11-24T07:01:08Z",
+    "updated_at": "2024-03-18T20:04:41Z",
+    "classification": "relevant",
+    "rationale": "Protocol/client/runtime reliability or operability concern relevant to Neverust/Archivist."
+  },
+  {
+    "number": 626,
+    "title": "Maintenance for Marketplace cleanup ",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/626",
+    "labels": [
+      "Client",
+      "Marketplace"
+    ],
+    "created_at": "2023-11-16T12:18:08Z",
+    "updated_at": "2023-12-06T17:14:07Z",
+    "classification": "relevant",
+    "rationale": "Protocol/client/runtime reliability or operability concern relevant to Neverust/Archivist."
+  },
+  {
+    "number": 624,
+    "title": "Gather data for Snark-creation input.",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/624",
+    "labels": [],
+    "created_at": "2023-11-16T09:21:10Z",
+    "updated_at": "2024-05-14T18:24:14Z",
+    "classification": "not_applicable",
+    "rationale": "No direct protocol/runtime impact identified for Neverust at this stage."
+  },
+  {
+    "number": 620,
+    "title": "Hardcoded empty block hash?",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/620",
+    "labels": [],
+    "created_at": "2023-11-15T10:37:52Z",
+    "updated_at": "2023-11-15T10:49:26Z",
+    "classification": "not_applicable",
+    "rationale": "No direct protocol/runtime impact identified for Neverust at this stage."
+  },
+  {
+    "number": 605,
+    "title": "Bare Metal Testing",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/605",
+    "labels": [
+      "epic"
+    ],
+    "created_at": "2023-11-08T18:22:29Z",
+    "updated_at": "2023-11-08T18:23:23Z",
+    "classification": "not_applicable",
+    "rationale": "No direct protocol/runtime impact identified for Neverust at this stage."
+  },
+  {
+    "number": 601,
+    "title": "Improvement: Async iterator template",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/601",
+    "labels": [],
+    "created_at": "2023-10-30T09:50:44Z",
+    "updated_at": "2023-11-01T15:58:08Z",
+    "classification": "not_applicable",
+    "rationale": "No direct protocol/runtime impact identified for Neverust at this stage."
+  },
+  {
+    "number": 595,
+    "title": "Priority for renewing contracts",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/595",
+    "labels": [
+      "enhancement",
+      "Marketplace"
+    ],
+    "created_at": "2023-10-24T06:03:29Z",
+    "updated_at": "2023-12-06T17:13:48Z",
+    "classification": "relevant",
+    "rationale": "Protocol/client/runtime reliability or operability concern relevant to Neverust/Archivist."
+  },
+  {
+    "number": 589,
+    "title": "Subscribe to proof-required-event, get slot id and compute indices for blocks and pass block data along with inclusion proofs to the proving system, and return a proof",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/589",
+    "labels": [
+      "E:1.3: Wiring the Proving System",
+      "Client"
+    ],
+    "created_at": "2023-10-18T11:54:46Z",
+    "updated_at": "2023-11-28T20:13:58Z",
+    "classification": "relevant",
+    "rationale": "Protocol/client/runtime reliability or operability concern relevant to Neverust/Archivist."
+  },
+  {
+    "number": 588,
+    "title": "Work on the Circom pieces of the Proving System",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/588",
+    "labels": [
+      "Client"
+    ],
+    "created_at": "2023-10-18T11:53:22Z",
+    "updated_at": "2023-12-06T03:58:06Z",
+    "classification": "relevant",
+    "rationale": "Protocol/client/runtime reliability or operability concern relevant to Neverust/Archivist."
+  },
+  {
+    "number": 587,
+    "title": "Nim function for generating a proof of storage (Proving System)",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/587",
+    "labels": [
+      "Client"
+    ],
+    "created_at": "2023-10-18T11:52:40Z",
+    "updated_at": "2023-12-06T03:58:31Z",
+    "classification": "relevant",
+    "rationale": "Protocol/client/runtime reliability or operability concern relevant to Neverust/Archivist."
+  },
+  {
+    "number": 586,
+    "title": "Wiring the Proving System",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/586",
+    "labels": [
+      "epic",
+      "Client"
+    ],
+    "created_at": "2023-10-18T11:51:27Z",
+    "updated_at": "2023-11-28T20:07:01Z",
+    "classification": "relevant",
+    "rationale": "Protocol/client/runtime reliability or operability concern relevant to Neverust/Archivist."
+  },
+  {
+    "number": 585,
+    "title": "Download slot data (64k blocks) using Merkle root and indices range (and reconstruct a sub-tree)",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/585",
+    "labels": [
+      "Client"
+    ],
+    "created_at": "2023-10-18T11:49:48Z",
+    "updated_at": "2023-12-06T03:58:40Z",
+    "classification": "relevant",
+    "rationale": "Protocol/client/runtime reliability or operability concern relevant to Neverust/Archivist."
+  },
+  {
+    "number": 584,
+    "title": "Wire in Poseidon to the merkleization (integrate that into libp2p?)",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/584",
+    "labels": [
+      "Client"
+    ],
+    "created_at": "2023-10-18T11:47:32Z",
+    "updated_at": "2023-12-06T03:58:49Z",
+    "classification": "relevant",
+    "rationale": "Protocol/client/runtime reliability or operability concern relevant to Neverust/Archivist."
+  },
+  {
+    "number": 582,
+    "title": "Test Merkelization & Threading (Dist-tests)",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/582",
+    "labels": [],
+    "created_at": "2023-10-18T10:41:06Z",
+    "updated_at": "2023-11-28T01:06:37Z",
+    "classification": "not_applicable",
+    "rationale": "No direct protocol/runtime impact identified for Neverust at this stage."
+  },
+  {
+    "number": 578,
+    "title": "Sales: Check Merkle Root",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/578",
+    "labels": [
+      "Marketplace"
+    ],
+    "created_at": "2023-10-18T08:19:00Z",
+    "updated_at": "2026-02-19T16:35:32Z",
+    "classification": "relevant",
+    "rationale": "Protocol/client/runtime reliability or operability concern relevant to Neverust/Archivist."
+  },
+  {
+    "number": 575,
+    "title": "Request Proving Scheme - Marketplace Integration",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/575",
+    "labels": [
+      "epic"
+    ],
+    "created_at": "2023-10-18T08:15:49Z",
+    "updated_at": "2026-02-19T16:35:32Z",
+    "classification": "relevant",
+    "rationale": "Protocol/client/runtime reliability or operability concern relevant to Neverust/Archivist."
+  },
+  {
+    "number": 571,
+    "title": "Integration Test: Verify Validator Function",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/571",
+    "labels": [],
+    "created_at": "2023-10-18T08:11:55Z",
+    "updated_at": "2026-02-19T16:35:31Z",
+    "classification": "relevant",
+    "rationale": "Protocol/client/runtime reliability or operability concern relevant to Neverust/Archivist."
+  },
+  {
+    "number": 570,
+    "title": "Write Additional Integration Tests",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/570",
+    "labels": [],
+    "created_at": "2023-10-18T08:10:02Z",
+    "updated_at": "2023-11-28T01:06:44Z",
+    "classification": "not_applicable",
+    "rationale": "No direct protocol/runtime impact identified for Neverust at this stage."
+  },
+  {
+    "number": 569,
+    "title": "Multinode and Integration Testing Suite",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/569",
+    "labels": [],
+    "created_at": "2023-10-18T08:09:16Z",
+    "updated_at": "2023-11-28T01:06:45Z",
+    "classification": "not_applicable",
+    "rationale": "No direct protocol/runtime impact identified for Neverust at this stage."
+  },
+  {
+    "number": 564,
+    "title": "Check wheter downloaded data are indeed of the size specified in RequestAsk",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/564",
+    "labels": [
+      "bug",
+      "Marketplace"
+    ],
+    "created_at": "2023-10-09T06:02:39Z",
+    "updated_at": "2025-03-13T09:51:29Z",
+    "classification": "relevant",
+    "rationale": "Protocol/client/runtime reliability or operability concern relevant to Neverust/Archivist."
+  },
+  {
+    "number": 563,
+    "title": "Check node's balance when adding new Availablity",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/563",
+    "labels": [
+      "Marketplace"
+    ],
+    "created_at": "2023-10-08T17:24:07Z",
+    "updated_at": "2023-12-06T17:13:20Z",
+    "classification": "relevant",
+    "rationale": "Protocol/client/runtime reliability or operability concern relevant to Neverust/Archivist."
+  },
+  {
+    "number": 562,
+    "title": "Implement new proving scheme using 2D erasure coding",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/562",
+    "labels": [
+      "epic"
+    ],
+    "created_at": "2023-10-04T09:03:13Z",
+    "updated_at": "2023-12-12T10:44:33Z",
+    "classification": "relevant",
+    "rationale": "Protocol/client/runtime reliability or operability concern relevant to Neverust/Archivist."
+  },
+  {
+    "number": 551,
+    "title": "Allow encoding one block",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/551",
+    "labels": [],
+    "created_at": "2023-09-14T15:18:24Z",
+    "updated_at": "2023-11-28T01:06:41Z",
+    "classification": "not_applicable",
+    "rationale": "No direct protocol/runtime impact identified for Neverust at this stage."
+  },
+  {
+    "number": 546,
+    "title": "Allow returning parity blocks from erasure decoding",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/546",
+    "labels": [],
+    "created_at": "2023-09-06T02:59:20Z",
+    "updated_at": "2023-11-28T01:06:41Z",
+    "classification": "relevant",
+    "rationale": "Protocol/client/runtime reliability or operability concern relevant to Neverust/Archivist."
+  },
+  {
+    "number": 544,
+    "title": "Application Component Lifecycle",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/544",
+    "labels": [],
+    "created_at": "2023-09-04T08:50:04Z",
+    "updated_at": "2023-09-04T12:03:00Z",
+    "classification": "not_applicable",
+    "rationale": "No direct protocol/runtime impact identified for Neverust at this stage."
+  },
+  {
+    "number": 531,
+    "title": "Slot is freed",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/531",
+    "labels": [
+      "Marketplace",
+      "Testing"
+    ],
+    "created_at": "2023-08-24T13:07:50Z",
+    "updated_at": "2023-12-06T17:12:11Z",
+    "classification": "relevant",
+    "rationale": "Protocol/client/runtime reliability or operability concern relevant to Neverust/Archivist."
+  },
+  {
+    "number": 530,
+    "title": "Different proof failure rates nodes",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/530",
+    "labels": [
+      "Marketplace",
+      "Testing"
+    ],
+    "created_at": "2023-08-24T13:06:00Z",
+    "updated_at": "2023-12-06T17:12:00Z",
+    "classification": "relevant",
+    "rationale": "Protocol/client/runtime reliability or operability concern relevant to Neverust/Archivist."
+  },
+  {
+    "number": 529,
+    "title": "Large scale Request filling ",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/529",
+    "labels": [
+      "Marketplace",
+      "Testing"
+    ],
+    "created_at": "2023-08-24T12:57:44Z",
+    "updated_at": "2023-12-06T17:11:44Z",
+    "classification": "relevant",
+    "rationale": "Protocol/client/runtime reliability or operability concern relevant to Neverust/Archivist."
+  },
+  {
+    "number": 528,
+    "title": "Requests expires with not enough filled slots and money are returned",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/528",
+    "labels": [],
+    "created_at": "2023-08-24T12:55:27Z",
+    "updated_at": "2023-11-28T01:06:50Z",
+    "classification": "relevant",
+    "rationale": "Protocol/client/runtime reliability or operability concern relevant to Neverust/Archivist."
+  },
+  {
+    "number": 525,
+    "title": "[Feature request] Support multiple SPR records via environment variable",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/525",
+    "labels": [],
+    "created_at": "2023-08-24T07:42:12Z",
+    "updated_at": "2024-02-23T18:30:45Z",
+    "classification": "not_applicable",
+    "rationale": "No direct protocol/runtime impact identified for Neverust at this stage."
+  },
+  {
+    "number": 524,
+    "title": "Block Iteration Rework",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/524",
+    "labels": [],
+    "created_at": "2023-08-22T06:45:52Z",
+    "updated_at": "2023-08-22T18:27:47Z",
+    "classification": "not_applicable",
+    "rationale": "No direct protocol/runtime impact identified for Neverust at this stage."
+  },
+  {
+    "number": 522,
+    "title": "Handle single block erasure coding (K=1)",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/522",
+    "labels": [],
+    "created_at": "2023-08-22T00:26:12Z",
+    "updated_at": "2023-08-22T00:26:12Z",
+    "classification": "relevant",
+    "rationale": "Protocol/client/runtime reliability or operability concern relevant to Neverust/Archivist."
+  },
+  {
+    "number": 508,
+    "title": "[BUG] Blocks get immediately deleted when TTL = 0",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/508",
+    "labels": [
+      "bug",
+      "Client"
+    ],
+    "created_at": "2023-08-05T18:47:17Z",
+    "updated_at": "2024-03-13T22:24:13Z",
+    "classification": "relevant",
+    "rationale": "Protocol/client/runtime reliability or operability concern relevant to Neverust/Archivist."
+  },
+  {
+    "number": 503,
+    "title": "Refine Proving System",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/503",
+    "labels": [
+      "epic"
+    ],
+    "created_at": "2023-08-02T03:35:39Z",
+    "updated_at": "2023-08-02T03:35:53Z",
+    "classification": "not_applicable",
+    "rationale": "No direct protocol/runtime impact identified for Neverust at this stage."
+  },
+  {
+    "number": 502,
+    "title": "Implement Poseidon2",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/502",
+    "labels": [
+      "epic"
+    ],
+    "created_at": "2023-08-02T03:35:03Z",
+    "updated_at": "2023-08-02T03:35:13Z",
+    "classification": "not_applicable",
+    "rationale": "No direct protocol/runtime impact identified for Neverust at this stage."
+  },
+  {
+    "number": 500,
+    "title": "Distributed Client Testing",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/500",
+    "labels": [
+      "epic"
+    ],
+    "created_at": "2023-08-02T03:14:07Z",
+    "updated_at": "2023-08-02T03:14:25Z",
+    "classification": "not_applicable",
+    "rationale": "No direct protocol/runtime impact identified for Neverust at this stage."
+  },
+  {
+    "number": 499,
+    "title": "Block Discovery and Retrieval",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/499",
+    "labels": [
+      "epic"
+    ],
+    "created_at": "2023-08-02T03:11:03Z",
+    "updated_at": "2023-11-03T20:42:58Z",
+    "classification": "not_applicable",
+    "rationale": "No direct protocol/runtime impact identified for Neverust at this stage."
+  },
+  {
+    "number": 440,
+    "title": "Sui",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/440",
+    "labels": [
+      "epic"
+    ],
+    "created_at": "2023-06-08T13:00:38Z",
+    "updated_at": "2023-06-08T13:01:47Z",
+    "classification": "not_applicable",
+    "rationale": "No direct protocol/runtime impact identified for Neverust at this stage."
+  },
+  {
+    "number": 439,
+    "title": "L2 Rollup",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/439",
+    "labels": [
+      "epic",
+      "Marketplace"
+    ],
+    "created_at": "2023-06-08T12:58:02Z",
+    "updated_at": "2024-05-09T09:49:04Z",
+    "classification": "relevant",
+    "rationale": "Protocol/client/runtime reliability or operability concern relevant to Neverust/Archivist."
+  },
+  {
+    "number": 438,
+    "title": "Bandwidth Payments",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/438",
+    "labels": [
+      "epic"
+    ],
+    "created_at": "2023-06-08T12:57:09Z",
+    "updated_at": "2023-06-08T12:57:33Z",
+    "classification": "not_applicable",
+    "rationale": "No direct protocol/runtime impact identified for Neverust at this stage."
+  },
+  {
+    "number": 434,
+    "title": "API Improvements",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/434",
+    "labels": [
+      "epic"
+    ],
+    "created_at": "2023-06-08T12:43:26Z",
+    "updated_at": "2023-06-08T12:43:27Z",
+    "classification": "relevant",
+    "rationale": "Protocol/client/runtime reliability or operability concern relevant to Neverust/Archivist."
+  },
+  {
+    "number": 433,
+    "title": "Expanding Window",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/433",
+    "labels": [
+      "epic"
+    ],
+    "created_at": "2023-06-08T12:20:39Z",
+    "updated_at": "2023-06-08T12:56:52Z",
+    "classification": "not_applicable",
+    "rationale": "No direct protocol/runtime impact identified for Neverust at this stage."
+  },
+  {
+    "number": 432,
+    "title": "Slot Reservations",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/432",
+    "labels": [
+      "epic",
+      "Marketplace"
+    ],
+    "created_at": "2023-06-08T12:20:24Z",
+    "updated_at": "2024-05-09T09:20:00Z",
+    "classification": "relevant",
+    "rationale": "Protocol/client/runtime reliability or operability concern relevant to Neverust/Archivist."
+  },
+  {
+    "number": 431,
+    "title": "Auditing Tooling",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/431",
+    "labels": [
+      "epic"
+    ],
+    "created_at": "2023-06-08T12:06:58Z",
+    "updated_at": "2023-06-08T12:07:00Z",
+    "classification": "not_applicable",
+    "rationale": "No direct protocol/runtime impact identified for Neverust at this stage."
+  },
+  {
+    "number": 430,
+    "title": "Fuzzing",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/430",
+    "labels": [
+      "epic"
+    ],
+    "created_at": "2023-06-08T12:05:52Z",
+    "updated_at": "2023-06-08T12:06:21Z",
+    "classification": "not_applicable",
+    "rationale": "No direct protocol/runtime impact identified for Neverust at this stage."
+  },
+  {
+    "number": 428,
+    "title": "Integrate invalid proof simulation into distributed testing",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/428",
+    "labels": [],
+    "created_at": "2023-06-08T12:00:01Z",
+    "updated_at": "2023-06-08T12:00:01Z",
+    "classification": "relevant",
+    "rationale": "Protocol/client/runtime reliability or operability concern relevant to Neverust/Archivist."
+  },
+  {
+    "number": 427,
+    "title": "Repair",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/427",
+    "labels": [
+      "epic"
+    ],
+    "created_at": "2023-06-08T11:46:44Z",
+    "updated_at": "2023-06-08T11:46:45Z",
+    "classification": "not_applicable",
+    "rationale": "No direct protocol/runtime impact identified for Neverust at this stage."
+  },
+  {
+    "number": 425,
+    "title": "https://github.com/codex-storage/infra-codex/issues/2",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/425",
+    "labels": [
+      "E:Infra Planning",
+      "Infrastructure"
+    ],
+    "created_at": "2023-06-07T17:32:28Z",
+    "updated_at": "2023-12-06T04:00:19Z",
+    "classification": "relevant",
+    "rationale": "Protocol/client/runtime reliability or operability concern relevant to Neverust/Archivist."
+  },
+  {
+    "number": 409,
+    "title": "Verbose help page",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/409",
+    "labels": [],
+    "created_at": "2023-05-02T12:02:35Z",
+    "updated_at": "2023-05-02T13:24:04Z",
+    "classification": "not_applicable",
+    "rationale": "No direct protocol/runtime impact identified for Neverust at this stage."
+  },
+  {
+    "number": 404,
+    "title": "Have API allowing configure missing proofs",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/404",
+    "labels": [
+      "enhancement",
+      "Marketplace"
+    ],
+    "created_at": "2023-04-21T13:30:18Z",
+    "updated_at": "2023-12-06T17:09:56Z",
+    "classification": "relevant",
+    "rationale": "Protocol/client/runtime reliability or operability concern relevant to Neverust/Archivist."
+  },
+  {
+    "number": 396,
+    "title": "Optimize RPC calls",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/396",
+    "labels": [
+      "Marketplace"
+    ],
+    "created_at": "2023-04-17T13:27:52Z",
+    "updated_at": "2024-12-10T16:09:26Z",
+    "classification": "relevant",
+    "rationale": "Protocol/client/runtime reliability or operability concern relevant to Neverust/Archivist."
+  },
+  {
+    "number": 395,
+    "title": "Sales module retrieves whole `Request` instead of doing decision making with `Ask`",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/395",
+    "labels": [
+      "bug",
+      "Marketplace"
+    ],
+    "created_at": "2023-04-14T08:39:47Z",
+    "updated_at": "2024-03-14T09:29:58Z",
+    "classification": "relevant",
+    "rationale": "Protocol/client/runtime reliability or operability concern relevant to Neverust/Archivist."
+  },
+  {
+    "number": 394,
+    "title": "Update `contracts/readme.md`",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/394",
+    "labels": [
+      "Marketplace"
+    ],
+    "created_at": "2023-04-14T00:48:36Z",
+    "updated_at": "2024-05-09T09:48:23Z",
+    "classification": "relevant",
+    "rationale": "Protocol/client/runtime reliability or operability concern relevant to Neverust/Archivist."
+  },
+  {
+    "number": 378,
+    "title": "Verify data availability upon restart of Sale state machine",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/378",
+    "labels": [
+      "Marketplace"
+    ],
+    "created_at": "2023-03-21T06:02:24Z",
+    "updated_at": "2025-06-10T18:07:45Z",
+    "classification": "relevant",
+    "rationale": "Protocol/client/runtime reliability or operability concern relevant to Neverust/Archivist."
+  },
+  {
+    "number": 376,
+    "title": "Distributed Testing Frameworks",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/376",
+    "labels": [],
+    "created_at": "2023-03-19T06:40:43Z",
+    "updated_at": "2023-03-19T06:40:43Z",
+    "classification": "not_applicable",
+    "rationale": "No direct protocol/runtime impact identified for Neverust at this stage."
+  },
+  {
+    "number": 375,
+    "title": "Bump depdendencies",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/375",
+    "labels": [],
+    "created_at": "2023-03-16T19:51:14Z",
+    "updated_at": "2023-07-26T23:10:52Z",
+    "classification": "not_applicable",
+    "rationale": "No direct protocol/runtime impact identified for Neverust at this stage."
+  },
+  {
+    "number": 370,
+    "title": "[marketplace] Add REST endpoint to remove availability",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/370",
+    "labels": [
+      "Marketplace"
+    ],
+    "created_at": "2023-03-15T05:53:50Z",
+    "updated_at": "2025-04-09T06:06:46Z",
+    "classification": "relevant",
+    "rationale": "Protocol/client/runtime reliability or operability concern relevant to Neverust/Archivist."
+  },
+  {
+    "number": 368,
+    "title": "Unsuccessful uploads may pollute local blockstore with orphaned blocks",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/368",
+    "labels": [],
+    "created_at": "2023-03-14T13:47:42Z",
+    "updated_at": "2023-03-14T14:39:04Z",
+    "classification": "relevant",
+    "rationale": "Protocol/client/runtime reliability or operability concern relevant to Neverust/Archivist."
+  },
+  {
+    "number": 367,
+    "title": "Cleanup API and extend its expressiveness",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/367",
+    "labels": [
+      "enhancement"
+    ],
+    "created_at": "2023-03-14T12:56:35Z",
+    "updated_at": "2023-11-28T01:06:38Z",
+    "classification": "relevant",
+    "rationale": "Protocol/client/runtime reliability or operability concern relevant to Neverust/Archivist."
+  },
+  {
+    "number": 357,
+    "title": "Wire up Memory cache",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/357",
+    "labels": [],
+    "created_at": "2023-03-10T07:52:18Z",
+    "updated_at": "2023-03-14T05:09:27Z",
+    "classification": "not_applicable",
+    "rationale": "No direct protocol/runtime impact identified for Neverust at this stage."
+  },
+  {
+    "number": 352,
+    "title": "Enable `--styleCheck` for nim compilation",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/352",
+    "labels": [],
+    "created_at": "2023-03-02T17:03:38Z",
+    "updated_at": "2023-03-06T17:24:46Z",
+    "classification": "not_applicable",
+    "rationale": "No direct protocol/runtime impact identified for Neverust at this stage."
+  },
+  {
+    "number": 350,
+    "title": "Distributed Testing High Level Requirements and Roadmap",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/350",
+    "labels": [],
+    "created_at": "2023-03-02T00:09:21Z",
+    "updated_at": "2023-03-02T00:09:21Z",
+    "classification": "not_applicable",
+    "rationale": "No direct protocol/runtime impact identified for Neverust at this stage."
+  },
+  {
+    "number": 345,
+    "title": "create test plan for Codex client",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/345",
+    "labels": [
+      "E:Infra Planning",
+      "Infrastructure"
+    ],
+    "created_at": "2023-02-15T16:48:03Z",
+    "updated_at": "2023-12-06T17:07:24Z",
+    "classification": "relevant",
+    "rationale": "Protocol/client/runtime reliability or operability concern relevant to Neverust/Archivist."
+  },
+  {
+    "number": 338,
+    "title": "Ease-of-Use",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/338",
+    "labels": [
+      "epic"
+    ],
+    "created_at": "2023-01-30T15:59:51Z",
+    "updated_at": "2023-01-30T16:00:00Z",
+    "classification": "not_applicable",
+    "rationale": "No direct protocol/runtime impact identified for Neverust at this stage."
+  },
+  {
+    "number": 337,
+    "title": "Test Resource Consumption and Limits",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/337",
+    "labels": [
+      "epic"
+    ],
+    "created_at": "2023-01-30T15:45:18Z",
+    "updated_at": "2023-01-30T15:48:52Z",
+    "classification": "not_applicable",
+    "rationale": "No direct protocol/runtime impact identified for Neverust at this stage."
+  },
+  {
+    "number": 336,
+    "title": "Allow human units for `storage-quota` cmd option",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/336",
+    "labels": [],
+    "created_at": "2023-01-30T15:32:00Z",
+    "updated_at": "2023-01-30T15:32:00Z",
+    "classification": "relevant",
+    "rationale": "Protocol/client/runtime reliability or operability concern relevant to Neverust/Archivist."
+  },
+  {
+    "number": 335,
+    "title": "Repo Maintenance (evict old blocks)",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/335",
+    "labels": [
+      "epic"
+    ],
+    "created_at": "2023-01-30T15:20:48Z",
+    "updated_at": "2023-02-15T16:36:19Z",
+    "classification": "not_applicable",
+    "rationale": "No direct protocol/runtime impact identified for Neverust at this stage."
+  },
+  {
+    "number": 334,
+    "title": "Block Exchange Cleanup and Stability",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/334",
+    "labels": [
+      "epic"
+    ],
+    "created_at": "2023-01-30T15:20:39Z",
+    "updated_at": "2023-10-10T09:32:11Z",
+    "classification": "not_applicable",
+    "rationale": "No direct protocol/runtime impact identified for Neverust at this stage."
+  },
+  {
+    "number": 333,
+    "title": "DHT Cleanup and Stability",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/333",
+    "labels": [
+      "epic"
+    ],
+    "created_at": "2023-01-30T15:20:30Z",
+    "updated_at": "2023-01-30T16:03:41Z",
+    "classification": "relevant",
+    "rationale": "Protocol/client/runtime reliability or operability concern relevant to Neverust/Archivist."
+  },
+  {
+    "number": 332,
+    "title": "Improve Client Stability",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/332",
+    "labels": [
+      "epic"
+    ],
+    "created_at": "2023-01-25T19:31:21Z",
+    "updated_at": "2023-01-25T19:31:38Z",
+    "classification": "not_applicable",
+    "rationale": "No direct protocol/runtime impact identified for Neverust at this stage."
+  },
+  {
+    "number": 326,
+    "title": "Performance evaluation of reference & Neptune implementations",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/326",
+    "labels": [],
+    "created_at": "2022-12-20T22:09:27Z",
+    "updated_at": "2022-12-20T22:11:47Z",
+    "classification": "not_applicable",
+    "rationale": "No direct protocol/runtime impact identified for Neverust at this stage."
+  },
+  {
+    "number": 308,
+    "title": "minprotobuf limits message size to 4mb",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/308",
+    "labels": [],
+    "created_at": "2022-11-11T21:41:30Z",
+    "updated_at": "2023-11-28T01:06:37Z",
+    "classification": "not_applicable",
+    "rationale": "No direct protocol/runtime impact identified for Neverust at this stage."
+  },
+  {
+    "number": 297,
+    "title": "Update Marketplace REST API",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/297",
+    "labels": [],
+    "created_at": "2022-11-03T07:47:54Z",
+    "updated_at": "2023-01-24T06:21:38Z",
+    "classification": "relevant",
+    "rationale": "Protocol/client/runtime reliability or operability concern relevant to Neverust/Archivist."
+  },
+  {
+    "number": 279,
+    "title": "End-to-end Testing",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/279",
+    "labels": [
+      "epic"
+    ],
+    "created_at": "2022-10-24T02:14:29Z",
+    "updated_at": "2023-11-28T01:07:03Z",
+    "classification": "not_applicable",
+    "rationale": "No direct protocol/runtime impact identified for Neverust at this stage."
+  },
+  {
+    "number": 272,
+    "title": "test \"Store and retrieve Data Stream\" doesn't work with some blocksizes",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/272",
+    "labels": [
+      "bug",
+      "Client"
+    ],
+    "created_at": "2022-10-05T23:27:54Z",
+    "updated_at": "2024-03-13T22:16:33Z",
+    "classification": "relevant",
+    "rationale": "Protocol/client/runtime reliability or operability concern relevant to Neverust/Archivist."
+  },
+  {
+    "number": 269,
+    "title": "Report which datastore backend is used at the program start",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/269",
+    "labels": [
+      "enhancement"
+    ],
+    "created_at": "2022-10-05T21:52:35Z",
+    "updated_at": "2023-11-28T01:06:39Z",
+    "classification": "relevant",
+    "rationale": "Protocol/client/runtime reliability or operability concern relevant to Neverust/Archivist."
+  },
+  {
+    "number": 242,
+    "title": "Hierarchical Manifests",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/242",
+    "labels": [
+      "enhancement"
+    ],
+    "created_at": "2022-09-10T03:07:55Z",
+    "updated_at": "2023-11-28T01:06:39Z",
+    "classification": "relevant",
+    "rationale": "Protocol/client/runtime reliability or operability concern relevant to Neverust/Archivist."
+  },
+  {
+    "number": 241,
+    "title": "Codex message.proto doesn't match IPFS BITSWAP.md",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/241",
+    "labels": [
+      "bug",
+      "Client"
+    ],
+    "created_at": "2022-09-10T02:00:24Z",
+    "updated_at": "2024-03-19T12:26:06Z",
+    "classification": "relevant",
+    "rationale": "Protocol/client/runtime reliability or operability concern relevant to Neverust/Archivist."
+  },
+  {
+    "number": 239,
+    "title": "Track blockstore performance",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/239",
+    "labels": [],
+    "created_at": "2022-09-08T13:23:22Z",
+    "updated_at": "2023-11-28T01:06:41Z",
+    "classification": "relevant",
+    "rationale": "Protocol/client/runtime reliability or operability concern relevant to Neverust/Archivist."
+  },
+  {
+    "number": 237,
+    "title": "Document that Windows Defender may delete suspicious files from FSStore",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/237",
+    "labels": [
+      "bug",
+      "Client"
+    ],
+    "created_at": "2022-09-08T08:19:35Z",
+    "updated_at": "2024-03-18T20:05:33Z",
+    "classification": "relevant",
+    "rationale": "Protocol/client/runtime reliability or operability concern relevant to Neverust/Archivist."
+  },
+  {
+    "number": 234,
+    "title": "Adjust SQLite pagesize to raise performance",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/234",
+    "labels": [],
+    "created_at": "2022-09-02T17:58:24Z",
+    "updated_at": "2023-11-28T01:06:42Z",
+    "classification": "not_applicable",
+    "rationale": "No direct protocol/runtime impact identified for Neverust at this stage."
+  },
+  {
+    "number": 231,
+    "title": "Reward node that notifies about missed proofs",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/231",
+    "labels": [],
+    "created_at": "2022-08-26T04:44:14Z",
+    "updated_at": "2022-11-15T00:09:04Z",
+    "classification": "relevant",
+    "rationale": "Protocol/client/runtime reliability or operability concern relevant to Neverust/Archivist."
+  },
+  {
+    "number": 227,
+    "title": "(Potentially) only announce Manifest Cid on the DHT",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/227",
+    "labels": [],
+    "created_at": "2022-08-23T16:46:52Z",
+    "updated_at": "2023-11-28T01:06:43Z",
+    "classification": "relevant",
+    "rationale": "Protocol/client/runtime reliability or operability concern relevant to Neverust/Archivist."
+  },
+  {
+    "number": 225,
+    "title": "Add BlockSize parameter to the upload REST API",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/225",
+    "labels": [],
+    "created_at": "2022-08-22T19:24:58Z",
+    "updated_at": "2023-11-28T01:06:43Z",
+    "classification": "relevant",
+    "rationale": "Protocol/client/runtime reliability or operability concern relevant to Neverust/Archivist."
+  },
+  {
+    "number": 224,
+    "title": "Copy all fields when [un]protect Manifest",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/224",
+    "labels": [],
+    "created_at": "2022-08-22T19:09:34Z",
+    "updated_at": "2023-11-28T01:06:44Z",
+    "classification": "not_applicable",
+    "rationale": "No direct protocol/runtime impact identified for Neverust at this stage."
+  },
+  {
+    "number": 223,
+    "title": "Modify all tests to use non-default block/chunk sizes",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/223",
+    "labels": [],
+    "created_at": "2022-08-22T18:25:33Z",
+    "updated_at": "2023-11-28T01:06:45Z",
+    "classification": "not_applicable",
+    "rationale": "No direct protocol/runtime impact identified for Neverust at this stage."
+  },
+  {
+    "number": 222,
+    "title": "32-bit platforms",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/222",
+    "labels": [
+      "epic"
+    ],
+    "created_at": "2022-08-21T09:51:27Z",
+    "updated_at": "2023-11-28T01:06:46Z",
+    "classification": "not_applicable",
+    "rationale": "No direct protocol/runtime impact identified for Neverust at this stage."
+  },
+  {
+    "number": 213,
+    "title": "Testing Plans",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/213",
+    "labels": [],
+    "created_at": "2022-08-16T17:33:42Z",
+    "updated_at": "2023-11-28T01:06:40Z",
+    "classification": "not_applicable",
+    "rationale": "No direct protocol/runtime impact identified for Neverust at this stage."
+  },
+  {
+    "number": 207,
+    "title": "collect metrics on test infrastructure",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/207",
+    "labels": [],
+    "created_at": "2022-08-11T11:46:31Z",
+    "updated_at": "2023-11-28T01:06:41Z",
+    "classification": "not_applicable",
+    "rationale": "No direct protocol/runtime impact identified for Neverust at this stage."
+  },
+  {
+    "number": 206,
+    "title": "Add partial file download support to REST API",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/206",
+    "labels": [],
+    "created_at": "2022-08-10T09:13:53Z",
+    "updated_at": "2023-11-28T01:06:46Z",
+    "classification": "relevant",
+    "rationale": "Protocol/client/runtime reliability or operability concern relevant to Neverust/Archivist."
+  },
+  {
+    "number": 202,
+    "title": "Simplify SQLiteStore testing code",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/202",
+    "labels": [],
+    "created_at": "2022-08-08T21:30:57Z",
+    "updated_at": "2023-11-28T01:06:47Z",
+    "classification": "relevant",
+    "rationale": "Protocol/client/runtime reliability or operability concern relevant to Neverust/Archivist."
+  },
+  {
+    "number": 197,
+    "title": "Setup basic Grafana Dashboard",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/197",
+    "labels": [],
+    "created_at": "2022-08-04T15:38:04Z",
+    "updated_at": "2023-11-28T01:06:48Z",
+    "classification": "not_applicable",
+    "rationale": "No direct protocol/runtime impact identified for Neverust at this stage."
+  },
+  {
+    "number": 191,
+    "title": "Minimal test plan for testground",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/191",
+    "labels": [],
+    "created_at": "2022-08-04T15:26:31Z",
+    "updated_at": "2023-11-28T01:06:41Z",
+    "classification": "not_applicable",
+    "rationale": "No direct protocol/runtime impact identified for Neverust at this stage."
+  },
+  {
+    "number": 190,
+    "title": "Sanitize network input",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/190",
+    "labels": [],
+    "created_at": "2022-08-04T15:25:12Z",
+    "updated_at": "2023-11-28T01:06:48Z",
+    "classification": "relevant",
+    "rationale": "Protocol/client/runtime reliability or operability concern relevant to Neverust/Archivist."
+  },
+  {
+    "number": 188,
+    "title": "Run cluster on AWS (check cost, control net, etc)",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/188",
+    "labels": [],
+    "created_at": "2022-08-04T15:11:18Z",
+    "updated_at": "2023-11-28T01:06:42Z",
+    "classification": "not_applicable",
+    "rationale": "No direct protocol/runtime impact identified for Neverust at this stage."
+  },
+  {
+    "number": 179,
+    "title": "Make choice of FSStore or SQLiteStore parameterizable",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/179",
+    "labels": [],
+    "created_at": "2022-08-02T13:38:20Z",
+    "updated_at": "2023-11-28T01:06:49Z",
+    "classification": "relevant",
+    "rationale": "Protocol/client/runtime reliability or operability concern relevant to Neverust/Archivist."
+  },
+  {
+    "number": 175,
+    "title": "Complex mesh network stress test",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/175",
+    "labels": [],
+    "created_at": "2022-08-01T08:12:11Z",
+    "updated_at": "2023-11-28T01:06:43Z",
+    "classification": "relevant",
+    "rationale": "Protocol/client/runtime reliability or operability concern relevant to Neverust/Archivist."
+  },
+  {
+    "number": 174,
+    "title": "CI: small mesh network with simple stress tests",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/174",
+    "labels": [],
+    "created_at": "2022-08-01T08:11:03Z",
+    "updated_at": "2023-11-28T01:06:43Z",
+    "classification": "relevant",
+    "rationale": "Protocol/client/runtime reliability or operability concern relevant to Neverust/Archivist."
+  },
+  {
+    "number": 173,
+    "title": "Larger file stress test",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/173",
+    "labels": [],
+    "created_at": "2022-08-01T08:09:51Z",
+    "updated_at": "2023-11-28T01:06:44Z",
+    "classification": "not_applicable",
+    "rationale": "No direct protocol/runtime impact identified for Neverust at this stage."
+  },
+  {
+    "number": 172,
+    "title": "Simple stress test",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/172",
+    "labels": [],
+    "created_at": "2022-08-01T08:08:36Z",
+    "updated_at": "2023-11-28T01:06:45Z",
+    "classification": "not_applicable",
+    "rationale": "No direct protocol/runtime impact identified for Neverust at this stage."
+  },
+  {
+    "number": 171,
+    "title": "Prefetching data streams",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/171",
+    "labels": [
+      "epic"
+    ],
+    "created_at": "2022-07-29T20:31:44Z",
+    "updated_at": "2023-11-28T01:06:50Z",
+    "classification": "not_applicable",
+    "rationale": "No direct protocol/runtime impact identified for Neverust at this stage."
+  },
+  {
+    "number": 165,
+    "title": "BlockStore agenda",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/165",
+    "labels": [
+      "epic"
+    ],
+    "created_at": "2022-07-28T13:12:33Z",
+    "updated_at": "2024-10-18T07:32:59Z",
+    "classification": "relevant",
+    "rationale": "Protocol/client/runtime reliability or operability concern relevant to Neverust/Archivist."
+  },
+  {
+    "number": 159,
+    "title": "Implement storage limits for local repository",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/159",
+    "labels": [],
+    "created_at": "2022-07-26T22:15:45Z",
+    "updated_at": "2023-11-28T01:06:52Z",
+    "classification": "not_applicable",
+    "rationale": "No direct protocol/runtime impact identified for Neverust at this stage."
+  },
+  {
+    "number": 152,
+    "title": "Initial test without load",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/152",
+    "labels": [],
+    "created_at": "2022-07-14T14:44:01Z",
+    "updated_at": "2023-11-28T01:06:45Z",
+    "classification": "not_applicable",
+    "rationale": "No direct protocol/runtime impact identified for Neverust at this stage."
+  },
+  {
+    "number": 151,
+    "title": "Understand how to setup a test bed",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/151",
+    "labels": [],
+    "created_at": "2022-07-14T14:43:35Z",
+    "updated_at": "2023-11-28T01:06:46Z",
+    "classification": "not_applicable",
+    "rationale": "No direct protocol/runtime impact identified for Neverust at this stage."
+  },
+  {
+    "number": 150,
+    "title": "Testing download endpoint",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/150",
+    "labels": [],
+    "created_at": "2022-07-14T14:19:54Z",
+    "updated_at": "2023-11-28T01:06:47Z",
+    "classification": "relevant",
+    "rationale": "Protocol/client/runtime reliability or operability concern relevant to Neverust/Archivist."
+  },
+  {
+    "number": 149,
+    "title": "Testing upload endpoint",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/149",
+    "labels": [],
+    "created_at": "2022-07-14T14:19:45Z",
+    "updated_at": "2023-11-28T01:06:47Z",
+    "classification": "relevant",
+    "rationale": "Protocol/client/runtime reliability or operability concern relevant to Neverust/Archivist."
+  },
+  {
+    "number": 142,
+    "title": "2023 Testnet setup",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/142",
+    "labels": [
+      "epic"
+    ],
+    "created_at": "2022-07-13T14:17:33Z",
+    "updated_at": "2023-11-28T01:06:48Z",
+    "classification": "relevant",
+    "rationale": "Protocol/client/runtime reliability or operability concern relevant to Neverust/Archivist."
+  },
+  {
+    "number": 137,
+    "title": "Multitier BlockStore",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/137",
+    "labels": [],
+    "created_at": "2022-07-12T14:10:56Z",
+    "updated_at": "2023-11-28T01:06:54Z",
+    "classification": "relevant",
+    "rationale": "Protocol/client/runtime reliability or operability concern relevant to Neverust/Archivist."
+  },
+  {
+    "number": 136,
+    "title": "Benchmark ECC implementations",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/136",
+    "labels": [],
+    "created_at": "2022-07-06T07:51:05Z",
+    "updated_at": "2023-11-28T01:06:54Z",
+    "classification": "relevant",
+    "rationale": "Protocol/client/runtime reliability or operability concern relevant to Neverust/Archivist."
+  },
+  {
+    "number": 132,
+    "title": "Process CancelledError",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/132",
+    "labels": [],
+    "created_at": "2022-07-02T12:09:14Z",
+    "updated_at": "2023-11-28T01:06:55Z",
+    "classification": "not_applicable",
+    "rationale": "No direct protocol/runtime impact identified for Neverust at this stage."
+  },
+  {
+    "number": 117,
+    "title": "Offload long-running tasks to other OS threads",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/117",
+    "labels": [],
+    "created_at": "2022-06-15T10:43:19Z",
+    "updated_at": "2023-11-28T01:06:57Z",
+    "classification": "not_applicable",
+    "rationale": "No direct protocol/runtime impact identified for Neverust at this stage."
+  },
+  {
+    "number": 15,
+    "title": "A minimal payment channel implementation for chunk retrieval",
+    "url": "https://github.com/logos-storage/logos-storage-nim/issues/15",
+    "labels": [],
+    "created_at": "2021-08-24T02:57:46Z",
+    "updated_at": "2023-11-28T01:06:40Z",
+    "classification": "not_applicable",
+    "rationale": "No direct protocol/runtime impact identified for Neverust at this stage."
+  }
+]

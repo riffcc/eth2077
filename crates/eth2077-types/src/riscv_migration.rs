@@ -112,19 +112,23 @@ pub fn default_migration_strategy() -> MigrationStrategy {
             phase: MigrationPhase::Phase1DualDeploy,
             risk_description: "Dual runtime divergence could create consensus edge-cases.".into(),
             severity: 0.6,
-            mitigation: "Use differential execution traces and client conformance test vectors.".into(),
+            mitigation: "Use differential execution traces and client conformance test vectors."
+                .into(),
         },
         MigrationRisk {
             phase: MigrationPhase::Phase2EvmWrapped,
-            risk_description: "Wrapper semantics may mis-handle EVM corner-cases and precompiles.".into(),
+            risk_description: "Wrapper semantics may mis-handle EVM corner-cases and precompiles."
+                .into(),
             severity: 0.8,
             mitigation: "Ship compatibility suites and phase-gate legacy opcode parity.".into(),
         },
         MigrationRisk {
             phase: MigrationPhase::Phase3EvmDeprecated,
-            risk_description: "Developer tooling lag can slow migration of production contracts.".into(),
+            risk_description: "Developer tooling lag can slow migration of production contracts."
+                .into(),
             severity: 0.4,
-            mitigation: "Fund compiler/tooling grants and provide long-lived migration SDKs.".into(),
+            mitigation: "Fund compiler/tooling grants and provide long-lived migration SDKs."
+                .into(),
         },
     ];
     let breaking_changes = vec![

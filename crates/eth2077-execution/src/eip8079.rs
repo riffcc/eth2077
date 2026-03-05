@@ -39,12 +39,23 @@ pub struct ExecutePrecompileOutput {
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
 pub enum NativeRollupError {
-    InvalidAnchor { reason: String },
-    ExceedsGasLimit { used: u64, limit: u64 },
+    InvalidAnchor {
+        reason: String,
+    },
+    ExceedsGasLimit {
+        used: u64,
+        limit: u64,
+    },
     EmptyTransactions,
     InvalidPreStateRoot,
-    AnchorFrequencyViolation { expected_block: u64, actual_block: u64 },
-    RollupIdMismatch { expected: [u8; 32], actual: [u8; 32] },
+    AnchorFrequencyViolation {
+        expected_block: u64,
+        actual_block: u64,
+    },
+    RollupIdMismatch {
+        expected: [u8; 32],
+        actual: [u8; 32],
+    },
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
@@ -149,9 +160,9 @@ pub fn compute_execution_stats(
     let total_gas_used = executions
         .iter()
         .fold(0u64, |acc, (_, output)| acc.saturating_add(output.gas_used));
-    let total_transactions = executions
-        .iter()
-        .fold(0usize, |acc, (input, _)| acc.saturating_add(input.transactions.len()));
+    let total_transactions = executions.iter().fold(0usize, |acc, (input, _)| {
+        acc.saturating_add(input.transactions.len())
+    });
     let avg_gas_per_execution = if executions_count == 0 {
         0.0
     } else {

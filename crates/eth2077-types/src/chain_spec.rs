@@ -245,9 +245,17 @@ pub fn validate_chain_spec_config(
         push_error(&mut errors, "forks", "must include at least one fork entry");
     }
 
-    let spec_version = config.metadata.get("spec_version").map(|v| v.trim()).unwrap_or("");
+    let spec_version = config
+        .metadata
+        .get("spec_version")
+        .map(|v| v.trim())
+        .unwrap_or("");
     if spec_version.is_empty() {
-        push_error(&mut errors, "metadata.spec_version", "must be present and non-empty");
+        push_error(
+            &mut errors,
+            "metadata.spec_version",
+            "must be present and non-empty",
+        );
     }
 
     for key in config.metadata.keys() {
@@ -258,9 +266,17 @@ pub fn validate_chain_spec_config(
     }
 
     if config.network == NetworkKind::Custom {
-        let custom_name = config.metadata.get("network_name").map(|v| v.trim()).unwrap_or("");
+        let custom_name = config
+            .metadata
+            .get("network_name")
+            .map(|v| v.trim())
+            .unwrap_or("");
         if custom_name.is_empty() {
-            push_error(&mut errors, "metadata.network_name", "is required when network is Custom");
+            push_error(
+                &mut errors,
+                "metadata.network_name",
+                "is required when network is Custom",
+            );
         }
     }
 
@@ -278,17 +294,25 @@ pub fn validate_chain_spec_config(
             push_error(
                 &mut errors,
                 "forks.name",
-                &format!("fork name '{}' is duplicated at indices {} and {}", name, prior_index, index),
+                &format!(
+                    "fork name '{}' is duplicated at indices {} and {}",
+                    name, prior_index, index
+                ),
             );
         } else {
             seen_names.insert(normalized_name, index);
         }
 
-        if matches!(fork.phase, ForkPhase::Scheduled | ForkPhase::Pending) && fork.activation_epoch == 0 {
+        if matches!(fork.phase, ForkPhase::Scheduled | ForkPhase::Pending)
+            && fork.activation_epoch == 0
+        {
             push_error(
                 &mut errors,
                 "forks.activation_epoch",
-                &format!("fork '{}' in phase {:?} must have activation_epoch > 0", name, fork.phase),
+                &format!(
+                    "fork '{}' in phase {:?} must have activation_epoch > 0",
+                    name, fork.phase
+                ),
             );
         }
 
@@ -310,13 +334,21 @@ pub fn validate_chain_spec_config(
         for eip in &fork.eips {
             let token = eip.trim();
             if token.is_empty() {
-                push_error(&mut errors, "forks.eips", &format!("fork '{}' contains an empty EIP entry", name));
+                push_error(
+                    &mut errors,
+                    "forks.eips",
+                    &format!("fork '{}' contains an empty EIP entry", name),
+                );
                 continue;
             }
 
             let normalized = token.to_uppercase();
             if seen_eips.contains_key(&normalized) {
-                push_error(&mut errors, "forks.eips", &format!("fork '{}' contains duplicate EIP '{}'", name, token));
+                push_error(
+                    &mut errors,
+                    "forks.eips",
+                    &format!("fork '{}' contains duplicate EIP '{}'", name, token),
+                );
             } else {
                 seen_eips.insert(normalized, 1);
             }
@@ -334,7 +366,11 @@ pub fn validate_chain_spec_config(
         }
     }
 
-    if errors.is_empty() { Ok(()) } else { Err(errors) }
+    if errors.is_empty() {
+        Ok(())
+    } else {
+        Err(errors)
+    }
 }
 
 /// Computes summary statistics for a chain specification.
@@ -390,7 +426,10 @@ pub fn compute_chain_spec_commitment(config: &ChainSpecConfig) -> String {
 
     canonical.push_str(&format!("chain_id={}\n", config.chain_id));
     canonical.push_str(&format!("network={}\n", network_label(&config.network)));
-    canonical.push_str(&format!("consensus={}\n", consensus_label(&config.consensus)));
+    canonical.push_str(&format!(
+        "consensus={}\n",
+        consensus_label(&config.consensus)
+    ));
     canonical.push_str(&format!("status={}\n", status_label(&config.status)));
     canonical.push_str(&format!("genesis_time={}\n", config.genesis_time));
     canonical.push_str(&format!("slots_per_epoch={}\n", config.slots_per_epoch));
@@ -405,9 +444,18 @@ pub fn compute_chain_spec_commitment(config: &ChainSpecConfig) -> String {
 
     for (fork_index, fork) in config.forks.iter().enumerate() {
         canonical.push_str(&format!("fork[{fork_index}].name={}\n", fork.name));
-        canonical.push_str(&format!("fork[{fork_index}].phase={}\n", fork_phase_label(&fork.phase)));
-        canonical.push_str(&format!("fork[{fork_index}].activation_epoch={}\n", fork.activation_epoch));
-        canonical.push_str(&format!("fork[{fork_index}].consensus_change={}\n", fork.consensus_change));
+        canonical.push_str(&format!(
+            "fork[{fork_index}].phase={}\n",
+            fork_phase_label(&fork.phase)
+        ));
+        canonical.push_str(&format!(
+            "fork[{fork_index}].activation_epoch={}\n",
+            fork.activation_epoch
+        ));
+        canonical.push_str(&format!(
+            "fork[{fork_index}].consensus_change={}\n",
+            fork.consensus_change
+        ));
 
         for (eip_index, eip) in fork.eips.iter().enumerate() {
             canonical.push_str(&format!("fork[{fork_index}].eip[{eip_index}]={}\n", eip));
@@ -441,7 +489,12 @@ fn resolve_spec_version(config: &ChainSpecConfig) -> String {
         }
     }
 
-    format!("{}-{}-{}", status_label(&config.status), config.chain_id, config.forks.len())
+    format!(
+        "{}-{}-{}",
+        status_label(&config.status),
+        config.chain_id,
+        config.forks.len()
+    )
 }
 
 fn network_label(value: &NetworkKind) -> &'static str {

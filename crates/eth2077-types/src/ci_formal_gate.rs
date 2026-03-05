@@ -164,7 +164,10 @@ pub struct CiFormalGateStats {
 /// - no exemptions by default.
 pub fn default_ci_formal_gate_config() -> CiFormalGateConfig {
     let mut metadata = HashMap::new();
-    metadata.insert("policy_profile".to_string(), "eth2077-formal-gate-v1".to_string());
+    metadata.insert(
+        "policy_profile".to_string(),
+        "eth2077-formal-gate-v1".to_string(),
+    );
     metadata.insert("owner".to_string(), "eth2077-core".to_string());
 
     CiFormalGateConfig {
@@ -195,58 +198,110 @@ pub fn validate_ci_formal_gate_config(
     let mut errors = Vec::new();
 
     if config.max_total_debt < config.max_tier1_debt {
-        push_validation_error(&mut errors, "max_total_debt", "must be greater than or equal to max_tier1_debt");
+        push_validation_error(
+            &mut errors,
+            "max_total_debt",
+            "must be greater than or equal to max_tier1_debt",
+        );
     }
     if config.max_total_debt < config.max_tier2_debt {
-        push_validation_error(&mut errors, "max_total_debt", "must be greater than or equal to max_tier2_debt");
+        push_validation_error(
+            &mut errors,
+            "max_total_debt",
+            "must be greater than or equal to max_tier2_debt",
+        );
     }
 
     if matches!(config.mode, GateMode::Strict | GateMode::ReleaseCandidate) {
         if config.max_tier1_debt != 0 {
-            push_validation_error(&mut errors, "max_tier1_debt", "must be zero in strict or release-candidate mode");
+            push_validation_error(
+                &mut errors,
+                "max_tier1_debt",
+                "must be zero in strict or release-candidate mode",
+            );
         }
         if config.max_tier2_debt != 0 {
-            push_validation_error(&mut errors, "max_tier2_debt", "must be zero in strict or release-candidate mode");
+            push_validation_error(
+                &mut errors,
+                "max_tier2_debt",
+                "must be zero in strict or release-candidate mode",
+            );
         }
         if config.max_total_debt != 0 {
-            push_validation_error(&mut errors, "max_total_debt", "must be zero in strict or release-candidate mode");
+            push_validation_error(
+                &mut errors,
+                "max_total_debt",
+                "must be zero in strict or release-candidate mode",
+            );
         }
         if !config.exemption_list.is_empty() {
-            push_validation_error(&mut errors, "exemption_list", "must be empty in strict or release-candidate mode");
+            push_validation_error(
+                &mut errors,
+                "exemption_list",
+                "must be empty in strict or release-candidate mode",
+            );
         }
     }
 
     if matches!(config.mode, GateMode::ReleaseCandidate) && !config.strict_on_release_branch {
-        push_validation_error(&mut errors, "strict_on_release_branch", "must be true when mode is ReleaseCandidate");
+        push_validation_error(
+            &mut errors,
+            "strict_on_release_branch",
+            "must be true when mode is ReleaseCandidate",
+        );
     }
     if matches!(config.mode, GateMode::Emergency) && config.strict_on_release_branch {
-        push_validation_error(&mut errors, "strict_on_release_branch", "must be false in Emergency mode");
+        push_validation_error(
+            &mut errors,
+            "strict_on_release_branch",
+            "must be false in Emergency mode",
+        );
     }
 
     let mut seen_exemptions: HashMap<String, usize> = HashMap::new();
     for exemption in &config.exemption_list {
         let normalized = exemption.trim();
         if normalized.is_empty() {
-            push_validation_error(&mut errors, "exemption_list", "entries must not be empty or whitespace");
+            push_validation_error(
+                &mut errors,
+                "exemption_list",
+                "entries must not be empty or whitespace",
+            );
             continue;
         }
         let seen = seen_exemptions.entry(normalized.to_string()).or_insert(0);
         *seen += 1;
         if *seen > 1 {
-            push_validation_error(&mut errors, "exemption_list", &format!("duplicate exemption id `{normalized}`"));
+            push_validation_error(
+                &mut errors,
+                "exemption_list",
+                &format!("duplicate exemption id `{normalized}`"),
+            );
         }
     }
 
     for (key, value) in &config.metadata {
         if key.trim().is_empty() {
-            push_validation_error(&mut errors, "metadata", "metadata keys must not be empty or whitespace");
+            push_validation_error(
+                &mut errors,
+                "metadata",
+                "metadata keys must not be empty or whitespace",
+            );
         }
         if value.trim().is_empty() {
-            push_validation_error(&mut errors, "metadata", &format!("metadata value for key `{key}` must not be empty"));
+            push_validation_error(
+                &mut errors,
+                "metadata",
+                &format!("metadata value for key `{key}` must not be empty"),
+            );
         }
     }
 
-    if errors.is_empty() { Ok(()) } else { Err(errors) }
+    if errors.is_empty() {
+        Ok(())
+    } else {
+        Err(errors)
+    }
 }
 
 /// Computes aggregate counts and verdict for formal-gate debt.
@@ -313,7 +368,15 @@ pub fn compute_ci_formal_gate_stats(
         &tier2_modules,
     );
 
-    CiFormalGateStats { total_debt, tier1_count, tier2_count, tier3_count, verdict, oldest_debt_days, blocked_modules }
+    CiFormalGateStats {
+        total_debt,
+        tier1_count,
+        tier2_count,
+        tier3_count,
+        verdict,
+        oldest_debt_days,
+        blocked_modules,
+    }
 }
 
 /// Computes deterministic SHA-256 commitment for a formal gate config.
@@ -332,7 +395,17 @@ pub fn compute_ci_formal_gate_commitment(config: &CiFormalGateConfig) -> String 
     hasher.update(format!("max_tier1_debt={}\n", config.max_tier1_debt).as_bytes());
     hasher.update(format!("max_tier2_debt={}\n", config.max_tier2_debt).as_bytes());
     hasher.update(format!("max_total_debt={}\n", config.max_total_debt).as_bytes());
-    hasher.update(format!("strict_on_release_branch={}\n", if config.strict_on_release_branch { "true" } else { "false" }).as_bytes());
+    hasher.update(
+        format!(
+            "strict_on_release_branch={}\n",
+            if config.strict_on_release_branch {
+                "true"
+            } else {
+                "false"
+            }
+        )
+        .as_bytes(),
+    );
 
     let mut exemptions = normalized_exemptions(&config.exemption_list);
     exemptions.sort();
@@ -353,7 +426,10 @@ pub fn compute_ci_formal_gate_commitment(config: &CiFormalGateConfig) -> String 
 }
 
 fn push_validation_error(errors: &mut Vec<CiFormalGateValidationError>, field: &str, reason: &str) {
-    errors.push(CiFormalGateValidationError { field: field.to_string(), reason: reason.to_string() });
+    errors.push(CiFormalGateValidationError {
+        field: field.to_string(),
+        reason: reason.to_string(),
+    });
 }
 
 fn build_exemption_lookup(exemptions: &[String]) -> HashMap<String, bool> {
@@ -417,8 +493,20 @@ fn compute_verdict(
 
     match config.mode {
         GateMode::Advisory => GateVerdict::ConditionalPass,
-        GateMode::Warning => if exceeds { GateVerdict::SoftFail } else { GateVerdict::ConditionalPass },
-        GateMode::Blocking | GateMode::ReleaseCandidate => if exceeds { GateVerdict::HardFail } else { GateVerdict::ConditionalPass },
+        GateMode::Warning => {
+            if exceeds {
+                GateVerdict::SoftFail
+            } else {
+                GateVerdict::ConditionalPass
+            }
+        }
+        GateMode::Blocking | GateMode::ReleaseCandidate => {
+            if exceeds {
+                GateVerdict::HardFail
+            } else {
+                GateVerdict::ConditionalPass
+            }
+        }
         GateMode::Strict => GateVerdict::HardFail,
         GateMode::Emergency => GateVerdict::Exempted,
     }

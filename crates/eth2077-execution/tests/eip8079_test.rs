@@ -57,11 +57,9 @@ fn anchor_frequency_violation() {
     let errors =
         validate_execute_input(&input, &config).expect_err("non-divisible block must fail");
 
-    assert!(
-        errors
-            .iter()
-            .any(|err| matches!(err, NativeRollupError::AnchorFrequencyViolation { .. }))
-    );
+    assert!(errors
+        .iter()
+        .any(|err| matches!(err, NativeRollupError::AnchorFrequencyViolation { .. })));
 }
 
 #[test]
@@ -118,10 +116,8 @@ fn execution_stats_correct() {
         success: true,
     };
 
-    let stats = compute_execution_stats(&[
-        (first_input, first_output),
-        (second_input, second_output),
-    ]);
+    let stats =
+        compute_execution_stats(&[(first_input, first_output), (second_input, second_output)]);
 
     assert_eq!(stats.rollup_id, [0u8; 32]);
     assert_eq!(stats.executions_count, 2);

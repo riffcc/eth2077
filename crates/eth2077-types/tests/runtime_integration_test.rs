@@ -2,15 +2,37 @@ use eth2077_types::runtime_integration::*;
 use std::collections::HashMap;
 
 fn approx_eq(left: f64, right: f64, eps: f64) {
-    assert!((left - right).abs() <= eps, "left={left}, right={right}, eps={eps}");
+    assert!(
+        (left - right).abs() <= eps,
+        "left={left}, right={right}, eps={eps}"
+    );
 }
 
 fn trace(id: &str, verified: bool) -> ProofTrace {
-    ProofTrace { theorem_id: id.to_string(), kind: ProofTraceKind::TheoremLink, artifact_path: format!("proofs/{id}.json"), verified }
+    ProofTrace {
+        theorem_id: id.to_string(),
+        kind: ProofTraceKind::TheoremLink,
+        artifact_path: format!("proofs/{id}.json"),
+        verified,
+    }
 }
 
-fn module(id: &str, phase: IntegrationPhase, compatibility: CompatibilityLevel, traces: Vec<ProofTrace>) -> RuntimeModule {
-    RuntimeModule { id: id.to_string(), module_name: format!("module_{id}"), phase, slot: RuntimeSlot::Execution, compatibility, proof_traces: traces, dependencies: vec![], metadata: HashMap::new() }
+fn module(
+    id: &str,
+    phase: IntegrationPhase,
+    compatibility: CompatibilityLevel,
+    traces: Vec<ProofTrace>,
+) -> RuntimeModule {
+    RuntimeModule {
+        id: id.to_string(),
+        module_name: format!("module_{id}"),
+        phase,
+        slot: RuntimeSlot::Execution,
+        compatibility,
+        proof_traces: traces,
+        dependencies: vec![],
+        metadata: HashMap::new(),
+    }
 }
 
 #[test]
@@ -32,21 +54,45 @@ fn validation_collects_multiple_errors() {
     config.auto_activate = true;
     config.min_compatibility = CompatibilityLevel::Incompatible;
     config.test_coverage_min_pct = 120.0;
-    config.metadata.insert("   ".to_string(), "non-empty".to_string());
+    config
+        .metadata
+        .insert("   ".to_string(), "non-empty".to_string());
     let errors = validate_runtime_integration_config(&config).expect_err("expected errors");
     assert!(errors.iter().any(|error| error.field == "max_shim_modules"));
-    assert!(errors.iter().any(|error| error.field == "test_coverage_min_pct"));
+    assert!(errors
+        .iter()
+        .any(|error| error.field == "test_coverage_min_pct"));
     assert!(errors.iter().any(|error| error.field == "auto_activate"));
-    assert!(errors.iter().any(|error| error.field == "min_compatibility"));
+    assert!(errors
+        .iter()
+        .any(|error| error.field == "min_compatibility"));
     assert!(errors.iter().any(|error| error.field == "metadata"));
 }
 
 #[test]
 fn stats_are_computed_from_modules() {
     let modules = vec![
-        module("consensus_bridge", IntegrationPhase::Activated, CompatibilityLevel::Full, vec![trace("thm.consensus.safety", true), trace("thm.consensus.liveness", true)]),
-        module("mempool_adapter", IntegrationPhase::Tested, CompatibilityLevel::Partial, vec![trace("thm.mempool.ordering", false)]),
-        module("legacy_codec", IntegrationPhase::Configured, CompatibilityLevel::Incompatible, vec![]),
+        module(
+            "consensus_bridge",
+            IntegrationPhase::Activated,
+            CompatibilityLevel::Full,
+            vec![
+                trace("thm.consensus.safety", true),
+                trace("thm.consensus.liveness", true),
+            ],
+        ),
+        module(
+            "mempool_adapter",
+            IntegrationPhase::Tested,
+            CompatibilityLevel::Partial,
+            vec![trace("thm.mempool.ordering", false)],
+        ),
+        module(
+            "legacy_codec",
+            IntegrationPhase::Configured,
+            CompatibilityLevel::Incompatible,
+            vec![],
+        ),
     ];
 
     let stats = compute_runtime_integration_stats(&modules);
@@ -63,12 +109,20 @@ fn stats_are_computed_from_modules() {
 #[test]
 fn commitment_is_stable_and_changes_when_config_changes() {
     let mut first = default_runtime_integration_config();
-    first.metadata.insert("chain".to_string(), "eth2077-devnet".to_string());
-    first.metadata.insert("release".to_string(), "v0.3.0".to_string());
+    first
+        .metadata
+        .insert("chain".to_string(), "eth2077-devnet".to_string());
+    first
+        .metadata
+        .insert("release".to_string(), "v0.3.0".to_string());
 
     let mut second = default_runtime_integration_config();
-    second.metadata.insert("release".to_string(), "v0.3.0".to_string());
-    second.metadata.insert("chain".to_string(), "eth2077-devnet".to_string());
+    second
+        .metadata
+        .insert("release".to_string(), "v0.3.0".to_string());
+    second
+        .metadata
+        .insert("chain".to_string(), "eth2077-devnet".to_string());
 
     let commit_a = compute_runtime_integration_commitment(&first);
     let commit_b = compute_runtime_integration_commitment(&second);

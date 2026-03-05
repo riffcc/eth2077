@@ -180,7 +180,10 @@ impl BlockExecutor {
         }
 
         let info = &account.info;
-        let code = info.code.as_ref().map(|bytecode| bytecode.original_bytes().to_vec());
+        let code = info
+            .code
+            .as_ref()
+            .map(|bytecode| bytecode.original_bytes().to_vec());
         self.state.insert_account(
             address,
             AccountInfo {
@@ -196,7 +199,8 @@ impl BlockExecutor {
         }
 
         for (slot, value) in account.changed_storage_slots() {
-            self.state.set_storage(address, *slot, value.present_value());
+            self.state
+                .set_storage(address, *slot, value.present_value());
         }
     }
 }

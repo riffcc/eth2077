@@ -51,7 +51,9 @@ pub struct MockExecutionEngine {
 impl MockExecutionEngine {
     pub fn new(cfg: &ScenarioConfig) -> Self {
         let plan = plan_execution(cfg);
-        let rounds = (50_000.0 / plan.effective_tps.max(1.0)).round().clamp(1.0, 64.0) as u32;
+        let rounds = (50_000.0 / plan.effective_tps.max(1.0))
+            .round()
+            .clamp(1.0, 64.0) as u32;
         Self {
             seed: cfg.seed ^ 0xa24baed4963ee407,
             work_rounds: rounds,
@@ -83,7 +85,8 @@ impl MockExecutionEngine {
             let left = block[i % block.len()];
             let right = block[block.len() - 1 - (i % block.len())];
             state_root[i] = base ^ left ^ (i as u8).wrapping_mul(17);
-            receipts_root[i] = base.rotate_left((i % 7) as u32) ^ right ^ (i as u8).wrapping_mul(29);
+            receipts_root[i] =
+                base.rotate_left((i % 7) as u32) ^ right ^ (i as u8).wrapping_mul(29);
         }
         (state_root, receipts_root)
     }
@@ -139,7 +142,12 @@ fn duration_to_ns(duration: Duration) -> u64 {
     duration.as_nanos().min(u64::MAX as u128) as u64
 }
 
-fn summarize(label: &str, iterations: usize, op_latencies_ns: &[u64], total_ns: u64) -> MicrobenchResult {
+fn summarize(
+    label: &str,
+    iterations: usize,
+    op_latencies_ns: &[u64],
+    total_ns: u64,
+) -> MicrobenchResult {
     let (min_ns, max_ns) = if op_latencies_ns.is_empty() {
         (0, 0)
     } else {

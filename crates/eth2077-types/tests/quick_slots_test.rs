@@ -38,10 +38,12 @@ fn propagation_exceeds_slot_is_rejected() {
     };
 
     let errors = validate_slot_config(&config).unwrap_err();
-    assert!(errors.contains(&QuickSlotValidationError::PropagationExceedsSlot {
-        propagation_ms: 2_500,
-        slot_ms: 2_000,
-    }));
+    assert!(
+        errors.contains(&QuickSlotValidationError::PropagationExceedsSlot {
+            propagation_ms: 2_500,
+            slot_ms: 2_000,
+        })
+    );
 }
 
 #[test]
@@ -79,11 +81,10 @@ fn insufficient_security_margin_is_rejected() {
     };
 
     let errors = validate_slot_config(&config).unwrap_err();
-    assert!(
-        errors
-            .iter()
-            .any(|error| matches!(error, QuickSlotValidationError::InsufficientSecurityMargin { .. }))
-    );
+    assert!(errors.iter().any(|error| matches!(
+        error,
+        QuickSlotValidationError::InsufficientSecurityMargin { .. }
+    )));
 }
 
 #[test]

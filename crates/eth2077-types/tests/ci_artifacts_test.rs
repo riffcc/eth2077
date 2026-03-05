@@ -5,10 +5,20 @@ use eth2077_types::ci_artifacts::{
 };
 use std::collections::HashMap;
 
-fn artifact(id: &str, kind: ArtifactKind, size_bytes: u64, status: Option<&str>, coverage: Option<&str>) -> CiArtifact {
+fn artifact(
+    id: &str,
+    kind: ArtifactKind,
+    size_bytes: u64,
+    status: Option<&str>,
+    coverage: Option<&str>,
+) -> CiArtifact {
     let mut metadata = HashMap::new();
-    if let Some(s) = status { metadata.insert("gate_status".to_string(), s.to_string()); }
-    if let Some(c) = coverage { metadata.insert("coverage_pct".to_string(), c.to_string()); }
+    if let Some(s) = status {
+        metadata.insert("gate_status".to_string(), s.to_string());
+    }
+    if let Some(c) = coverage {
+        metadata.insert("coverage_pct".to_string(), c.to_string());
+    }
     CiArtifact {
         id: id.to_string(),
         kind,
@@ -23,10 +33,38 @@ fn artifact(id: &str, kind: ArtifactKind, size_bytes: u64, status: Option<&str>,
 
 #[test]
 fn enum_variants_are_constructible() {
-    let kinds = [ArtifactKind::ProofReport, ArtifactKind::BenchmarkGate, ArtifactKind::CoverageMap, ArtifactKind::BuildAttestation, ArtifactKind::RegressionDiff, ArtifactKind::FuzzCorpus];
-    let statuses = [GateStatus::Passed, GateStatus::Failed, GateStatus::Flaky, GateStatus::Skipped, GateStatus::TimedOut, GateStatus::ManualOverride];
-    let formats = [ReportFormat::Json, ReportFormat::Html, ReportFormat::Markdown, ReportFormat::Csv, ReportFormat::Binary, ReportFormat::Protobuf];
-    let retention = [RetentionPolicy::Ephemeral, RetentionPolicy::ShortTerm, RetentionPolicy::LongTerm, RetentionPolicy::Permanent, RetentionPolicy::ArchiveAfter, RetentionPolicy::PurgeOnPass];
+    let kinds = [
+        ArtifactKind::ProofReport,
+        ArtifactKind::BenchmarkGate,
+        ArtifactKind::CoverageMap,
+        ArtifactKind::BuildAttestation,
+        ArtifactKind::RegressionDiff,
+        ArtifactKind::FuzzCorpus,
+    ];
+    let statuses = [
+        GateStatus::Passed,
+        GateStatus::Failed,
+        GateStatus::Flaky,
+        GateStatus::Skipped,
+        GateStatus::TimedOut,
+        GateStatus::ManualOverride,
+    ];
+    let formats = [
+        ReportFormat::Json,
+        ReportFormat::Html,
+        ReportFormat::Markdown,
+        ReportFormat::Csv,
+        ReportFormat::Binary,
+        ReportFormat::Protobuf,
+    ];
+    let retention = [
+        RetentionPolicy::Ephemeral,
+        RetentionPolicy::ShortTerm,
+        RetentionPolicy::LongTerm,
+        RetentionPolicy::Permanent,
+        RetentionPolicy::ArchiveAfter,
+        RetentionPolicy::PurgeOnPass,
+    ];
     assert_eq!(kinds.len(), 6);
     assert_eq!(statuses.len(), 6);
     assert_eq!(formats.len(), 6);
@@ -64,7 +102,13 @@ fn stats_are_computed_from_metadata() {
         artifact("a", ArtifactKind::BenchmarkGate, 100, Some("passed"), None),
         artifact("b", ArtifactKind::BenchmarkGate, 300, Some("failed"), None),
         artifact("c", ArtifactKind::BenchmarkGate, 500, Some("flaky"), None),
-        artifact("d", ArtifactKind::BuildAttestation, 700, Some("manual_override"), None),
+        artifact(
+            "d",
+            ArtifactKind::BuildAttestation,
+            700,
+            Some("manual_override"),
+            None,
+        ),
         artifact("e", ArtifactKind::CoverageMap, 900, None, Some("92.5")),
         artifact("f", ArtifactKind::CoverageMap, 1100, None, Some("nan")),
     ];

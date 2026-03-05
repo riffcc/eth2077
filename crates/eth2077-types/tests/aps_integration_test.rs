@@ -14,10 +14,9 @@ fn validation_rejects_small_validator_set() {
     let mut config = default_aps_integration_config();
     config.validator_set_size = 100;
 
-    let errors = validate_aps_config(&config).expect_err("validator_set_size below 1024 should fail");
-    assert!(errors.contains(&ApsValidationError::ValidatorSetTooSmall {
-        size: 100,
-    }));
+    let errors =
+        validate_aps_config(&config).expect_err("validator_set_size below 1024 should fail");
+    assert!(errors.contains(&ApsValidationError::ValidatorSetTooSmall { size: 100 }));
 }
 
 #[test]
@@ -26,7 +25,8 @@ fn validation_rejects_oversized_committee() {
     config.validator_set_size = 2048;
     config.committee_size = 600;
 
-    let errors = validate_aps_config(&config).expect_err("committee above validator_set/4 should fail");
+    let errors =
+        validate_aps_config(&config).expect_err("committee above validator_set/4 should fail");
     assert!(errors.contains(&ApsValidationError::CommitteeTooLarge {
         size: 600,
         max: 512,
@@ -39,9 +39,7 @@ fn validation_rejects_bad_participation() {
     config.min_attester_participation = 1.5;
 
     let errors = validate_aps_config(&config).expect_err("participation above 1.0 should fail");
-    assert!(errors.contains(&ApsValidationError::ParticipationOutOfRange {
-        value: 1.5,
-    }));
+    assert!(errors.contains(&ApsValidationError::ParticipationOutOfRange { value: 1.5 }));
 }
 
 #[test]

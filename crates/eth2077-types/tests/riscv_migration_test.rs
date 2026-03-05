@@ -33,7 +33,10 @@ fn default_strategy_valid() {
     let strategy = default_migration_strategy();
 
     assert_eq!(strategy.phases.len(), 5);
-    assert_eq!(strategy.estimated_years_per_phase, vec![1.0, 2.0, 2.0, 3.0, 2.0]);
+    assert_eq!(
+        strategy.estimated_years_per_phase,
+        vec![1.0, 2.0, 2.0, 3.0, 2.0]
+    );
     assert_eq!(strategy.total_estimated_years, 10.0);
     assert_eq!(strategy.risks.len(), 3);
     assert_eq!(strategy.breaking_changes.len(), 4);
@@ -75,7 +78,10 @@ fn mismatched_years_detected() {
     assert!(errors.iter().any(|error| {
         matches!(
             error,
-            MigrationValidationError::MismatchedPhaseYears { phases: 5, years: 4 }
+            MigrationValidationError::MismatchedPhaseYears {
+                phases: 5,
+                years: 4
+            }
         )
     }));
 }

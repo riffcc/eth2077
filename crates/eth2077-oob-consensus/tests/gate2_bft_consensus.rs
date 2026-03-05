@@ -52,9 +52,14 @@ fn test_happy_path_finalization() {
     let leader = validator_set.leader_for_round(height, round);
 
     let start_events = engine.start_height(height);
-    assert!(start_events
-        .iter()
-        .any(|event| matches!(event, ConsensusEvent::NeedProposal { height: 1, round: 0, .. })));
+    assert!(start_events.iter().any(|event| matches!(
+        event,
+        ConsensusEvent::NeedProposal {
+            height: 1,
+            round: 0,
+            ..
+        }
+    )));
 
     let proposal_events = engine.on_message(ConsensusMessage::Proposal {
         height,
@@ -136,9 +141,13 @@ fn test_round_timeout_advances_leader() {
     let timeout_events = engine.on_timeout();
     let round1_leader = validator_set.leader_for_round(height, 1);
     assert_ne!(round0_leader, round1_leader);
-    assert!(timeout_events
-        .iter()
-        .any(|event| matches!(event, ConsensusEvent::RoundTimeout { height: 1, round: 0 })));
+    assert!(timeout_events.iter().any(|event| matches!(
+        event,
+        ConsensusEvent::RoundTimeout {
+            height: 1,
+            round: 0
+        }
+    )));
     assert!(timeout_events.iter().any(|event| {
         matches!(
             event,
@@ -300,9 +309,13 @@ fn test_locking_prevents_equivocation() {
     }
 
     let timeout_events = engine.on_timeout();
-    assert!(timeout_events
-        .iter()
-        .any(|event| matches!(event, ConsensusEvent::RoundTimeout { height: 1, round: 0 })));
+    assert!(timeout_events.iter().any(|event| matches!(
+        event,
+        ConsensusEvent::RoundTimeout {
+            height: 1,
+            round: 0
+        }
+    )));
 
     let leader_round1 = validator_set.leader_for_round(height, 1);
     let proposal_events = engine.on_message(ConsensusMessage::Proposal {

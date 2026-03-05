@@ -1,0 +1,38 @@
+{
+  "benchmark_kind": "live-rpc",
+  "rpc_urls": [
+    "http://127.0.0.1:9545"
+  ],
+  "sender": "0x375249129507aec9309abc1f5c055494200c7c32",
+  "to": "0x1111111111111111111111111111111111111111",
+  "chain_id": 2077002,
+  "generated_at_unix_s": 1772448151,
+  "sender_hint_mode": true,
+  "sender_count": 1,
+  "worker_count": 1,
+  "tx_count_target": 2000,
+  "tx_submitted": 2000,
+  "tx_confirmed": 2000,
+  "submit_duration_s": 0.859827125,
+  "submit_tps": 2326.048971762783,
+  "confirm_window_s": 1.3158620810000001,
+  "confirmed_tps": 1519.9161286569515,
+  "p50_confirmation_ms": 672.129424,
+  "p95_confirmation_ms": 1063.232412,
+  "p99_confirmation_ms": 1168.6527899999999,
+  "avg_confirmation_ms": 672.9374600599986,
+  "start_block": 6,
+  "end_block": 8,
+  "blocks_spanned": 2,
+  "chain_txs_in_spanned_blocks": 2000,
+  "sender_submitted_counts": {
+    "0x375249129507aec9309abc1f5c055494200c7c32": 2000
+  },
+  "endpoint_submitted_counts": {
+    "http://127.0.0.1:9545": 2000
+  },
+  "send_errors_sample": [],
+  "notes": [
+    "sender-hint mode is active: node currently requires eth_getTransactionCount(sender) before each eth_sendRawTransaction"
+  ]
+}
