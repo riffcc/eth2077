@@ -11,7 +11,7 @@ pub enum Step {
     Committed,
 }
 
-#[derive(Debug, Clone, PartialEq, Eq)]
+#[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
 pub enum ConsensusMessage {
     Proposal {
         height: u64,
@@ -33,7 +33,7 @@ pub enum ConsensusMessage {
     },
 }
 
-#[derive(Debug, Clone, PartialEq, Eq)]
+#[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
 pub enum ConsensusEvent {
     BlockFinalized {
         height: u64,
@@ -319,7 +319,9 @@ impl ConsensusEngine {
                     .saturating_add(self.state.round as u64),
             };
 
-            if let Some(FastPathOutcome::FastFinalized(_)) = self.fast_path.add_attestation(attestation) {
+            if let Some(FastPathOutcome::FastFinalized(_)) =
+                self.fast_path.add_attestation(attestation)
+            {
                 self.state.step = Step::Committed;
                 events.push(ConsensusEvent::BlockFinalized {
                     height,

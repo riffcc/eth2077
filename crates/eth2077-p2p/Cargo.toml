@@ -1,0 +1,23 @@
+[package]
+name = "eth2077-p2p"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+authors.workspace = true
+
+[dependencies]
+eth2077-types = { path = "../eth2077-types" }
+eth2077-oob-consensus = { path = "../eth2077-oob-consensus" }
+tokio = { workspace = true }
+serde = { workspace = true }
+serde_json = { workspace = true }
+sha2 = { workspace = true }
+alloy-primitives = { workspace = true }
+tracing = "0.1"
+tokio-util = { version = "0.7", features = ["codec"] }
+bytes = "1"
+futures = "0.3"
+
+[dev-dependencies]
+tokio = { workspace = true, features = ["test-util"] }
+tracing-subscriber = "0.3"
