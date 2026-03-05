@@ -7,6 +7,8 @@ authors.workspace = true
 
 [dependencies]
 eth2077-types = { path = "../eth2077-types" }
+alloy-primitives.workspace = true
 serde = { workspace = true }
 serde_json = { workspace = true }
 sha2 = "0.10"
+revm = { version = "34", default-features = true, features = ["std"] }

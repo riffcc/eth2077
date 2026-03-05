@@ -7,6 +7,7 @@ pub mod attester_includer;
 pub mod bals_integration;
 pub mod blob_streaming;
 pub mod bootnode_discovery;
+pub mod canonical;
 pub mod chain_spec;
 pub mod ci_artifacts;
 pub mod ci_formal_gate;

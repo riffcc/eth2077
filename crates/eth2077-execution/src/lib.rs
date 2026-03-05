@@ -6,7 +6,9 @@ pub mod eip8007;
 pub mod eip8070;
 pub mod eip8079;
 pub mod eip8142;
+pub mod executor;
 pub mod ingress;
+pub mod state;
 pub mod traits;
 
 use eth2077_types::ScenarioConfig;
